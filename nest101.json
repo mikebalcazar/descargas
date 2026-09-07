@@ -17,7 +17,8 @@
       "bytes": 179479165,
       "sha256": "2953fd01f24517e4ba030e218a1dc2e4e8362d72315612b02566cec384f32072",
       "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.15.4/nest101-0.15.4-setup.exe",
-      "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima"
+      "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
+      "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
   }
 }
