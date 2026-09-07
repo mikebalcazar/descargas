@@ -1,0 +1,23 @@
+{
+  "nest101": {
+    "version": "0.15.4",
+    "fecha": "2026-09-07",
+    "notas": [
+      "El programa se llama nest101 (antes t101xylo). Mismo icono, mismos proyectos .t101x, misma carpeta de trabajo: se instala encima y nada se pierde.",
+      "Configuración general (⚙ arriba): idioma, logotipo del papel y dónde vive todo. El idioma alcanza la pantalla Y el papel — planos, fichas y Excel.",
+      "Librería de módulos por categorías. Las de fábrica viajan con la app; las tuyas viven en tu carpeta y mandan sobre las de fábrica, así que una actualización no te las deshace.",
+      "El logotipo de los planos ahora es el de tu empresa: clic derecho sobre el logotipo → Cambiar logo. Se guarda en tu carpeta de taller.",
+      "El disco de la sierra sale de fábrica en 3 mm, y se puede cambiar. Antes salía en 0, que quería decir «usa el de la fresa» sin que nadie lo hubiera escogido.",
+      "El isométrico de los planos ya no deja ver piezas que están tapadas: la profundidad del dibujo estaba mal calculada.",
+      "Y desde esta versión el programa avisa cuando hay una nueva, con su enlace de descarga."
+    ],
+    "pagina": "https://github.com/mikebalcazar/descargas#readme",
+    "windows": {
+      "archivo": "nest101-0.15.4-setup.exe",
+      "bytes": 179479165,
+      "sha256": "2953fd01f24517e4ba030e218a1dc2e4e8362d72315612b02566cec384f32072",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.15.4/nest101-0.15.4-setup.exe",
+      "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima"
+    }
+  }
+}
