@@ -1,0 +1,18 @@
+{
+ "avisos": [
+  {
+   "id": "2026-09-07-actualizador",
+   "fecha": "2026-09-07",
+   "nivel": "info",
+   "titulo": "draw101 ya se actualiza solo",
+   "texto": "Desde la 0.19.2 draw101 revisa al arrancar si hay versión nueva y la baja e instala cuando tú digas (Ayuda ▾ → Buscar actualizaciones, o el comando ACTUALIZAR). Por aquí, en Ayuda ▾ → Avisos, te llegarán las noticias de Taller 101.",
+   "desde": "0.19.2",
+   "caduca": "2026-12-31",
+   "en": {
+    "titulo": "draw101 now updates itself",
+    "texto": "Since 0.19.2 draw101 checks for a new version at startup and downloads and installs it when you say so (Help ▾ → Check for updates, or the UPDATE command). Taller 101 news will arrive here, in Help ▾ → Notices."
+   },
+   "app": "draw101"
+  }
+ ]
+}
