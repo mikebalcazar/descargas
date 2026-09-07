@@ -1,0 +1,20 @@
+{
+ "draw101": {
+  "version": "0.19.2",
+  "fecha": "2026-09-07",
+  "notas": [
+   "draw101 se actualiza solo: al arrancar (y una vez al día) revisa en el sitio de Taller 101 si hay versión nueva; Ayuda ▾ → Buscar actualizaciones (o ACTUALIZAR) la baja, la comprueba con su huella sha256 y corre el instalador cuando tú digas. Se puede ignorar una versión o apagar la revisión automática.",
+   "Avisos de Taller 101 dentro del programa: Ayuda ▾ → Avisos (o AVISOS). Los nuevos marcan el menú con un punto; los importantes salen solos al arrancar. Lo leído no se repite.",
+   "Ayuda ▾ → Licencias de terceros (LICENCIAS): cada componente ajeno que viaja dentro del programa, con su versión, licencia y texto.",
+   "El PDF de fondo (PDFFONDO) se lee ahora con pypdfium2 en vez de PyMuPDF: misma función, licencia BSD/Apache en vez de AGPL. Los caminos que vuelven a su origen (círculos) entran cerrados."
+  ],
+  "pagina": "https://github.com/mikebalcazar/descargas#readme",
+  "windows": {
+   "archivo": "draw101-0.19.2-setup.exe",
+   "bytes": 109137422,
+   "sha256": "0129c75afa8fcaace1ed8ba248aad16c368b18943f7d95ca05f14a9355887e65",
+   "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.19.2/draw101-0.19.2-setup.exe",
+   "ultima": "https://github.com/mikebalcazar/descargas/releases/download/draw101-ultima/draw101-setup.exe"
+  }
+ }
+}
