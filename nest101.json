@@ -1,22 +1,20 @@
 {
   "nest101": {
-    "version": "0.15.4",
-    "fecha": "2026-09-07",
+    "version": "0.15.5",
+    "fecha": "2026-09-08",
     "notas": [
-      "El programa se llama nest101 (antes t101xylo). Mismo icono, mismos proyectos .t101x, misma carpeta de trabajo: se instala encima y nada se pierde.",
-      "Configuración general (⚙ arriba): idioma, logotipo del papel y dónde vive todo. El idioma alcanza la pantalla Y el papel — planos, fichas y Excel.",
-      "Librería de módulos por categorías. Las de fábrica viajan con la app; las tuyas viven en tu carpeta y mandan sobre las de fábrica, así que una actualización no te las deshace.",
-      "El logotipo de los planos ahora es el de tu empresa: clic derecho sobre el logotipo → Cambiar logo. Se guarda en tu carpeta de taller.",
-      "El disco de la sierra sale de fábrica en 3 mm, y se puede cambiar. Antes salía en 0, que quería decir «usa el de la fresa» sin que nadie lo hubiera escogido.",
-      "El isométrico de los planos ya no deja ver piezas que están tapadas: la profundidad del dibujo estaba mal calculada.",
-      "Y desde esta versión el programa avisa cuando hay una nueva, con su enlace de descarga."
+      "Menú de Ayuda: avisos de Taller 101 dentro del programa y la lista de licencias de todo lo que viaja adentro.",
+      "El programa revisa solo si hay versión nueva: al arrancar y una vez al día. Se puede apagar, y se puede ignorar una versión sin dejar de recibir las siguientes.",
+      "La descarga del instalador comprueba su huella antes de ofrecerlo. Si no cuadra, se borra: más vale no tener nada que tener algo roto con cara de bueno.",
+      "La aplicación en inglés ya sale en inglés completa. Faltaban unos 75 textos que se pintan sobre la marcha: la barra de estado, la caja de proyecto exportado, las etiquetas de la lista de gabinetes.",
+      "El lector de planos cambió de motor de PDF. Lee lo mismo, comprobado trazo por trazo, y el instalador pesa 46 MB menos."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.15.4-setup.exe",
-      "bytes": 179479165,
-      "sha256": "2953fd01f24517e4ba030e218a1dc2e4e8362d72315612b02566cec384f32072",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.15.4/nest101-0.15.4-setup.exe",
+      "archivo": "nest101-0.15.5-setup.exe",
+      "bytes": 166857078,
+      "sha256": "132b8833c5509e32122ba7a198ca1752d6e72e2007660d345828ed0b24a8da37",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.15.5/nest101-0.15.5-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
