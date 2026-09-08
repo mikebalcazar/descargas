@@ -13,6 +13,20 @@
     "texto": "Since 0.19.2 draw101 checks for a new version at startup and downloads and installs it when you say so (Help ▾ → Check for updates, or the UPDATE command). Taller 101 news will arrive here, in Help ▾ → Notices."
    },
    "app": "draw101"
+  },
+  {
+   "id": "2026-09-08-0.19.3",
+   "fecha": "2026-09-08",
+   "app": "draw101",
+   "nivel": "info",
+   "desde": "0.19.2",
+   "caduca": "2026-12-31",
+   "titulo": "draw101 0.19.3: iconos, cotas que se mueven, unidades y guía",
+   "texto": "Cada herramienta lleva su icono junto al cursor; las cotas y directrices se mueven con su pieza; UNIDADES (mm, cm, m); la escala escrita en la hoja manda; CENTRAR; y Ayuda ▾ → Guía de herramientas (PDF). Ayuda ▾ → Buscar actualizaciones para instalarla.",
+   "en": {
+    "titulo": "draw101 0.19.3: icons, movable dimensions, units and guide",
+    "texto": "Every tool shows its icon by the cursor; dimensions and leaders move with their part; UNITS (mm, cm, m); the scale written on the sheet rules; CENTER; and Help ▾ → Tool guide (PDF). Help ▾ → Check for updates to install it."
+   }
   }
  ]
 }
