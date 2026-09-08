@@ -1,26 +1,16 @@
 {
  "draw101": {
-  "version": "0.19.3",
+  "version": "0.19.4",
   "fecha": "2026-09-08",
   "notas": [
-   "Cada herramienta lleva su icono junto al cursor (tijera en RECORTAR, flecha en EXTENDER, cuatro flechas en MOVER…) con la caja de selección bien marcada en azul.",
-   "Las cotas y directrices ya se mueven, copian, giran y escalan. Una cota pegada a una pieza sigue a la pieza entera; moverla sola sólo acerca o aleja la línea de cota. Sus puntos son grips.",
-   "Cada pregunta numérica recuerda su última respuesta (desfase, empalme, escala…) y la ofrece por omisión; Enter o espacio la toman.",
-   "El espacio confirma al teclear números (línea de comando, entrada dinámica y cuadros); en texto libre sigue siendo espacio.",
-   "Texto: altura por omisión 7.5 mm (antes 2.5), y recuerda la última.",
-   "Tipo de línea y escala del tipo por entidad, en el panel de propiedades.",
-   "RECTANGULO: la cajita dinámica pide X y Y (ancho y alto); Tab o Enter pasan de X a Y.",
-   "UNIDADES (Ayuda ▾ → Unidades del dibujo, y en el cuadro de la hoja): mm, cm o m; escala lo dibujado para conservar el tamaño real; el DXF sale con la unidad declarada.",
-   "La escala escrita en la hoja manda: «1:50» en el pie o en el cuadro pone la ventana a esa escala.",
-   "CENTRAR: centra el dibujo en la ventana de la hoja (Enter: todo; clic: ese punto al centro); botón «Centrar el dibujo» en el cuadro de la hoja.",
-   "Ayuda ▾ → Guía de herramientas (PDF): icono, nombre y qué hace cada herramienta, en español o inglés (GUIA)."
+   "ARREGLADO: al instalar una actualización desde el programa, Windows decía «No se ha encontrado la ruta de acceso de la red» y el instalador no arrancaba. Ahora el instalador se abre por un .bat de tres renglones, sin ventana negra."
   ],
   "pagina": "https://github.com/mikebalcazar/descargas#readme",
   "windows": {
-   "archivo": "draw101-0.19.3-setup.exe",
-   "bytes": 109334679,
-   "sha256": "1611a512235171de74846d03aa33d90a144429f6909d48633198f7d19be3078c",
-   "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.19.3/draw101-0.19.3-setup.exe",
+   "archivo": "draw101-0.19.4-setup.exe",
+   "bytes": 109337927,
+   "sha256": "a36e609ce6b4c6fdc9f98d127b488deac0bde77b916ee383de0fafc21907344a",
+   "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.19.4/draw101-0.19.4-setup.exe",
    "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
   }
  }
