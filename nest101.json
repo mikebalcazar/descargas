@@ -1,20 +1,19 @@
 {
   "nest101": {
-    "version": "0.15.5",
+    "version": "0.15.6",
     "fecha": "2026-09-08",
     "notas": [
-      "Menú de Ayuda: avisos de Taller 101 dentro del programa y la lista de licencias de todo lo que viaja adentro.",
-      "El programa revisa solo si hay versión nueva: al arrancar y una vez al día. Se puede apagar, y se puede ignorar una versión sin dejar de recibir las siguientes.",
-      "La descarga del instalador comprueba su huella antes de ofrecerlo. Si no cuadra, se borra: más vale no tener nada que tener algo roto con cara de bueno.",
-      "La aplicación en inglés ya sale en inglés completa. Faltaban unos 75 textos que se pintan sobre la marcha: la barra de estado, la caja de proyecto exportado, las etiquetas de la lista de gabinetes.",
-      "El lector de planos cambió de motor de PDF. Lee lo mismo, comprobado trazo por trazo, y el instalador pesa 46 MB menos."
+      "Los números cambian de tipografía. Medidas, cantidades, precios y fechas salen ahora en Fira Sans, que tiene cifras de la misma altura; el texto sigue igual.",
+      "Alcanza la pantalla y el papel: cotas, lista de corte, fichas, planos y Excel.",
+      "Raleway dibuja el 3, 4, 5, 7 y 9 colgando por debajo del renglón y el 6 y el 8 subidos. En un rótulo se ve bien; en una cota de corte no se lee de un golpe, y un número que no se lee de un golpe es una pieza mal cortada.",
+      "Las columnas de números de las tablas ahora quedan alineadas unas debajo de otras."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.15.5-setup.exe",
-      "bytes": 166857078,
-      "sha256": "132b8833c5509e32122ba7a198ca1752d6e72e2007660d345828ed0b24a8da37",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.15.5/nest101-0.15.5-setup.exe",
+      "archivo": "nest101-0.15.6-setup.exe",
+      "bytes": 166928819,
+      "sha256": "93326039905540157c8f81bea049acd1dbf70d8c28a0e440b623d7cfb1550697",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.15.6/nest101-0.15.6-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
