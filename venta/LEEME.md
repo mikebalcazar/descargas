@@ -4,6 +4,12 @@ Aquí vive lo que se le enseña a un cliente. Cada app deja su materia prima en
 **su propio repositorio**, en `claude/venta/`; las apps de escritorio, que no
 tienen repositorio, la dejan aquí en `venta/<app>/`.
 
+**En este repositorio todo lo de venta vive en `venta/`, no en `claude/venta/`.**
+`claude/` es para las notas y el semáforo de los chats; `venta/` es producto: lo
+mismo la materia prima que las hojas armadas y el guion que las arma. El 9-sep
+la sesión de draw101 subió su material a `claude/venta/draw101/` en la rama
+`claude/venta-draw101`; se integró el contenido y se dejó en `venta/draw101/`.
+
 | Carpeta | Qué es |
 |---|---|
 | `venta/<app>/` | materia prima: `ficha.md`, `datos.md`, `capturas/`, `marca/` |

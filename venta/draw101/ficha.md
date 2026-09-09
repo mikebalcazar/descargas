@@ -23,3 +23,21 @@
 6. **Hojas de plano** — formatos A4–A0, pie de plano lateral editable con doble clic, ventanas con handles (tamaño, posición, encuadre en vivo), varias ventanas por hoja, escala por lista.
 7. **Importar / exportar** — DWG (lectura y escritura), DXF R2013, PDF a tamaño real, PDF de fondo para calcar, SVG de la hoja, .t101x de Taller 101.
 8. **Se mantiene solo** — actualizador integrado con aviso al arrancar, avisos del fabricante, deshacer/rehacer ilimitado, autoguardado y recuperación tras un cierre inesperado, tema claro y oscuro.
+
+## Capturas
+
+Tomadas del render local en el runner (`build/capturas_venta.py` en el código de draw101: arranca el motor, abre la interfaz en Chromium a **1600 × 1100 px**, tema claro, idioma español, datos ficticios «Cocina Ramírez / Familia Ramírez»). Ninguna sale de un plano de cliente. Para retomarlas a mano en Windows: ventana de draw101 maximizada en un monitor a 1600 px de ancho (o recorte a 1600), tema claro (Ayuda → Configuración), mismo dibujo.
+
+| Archivo | Qué enseña |
+|---|---|
+| [01-modelo-cocina.png](capturas/01-modelo-cocina.png) | Modelo: alzado y planta de una cocina importada de Taller 101, acotada sola, nota a mano, capas a la derecha |
+| [02-propiedades-en-vivo.png](capturas/02-propiedades-en-vivo.png) | Clic derecho sobre un mueble: propiedades flotantes editables en vivo |
+| [03-galeria-rayado.png](capturas/03-galeria-rayado.png) | RAYADO: galería de patrones con previa sobre la cubierta |
+| [04-hoja-pie-de-plano.png](capturas/04-hoja-pie-de-plano.png) | Hoja A2 con el pie de plano lateral de Taller 101, escala 1:20 |
+| [05-ventana-handles.png](capturas/05-ventana-handles.png) | EDITARVENTANA: la ventana de la hoja con sus handles |
+| [06-vista-previa.png](capturas/06-vista-previa.png) | Vista previa de impresión, centrada en el papel |
+| [07-tema-oscuro.png](capturas/07-tema-oscuro.png) | El mismo modelo en tema oscuro |
+
+## Marca
+
+`marca/draw101-azul.{png,svg}` (logo sobre claro), `marca/draw101-blanco.{png,svg}` (sobre oscuro), `marca/draw101-icono.{png,svg,ico}` (el disco «101»). Los SVG son trazado vectorial del PNG original (Sansation Bold); el PNG es el de la app.
