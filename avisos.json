@@ -27,6 +27,20 @@
     "titulo": "draw101 0.19.3: icons, movable dimensions, units and guide",
     "texto": "Every tool shows its icon by the cursor; dimensions and leaders move with their part; UNITS (mm, cm, m); the scale written on the sheet rules; CENTER; and Help ▾ → Tool guide (PDF). Help ▾ → Check for updates to install it."
    }
+  },
+  {
+   "id": "2026-09-09-0.20.0",
+   "fecha": "2026-09-09",
+   "app": "draw101",
+   "nivel": "info",
+   "desde": "0.19.2",
+   "caduca": "2026-12-31",
+   "titulo": "draw101 0.20.0: la tanda grande",
+   "texto": "ESCALAR por tres puntos, selección por cruce real, cajita para cualquier dato, un solo texto de párrafo con justificación, grips en los medios, galería de rayados con previa, panel de cotas del documento y tamaño de cotas por hoja, ventanas de la hoja con handles (VP), escala del pie por lista, propiedades con clic derecho, y el arreglo de Extents en planos con bloques girados. Ayuda ▾ → Buscar actualizaciones para instalarla.",
+   "en": {
+    "titulo": "draw101 0.20.0: the big batch",
+    "texto": "SCALE by three points, real crossing selection, a value box by the cursor, one paragraph text with justification, midpoint grips, hatch gallery with preview, document dimension panel and per-sheet dimension size, sheet viewports with handles (VP), title-block scale from a list, right-click properties, and the Extents fix for plans with rotated nested blocks. Help ▾ → Check for updates to install it."
+   }
   }
  ]
 }
