@@ -1,6 +1,6 @@
 # draw101
 
-**CAD 2D para taller de muebles y despachos de arquitectura.** Abre DWG/DXF, dibuja, acota, arma la hoja con pie de plano e imprime a PDF. Sin suscripción, sin curva de AutoCAD: lo que un taller usa todos los días, y nada más.
+**CAD 2D para taller de muebles y despachos de arquitectura.** Abre DWG/DXF, dibuja, acota, arma la hoja con pie de plano e imprime a PDF. Lo que un taller usa todos los días, con los comandos que el dibujante ya sabe.
 
 ## Para quién
 - Talleres de carpintería y mobiliario que reciben planos DWG de arquitectos y deben producir sus propios planos de fabricación.
@@ -9,8 +9,8 @@
 
 ## 5 beneficios
 1. **Abre el DWG del cliente tal cual** — R2000 a R2018, capas, bloques, atributos y hojas de otros despachos; lo que no se entiende se conserva y vuelve a salir intacto al guardar.
-2. **Se aprende en una tarde** — comandos de AutoCAD (L, C, TR, DIM…), en inglés o español; espacio = Enter; menú radial con clic derecho; barra por bloques de herramientas.
-3. **Rápido con planos pesados** — 130 000 trazos se pintan en ~35 ms; la selección y el repintado cuestan lo que cambió, no lo que mide el plano.
+2. **Flujo de uso familiar** — los comandos que el dibujante ya trae de AutoCAD (L, C, TR, DIM…), en inglés o español, y un menú radial con clic derecho para lo que se usa a cada rato: línea, círculo, cotas, mover, recortar. Espacio = Enter; barra por bloques de herramientas.
+3. **Aguanta el plano de obra completo** — el plano del arquitecto entra entero y el ratón se sigue sintiendo suelto: dibujar, seleccionar y repintar cuestan lo que cambió, no lo que mide el plano.
 4. **Del modelo al plano en minutos** — hojas A4–A0 con el pie de plano del despacho, escala por lista, cotas con tamaño propio por hoja, vista previa e impresión a PDF a tamaño real.
 5. **Conectado al taller** — importa las cocinas del cotizador/despiezador (.t101x), las acota solas y se actualizan cuando cambia el mueble; el DXF que sale va directo al que corta.
 
@@ -26,7 +26,7 @@
 
 ## Capturas
 
-Tomadas del render local en el runner (`build/capturas_venta.py` en el código de draw101: arranca el motor, abre la interfaz en Chromium a **1600 × 1100 px**, tema claro, idioma español, datos ficticios «Cocina Ramírez / Familia Ramírez»). Ninguna sale de un plano de cliente. Para retomarlas a mano en Windows: ventana de draw101 maximizada en un monitor a 1600 px de ancho (o recorte a 1600), tema claro (Ayuda → Configuración), mismo dibujo.
+Tomadas del render local en el runner (`build/capturas_venta.py` en el código de draw101: arranca el motor, abre la interfaz en Chromium a **1600 × 1100 px** —y a **1600 × 900** para la portada—, tema claro, idioma español, datos ficticios «Cocina Ramírez / Familia Ramírez»). Ninguna sale de un plano de cliente. Para retomarlas a mano en Windows: ventana de draw101 maximizada en un monitor a 1600 px de ancho (o recorte a 1600), tema claro (Ayuda → Configuración), mismo dibujo.
 
 | Archivo | Qué enseña |
 |---|---|
@@ -37,7 +37,13 @@ Tomadas del render local en el runner (`build/capturas_venta.py` en el código d
 | [05-ventana-handles.png](capturas/05-ventana-handles.png) | EDITARVENTANA: la ventana de la hoja con sus handles |
 | [06-vista-previa.png](capturas/06-vista-previa.png) | Vista previa de impresión, centrada en el papel |
 | [07-tema-oscuro.png](capturas/07-tema-oscuro.png) | El mismo modelo en tema oscuro |
+| [08-menu-radial.png](capturas/08-menu-radial.png) | El menú radial abierto sobre el dibujo: clic derecho sostenido y los ocho gajos alrededor del cursor |
+| [09-portada-16-9.png](capturas/09-portada-16-9.png) | **Portada 16:9** (1600 × 900) — la pantalla completa, sin recortes |
 
 ## Marca
 
 `marca/draw101-azul.{png,svg}` (logo sobre claro), `marca/draw101-blanco.{png,svg}` (sobre oscuro), `marca/draw101-icono.{png,svg,ico}` (el disco «101»). Los SVG son trazado vectorial del PNG original (Sansation Bold); el PNG es el de la app.
+
+## Cómo se pide
+
+Se vende dentro de **Suite 101**. Sin precios en el material: la única llamada a la acción es **pedir una demostración a info@forespot.com**. Sitio: **suite101.pages.dev**.
