@@ -13,7 +13,7 @@
 import pathlib, re, html
 
 S = pathlib.Path(__file__).resolve().parent.parent
-CORREO = "mike@forespot.com"   # ← cambiar cuando haya correo de la suite
+CORREO = "info@forespot.com"
 
 def logo(app, viewbox=None, color=None):
     s = (S / 'marca' / f'{app}.svg').read_text()

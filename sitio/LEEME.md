@@ -44,6 +44,7 @@ Fira sin tocar el marcado. Ver `claude/tipografia-cifras-suite101.md`.
 
 - quote101, nest101, dash101 y peek101: hoy salen en la portada como tarjeta
   apagada, sin página propia.
-- Correo de contacto: hoy es el personal de Mike, en `armar-sitio.py → CORREO`.
 - Dominio propio. Cloudflare Pages lo conecta gratis cuando lo haya.
-- Precios: el sitio no dice ninguno todavía.
+- Precios: **no van en el sitio**. Decidido por Mike el 9-sep: la única
+  llamada a la acción es pedir una demostración. Si alguien pide número, se
+  contesta por correo.
