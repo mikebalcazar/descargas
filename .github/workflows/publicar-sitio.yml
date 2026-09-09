@@ -1,0 +1,53 @@
+# Publica el escaparate de Suite 101 en Cloudflare Pages.
+#
+# Cloudflare Pages es gratis y sin límite de tráfico. El sitio es estático
+# —sin marco, sin build, sin peticiones a internet—, así que aquí no se
+# construye nada: se sube la carpeta tal cual.
+#
+# Requisitos (una sola vez, en Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN   el mismo valor que ya usan bitacora-obra y el
+#                          portal, pero el token necesita además el permiso
+#                          "Cloudflare Pages: Edit". Si falta, el paso de
+#                          publicar sale con 403 y hay que agregarlo en
+#                          dash.cloudflare.com → My Profile → API Tokens.
+#
+# Queda en https://suite101.pages.dev
+
+name: Publicar sitio
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sitio/**'
+      - '.github/workflows/publicar-sitio.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: sitio
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Que el proyecto exista (la primera vez lo crea)
+        run: npx --yes wrangler@4 pages project create suite101 --production-branch main || true
+
+      - name: Publicar
+        run: npx --yes wrangler@4 pages deploy sitio --project-name suite101 --branch main --commit-dirty=true
+
+      - name: Medir lo publicado
+        run: |
+          sleep 10
+          for u in / /app/roster101.html /app/quell101.html /app/draw101.html /estilo.css; do
+            code=$(curl -s -o /tmp/p -w '%{http_code}' "https://suite101.pages.dev$u")
+            echo "$code  $u  $(wc -c </tmp/p) bytes"
+            [ "$code" = "200" ] || exit 1
+          done
+          echo "— fuentes propias, cero Google Fonts:"
+          ! grep -q "fonts.googleapis" /tmp/p && echo "ok"
