@@ -94,11 +94,11 @@ APPS = {
    corto='CAD 2D que abre el DWG del arquitecto y saca el plano de fabricación.',
    estado='Uso interno · v1 en curso', plataforma='Windows · macOS en preparación',
    entrada='Abre el plano del arquitecto tal cual —capas, bloques, atributos y hojas— y saca de ahí los planos '
-           'de fabricación del taller. Comandos de AutoCAD, cotas asociativas, hojas A4 a A0 con pie de plano '
+           'de fabricación del taller. Comandos de AutoCAD, menú radial para lo frecuente, cotas asociativas, hojas A4 a A0 con pie de plano '
            'propio e impresión a PDF a tamaño real. Sin suscripción: se instala y se usa.',
    ben=[('Abre el DWG del cliente','R2000 a R2018. Lo que no se entiende se conserva y vuelve a salir intacto.'),
-        ('Se aprende en una tarde','Comandos de AutoCAD en inglés o español, menú radial con clic derecho.'),
-        ('Rápido con planos pesados','130 000 trazos se pintan en 35 ms. Cuesta lo que cambió, no lo que mide.'),
+        ('Flujo de uso familiar','Los comandos de AutoCAD que ya usas, y un menú radial con clic derecho: lo de todos los días queda donde está el cursor.'),
+        ('Rápido con planos pesados','El plano pesado no se arrastra: repintar cuesta lo que cambió, no lo que mide el plano.'),
         ('Del modelo al plano','Hojas con pie de plano, escala por lista y vista previa antes de imprimir.'),
         ('Conectado al taller','Importa las cocinas del despiezador, las acota solas y las actualiza.'),
         ('Se mantiene solo','Avisa y se actualiza. Autoguardado y recuperación tras un cierre inesperado.')],

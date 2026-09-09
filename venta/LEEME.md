@@ -48,6 +48,20 @@ el texto y **Fira Sans en todas las cifras**, con `unicode-range` para que los
 dígitos caigan solos en Fira sin tocar el marcado. Ver
 `claude/tipografia-cifras-suite101.md` en el proyecto.
 
+## Decisiones de Mike (9-sep-2026)
+
+- **Se vende como Suite 101**, marca propia. Taller 101 es el taller que la usa
+  y la probó, no el nombre del producto.
+- **Sin precios públicos.** La única llamada a la acción es pedir una
+  demostración, a `info@forespot.com`.
+- **macOS de draw101 se anuncia** como «en preparación».
+- **Nada de números medidos en una sola máquina.** El claim de «130 000 trazos
+  en 35 ms» sale del material: la medición se queda adentro, para el chat que
+  optimiza. En su lugar se dice qué se siente, no cuánto marcó el cronómetro.
+- «Se aprende en una tarde» se cambia por **flujo de uso familiar**: los
+  comandos de AutoCAD que el dibujante ya trae, más el menú radial para lo
+  frecuente.
+
 ## Regla
 
 Si cambia lo que hace la app, cambian `ficha.md`, `datos.md` y las capturas
