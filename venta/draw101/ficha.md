@@ -10,9 +10,9 @@
 ## 5 beneficios
 1. **Abre el DWG del cliente tal cual** — R2000 a R2018, capas, bloques, atributos y hojas de otros despachos; lo que no se entiende se conserva y vuelve a salir intacto al guardar.
 2. **Flujo de uso familiar** — los comandos que el dibujante ya trae de AutoCAD (L, C, TR, DIM…), en inglés o español, y un menú radial con clic derecho para lo que se usa a cada rato: línea, círculo, cotas, mover, recortar. Espacio = Enter; barra por bloques de herramientas.
-3. **Aguanta el plano de obra completo** — el plano del arquitecto entra entero y el ratón se sigue sintiendo suelto: dibujar, seleccionar y repintar cuestan lo que cambió, no lo que mide el plano.
+3. **Aguanta el plano de obra completo** — el plano del arquitecto entra entero; pan y zoom navegan sobre él sin redibujarlo.
 4. **Del modelo al plano en minutos** — hojas A4–A0 con el pie de plano del despacho, escala por lista, cotas con tamaño propio por hoja, vista previa e impresión a PDF a tamaño real.
-5. **Conectado al taller** — importa las cocinas del cotizador/despiezador (.t101x), las acota solas y se actualizan cuando cambia el mueble; el DXF que sale va directo al que corta.
+5. **Conectado al taller** — importa las cocinas de nest101 (.t101x), las acota solas y se actualizan cuando cambia el mueble; el DXF que sale va directo al que corta.
 
 ## 8 funciones
 1. **Trazo completo** — línea, polilínea, arco, círculo, elipse, spline, rectángulo, polígono, texto de párrafo, rayado con galería de patrones (ANSI, ladrillo, concreto, madera…) y previa en vivo.

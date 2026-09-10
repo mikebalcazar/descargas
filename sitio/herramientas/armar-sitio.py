@@ -62,7 +62,7 @@ APPS = {
    vb='118 198 418 216', color='#0381c2',
    lema='La obra, ítem por ítem, sobre el plano.',
    corto='El avance de la obra, pin por pin, sobre el plano.',
-   estado='En uso', plataforma='Web · Android · Windows',
+   estado='En uso', plataforma='Web · Windows · Android en preparación',
    entrada='Se sube el plano —PDF o foto— y se le ponen pines: uno por cada mueble, puerta o acabado. Cada pin '
            'lleva su propio camino: compras, fabricación, flete, instalación, entrega. Un tap por etapa y el '
            'plano entero se lee de un vistazo. Al entregar se abre el punchlist, con responsable, fecha y foto. '
@@ -80,12 +80,12 @@ APPS = {
        ('Punchlist','asignación, evidencia, cierre del supervisor'),
        ('Dudas','buzón con foto en la pregunta y en la respuesta'),
        ('Roles','dueño, supervisor, contratista y trabajador'),
-       ('Sin señal','apps de Android y Windows, además del sitio')],
+       ('Sin señal','en el sitio y en la app de Windows')],
    img=[('1-plano.png','El plano de la obra: cada pin es un ítem y su color dice el tipo'),
         ('2-item.png','La bitácora del ítem, con lo acordado y cuándo'),
         ('3-lista.png','La obra entera en lista, cuando el plano ya no basta'),
         ('4-dudas.png','Las dudas que levanta quien está en obra y no decide')],
-   datos=[('Versión','Publicación continua'),('Plataforma','Web · Android · Windows'),
+   datos=[('Versión','Publicación continua'),('Plataforma','Web · Windows · Android en preparación'),
           ('Estado','En uso, primera obra'),('Sin señal','Sí, lectura y escritura')]),
 
  'draw101': dict(
@@ -98,9 +98,9 @@ APPS = {
            'propio e impresión a PDF a tamaño real. Sin suscripción: se instala y se usa.',
    ben=[('Abre el DWG del cliente','R2000 a R2018. Lo que no se entiende se conserva y vuelve a salir intacto.'),
         ('Flujo de uso familiar','Los comandos de AutoCAD que ya usas, y un menú radial con clic derecho: lo de todos los días queda donde está el cursor.'),
-        ('Rápido con planos pesados','El plano pesado no se arrastra: repintar cuesta lo que cambió, no lo que mide el plano.'),
+        ('Aguanta el plano de obra','El plano del arquitecto entra entero; pan y zoom navegan sobre él sin redibujarlo.'),
         ('Del modelo al plano','Hojas con pie de plano, escala por lista y vista previa antes de imprimir.'),
-        ('Conectado al taller','Importa las cocinas del despiezador, las acota solas y las actualiza.'),
+        ('Conectado al taller','Importa las cocinas de nest101, las acota solas y las actualiza.'),
         ('Se mantiene solo','Avisa y se actualiza. Autoguardado y recuperación tras un cierre inesperado.')],
    fn=[('Trazo completo','línea, arco, spline, texto, rayado con galería de patrones'),
        ('Edición con el ratón','recortar, extender, empalme, chaflán, arreglos, grips'),
@@ -167,7 +167,7 @@ h2{font-size:clamp(22px,3vw,30px);letter-spacing:-.01em;margin-bottom:10px}
 .tarjeta.pronto{opacity:.62;pointer-events:none}
 .sello{display:inline-block;margin-top:14px;font-size:11px;font-weight:700;letter-spacing:.1em;
   text-transform:uppercase;color:var(--azul);background:#eaf5fb;padding:4px 9px;border-radius:99px}
-.flujo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:8px}
+.flujo{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:14px;margin-top:8px}
 .paso{border-top:3px solid var(--azul);padding-top:12px;font-size:14px;color:var(--gris)}
 .paso b{display:block;font-family:"Cifras","Sansation",sans-serif;color:var(--tinta);font-size:15px;margin-bottom:3px}
 .cierre{background:#f4f7f9;border-top:1px solid var(--linea)}
@@ -224,15 +224,16 @@ pasos = [('quote101','Se cotiza el mueble, componente por componente.'),
          ('draw101','Salen los planos de fabricación.'),
          ('quell101','La obra se sigue sobre el plano, ítem por ítem.'),
          ('roster101','La gente que la hace, con su expediente en regla.'),
-         ('dash101','Y las cuentas cierran solas.')]
+         ('dash101','Las cuentas cierran solas.'),
+         ('peek101','Y el cliente ve su proyecto y su estado de cuenta.')]
 
 portada = cabeza('Suite 101 — programas para taller de muebles',
-                 'Seis programas para el taller que ya trabaja: cotización, despiece, planos, obra, personal y cuentas.') + f"""
+                 'Siete programas para el taller que ya trabaja: cotización, despiece, planos, obra, personal, cuentas y cliente.') + f"""
 {barra()}
 <div class="hero"><div class="env">
 <h1>El taller entero, de la cotización a la entrega.</h1>
-<p>Suite 101 son <span class="cifra">seis</span> programas que se hablan entre ellos: cotizas, despiezas, dibujas,
-sigues la obra, llevas al personal y cierras las cuentas. Cada uno se usa solo; juntos, el dato se captura
+<p>Suite 101 son <span class="cifra">siete</span> programas que se hablan entre ellos: cotizas, despiezas, dibujas,
+sigues la obra, llevas al personal, cierras las cuentas y le enseñas al cliente su proyecto. Cada uno se usa solo; juntos, el dato se captura
 <span class="cifra">una</span> vez.</p>
 <a class="btn" href="#apps">Ver los programas</a>
 <a class="btn fantasma" href="mailto:{CORREO}">Pedir una demostración</a>
@@ -246,7 +247,7 @@ sigues la obra, llevas al personal y cierras las cuentas. Cada uno se usa solo; 
 
 <section id="flujo" class="cierre"><div class="env">
 <h2>Cómo encajan</h2>
-<p class="sub">El mismo mueble recorre los seis programas sin volver a capturarse.</p>
+<p class="sub">El mismo mueble recorre los siete programas sin volver a capturarse.</p>
 <div class="flujo">{''.join(f'<div class="paso"><b>{a}</b>{html.escape(t)}</div>' for a, t in pasos)}</div>
 </div></section>
 
