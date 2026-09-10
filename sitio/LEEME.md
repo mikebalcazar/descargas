@@ -29,10 +29,9 @@ su material en `claude/venta/` de su repositorio, se copian sus capturas a
 Push a `main` → GitHub Actions → **Cloudflare Pages** (gratis, sin límite de
 tráfico) → https://suite101.pages.dev
 
-Falta una sola cosa, y la tiene que hacer Mike una vez: pegar el secreto
-`CLOUDFLARE_API_TOKEN` en Settings → Secrets → Actions de este repositorio
-—el mismo valor que ya usan `bitacora-obra` y el portal— y comprobar que ese
-token traiga el permiso **Cloudflare Pages: Edit**.
+El secreto `CLOUDFLARE_API_TOKEN` está puesto desde el 10-sep y trae
+**Cloudflare Pages: Edit**. Cada publicación mide lo servido contra el commit,
+archivo por archivo, y deja el resultado como comentario del commit.
 
 ## Logotipos
 
@@ -50,10 +49,42 @@ reproduce `roster` con 0.01 de diferencia.
 
 El recorte va **pegado al aro**, sin aire: el aro es lo más alto del dibujo, así
 que puesto en la página con una altura fija sale del mismo tamaño en los siete
-—72 px en la tapa de cada ficha, 34 px en las tarjetas de la portada—. Es la
+—entre 52 y 72 px en la tapa de cada programa y entre 44 y 58 px en los
+mosaicos de la portada, según el ancho de la pantalla—. Es la
 pieza que los une, y por eso no se toca. El aire va en el CSS, nunca dentro del
 SVG. Los siete se arman con el mismo guion, `draw101` incluido: antes era un
 dibujo aparte y su aro no medía igual que el de los demás.
+
+## Diseño (10-sep, inspirado en apple.com)
+
+Mike pidió tomar apple.com como referencia. Lo que se tomó de ahí:
+
+- **Mosaicos.** Cada programa es un bloque a lo ancho de la pantalla: logotipo
+  como título, su frase, dos píldoras («Más información» y «Pedir
+  demostración»), su estado y su pantalla grande. Los tres que tocan el mueble
+  antes de fabricarlo van a todo lo ancho; los otros cuatro, de a dos, en damero
+  claro y oscuro.
+- **Píldoras.** Llena para la acción principal, de contorno para la otra.
+- **Barra de la app.** En cada programa, debajo de la barra de la suite, otra
+  con su logotipo y «Pedir demostración», que se queda arriba al bajar.
+- **Una pantalla por sección** en la página de cada programa, con su frase
+  encima y el fondo alterno, en vez de capturas apiladas.
+- **Ficha técnica** al final de «Qué trae», con etiquetas en letra normal, no en
+  mayúsculas.
+
+Reglas que no se rompen:
+
+- **Ninguna imagen se estira.** `img{height:auto}`: manda el ancho y la altura
+  sale de la proporción. El 10-sep el montaje de la portada salía de 390 × 1020
+  en el celular porque traía `height="1020"` en el HTML sin `height:auto`.
+- **En el celular se recorta, no se encoge.** El montaje y las pantallas de los
+  mosaicos se cortan con `object-fit:cover` (el montaje en cuadrado, los
+  mosaicos en 4:5), para que se lean. La pantalla completa está en la página de
+  cada programa.
+- **Dos azules.** `--azul` (#0080C1) es el de la marca, para logotipos y
+  acentos. Para letra y botones va `--azul-texto` (#0074ad): el de la marca da
+  4.3 de contraste sobre blanco y la norma pide 4.5. Sobre fondo oscuro los
+  logotipos pasan al `--claro` (#3AA3DC), que da 5.5.
 
 ## Identidad
 
@@ -65,9 +96,9 @@ Fira sin tocar el marcado. Ver `claude/tipografia-cifras-suite101.md`.
 
 - **Capturas de verdad de nest101, dash101 y peek101.** Hoy el escaparate las
   enseña con **maquetas**, no con capturas: ver más abajo.
-- **Dos capturas más de quote101.** Sólo tiene dos, y por eso su página es la
-  única que no llega al 70 % de imagen (se queda en 51 %). Las demás van entre
-  70 % y 81 %.
+- **Dos capturas más de quote101.** Sólo tiene dos, y es la página con menos
+  imagen de las siete. Las dos que hay traen un ícono roto en el buscador y los
+  filtros encimados: hay que volver a tomarlas.
 - La ficha de nest101 es la más corta de las siete: se armó con lo que consta
   en `nest101.json` y con lo que draw101 y quote101 documentan del `.t101x`,
   porque el repositorio `nest101` no tiene material de venta.
@@ -96,10 +127,13 @@ claro y con datos falsos (`conta-master/claude/venta/*/capturas/README.md`).
 ## La imagen manda
 
 Se pidió que la imagen ocupara el 70 % de la página. Medido con Chromium a
-1440 px, sumando el área de cada `img` y `svg` contra el área total de la
-página: portada 72 %, nest101 72 %, draw101 75 %, quell101 70 %, roster101
-81 %, dash101 72 %, peek101 72 % y **quote101 51 %**, que es la excepción y se
-arregla con dos capturas más. En conjunto, 72 %.
+1440 px, sumando el área visible de cada `img` y `svg` contra el área total de
+la página, el diseño del 10-sep por la mañana daba 72 % en conjunto.
+
+**El rediseño inspirado en apple.com lo bajó**, medido igual: portada 45 %,
+conjunto 44 % a 1440; a 390, 23 %. Apple alterna una pantalla grande con aire y
+titulares; el diseño anterior apilaba capturas. **Pendiente de que Mike diga
+cuál manda.**
 - Dominio propio. Cloudflare Pages lo conecta gratis cuando lo haya.
 - Precios: **no van en el sitio**. Decidido por Mike el 9-sep: la única
   llamada a la acción es pedir una demostración. Si alguien pide número, se
