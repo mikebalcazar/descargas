@@ -39,6 +39,10 @@ a{color:inherit}
 .barra nav a:hover{color:var(--azul-texto)}
 .subbarra{top:52px;z-index:19}
 .subbarra svg{height:24px;width:auto;display:block}
+/* Los logotipos salen de marca/logos.svg; el color lo pone esta regla. El azul
+   de la marca sobre la tinta da 3.2 de contraste; el claro, 5.5. */
+.logo{fill:var(--azul)}
+.oscuro .logo{fill:var(--claro)}
 .subbarra .chica{font-size:12.5px;padding:5px 13px}
 
 /* Botones: píldora llena para la acción principal, de contorno para la otra. */
@@ -71,9 +75,7 @@ a{color:inherit}
   max-width:28ch;margin:14px auto 0}
 .estado{font-size:14px;color:var(--gris);margin-top:12px}
 .oscuro .estado{color:var(--en-oscuro)}
-.asoma{max-width:1280px;margin:30px auto 0;padding-bottom:48px}
-.asoma img{width:100%;border-radius:14px;box-shadow:0 0 0 1px rgba(18,39,51,.07),0 22px 60px rgba(18,39,51,.16)}
-.oscuro .asoma img{box-shadow:0 0 0 1px rgba(255,255,255,.10)}
+.asoma{max-width:1180px;margin:34px auto 0;padding-bottom:56px}
 .pares{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;background:#fff}
 .pares .mosaico{padding-top:52px}
 .pares .nombre svg{height:clamp(36px,3.4vw,44px)}
@@ -81,11 +83,36 @@ a{color:inherit}
 .pares .asoma{margin-top:30px;padding-bottom:3vw}
 .pares .mosaico{padding-left:3vw;padding-right:3vw}
 @media(max-width:820px){.pares{grid-template-columns:1fr;padding:12px 0}}
-/* En el celular una pantalla de computadora entera queda de 200 px de alto y
-   no se lee. Como hace Apple, se recorta en vertical: se ve una parte, pero
-   grande. Se recorta, nunca se estira; la pantalla completa está en la página
-   de cada programa. */
-@media(max-width:640px){.asoma img{aspect-ratio:4/5;object-fit:cover;object-position:0 0}}
+/* La laptop. Hecha con CSS, sin imagen: la tapa con su marco oscuro y la
+   cámara, la captura dentro, y la base más ancha que la tapa, como una
+   MacBook vista de frente. La captura conserva su proporción. */
+.laptop{position:relative;max-width:1180px;margin:0 auto;padding:0 6.5%;
+  filter:drop-shadow(0 28px 36px rgba(18,39,51,.20))}
+.oscuro .laptop{filter:drop-shadow(0 28px 40px rgba(0,0,0,.45))}
+.pantalla{position:relative;background:#0c1116;border-radius:clamp(10px,1.6vw,20px) clamp(10px,1.6vw,20px) 4px 4px;
+  padding:clamp(6px,1.4%,16px) clamp(6px,1.4%,16px) clamp(8px,2%,22px);box-shadow:inset 0 0 0 1px #2b3842}
+.pantalla::before{content:"";position:absolute;top:clamp(2px,.55%,6px);left:50%;width:clamp(3px,.45%,6px);
+  aspect-ratio:1;border-radius:50%;background:#2a3640;transform:translateX(-50%)}
+.pantalla img{width:100%;border-radius:3px}
+.base{position:relative;height:clamp(8px,1.5vw,20px);margin:0 -6.9%;border-radius:0 0 45% 45%/0 0 100% 100%;
+  background:linear-gradient(#e4e8eb,#b7bfc6 60%,#98a1a9)}
+.base::before{content:"";position:absolute;top:0;left:50%;width:15%;height:45%;transform:translateX(-50%);
+  border-radius:0 0 10px 10px;background:linear-gradient(#aab2b9,#c9cfd4)}
+/* Las altas van sueltas: angostas y con esquina redonda. */
+.suelta{max-width:520px;margin:0 auto}
+.suelta img{border-radius:14px;box-shadow:0 0 0 1px rgba(18,39,51,.07),0 22px 60px rgba(18,39,51,.14)}
+/* En el celular la laptop se deja un poco más ancha que la pantalla: la tapa
+   se ve entera y sólo se cortan las puntas de la base, así se lee mejor y
+   sigue viéndose como laptop. Nunca se estira. */
+@media(max-width:640px){.mosaico .laptop,.principal .laptop,.vista .laptop{width:114%;max-width:none;margin-left:-7%}}
+
+/* Movimiento: sólo si movimiento.js corrió (pone .mueve) y el sistema no pide
+   menos movimiento. --p va de 0 a 1 mientras la pieza entra a la pantalla. */
+@media(prefers-reduced-motion:no-preference){
+  .mueve [data-mueve]{transform:translateY(calc((1 - var(--p,1)) * 64px)) scale(calc(.9 + .1 * var(--p,1)));
+    opacity:calc(.25 + .75 * var(--p,1));will-change:transform,opacity}
+  .mueve .laptop.enciende .pantalla img{opacity:clamp(0,calc((var(--p,1) - .4) * 1.7),1)}
+}
 
 /* Cómo encajan: es una secuencia de verdad (el orden en que el mueble pasa por
    el taller), por eso va unida por una línea. */
@@ -117,8 +144,7 @@ footer .firma{margin-top:24px;padding-top:14px;border-top:1px solid var(--linea)
 .tapa .nombre svg{height:clamp(52px,6vw,72px)}
 .tapa h1{font-size:clamp(36px,5.4vw,64px);line-height:1.06;letter-spacing:-.02em;font-weight:700;
   max-width:17ch;margin:20px auto 0}
-.principal{max-width:1280px;margin:48px auto 0;padding:0 3vw}
-.principal img{border-radius:14px;box-shadow:0 0 0 1px rgba(18,39,51,.07),0 26px 70px rgba(18,39,51,.18)}
+.principal{max-width:1280px;margin:48px auto 0;padding:0 3vw;overflow:hidden}
 .principal figcaption{font-size:14px;color:var(--gris);margin-top:14px}
 .intro{padding:64px 0 60px}
 .intro p{font-size:clamp(21px,2.3vw,27px);line-height:1.42;font-weight:600;color:var(--tinta)}
@@ -132,11 +158,10 @@ footer .firma{margin-top:24px;padding-top:14px;border-top:1px solid var(--linea)
 @media(max-width:600px){.ventajas{grid-template-columns:1fr;gap:30px}}
 /* Una pantalla por sección, grande, con su frase encima: así recorre Apple
    una página de producto. Fondo alterno para que se sienta el paso. */
-.vista{text-align:center;padding:56px 3vw 56px}
+.vista{text-align:center;padding:56px 3vw 64px;overflow:hidden}
 .vista.nube{background:var(--nube)}
 .vista h2{font-size:clamp(24px,3vw,38px);line-height:1.15;letter-spacing:-.015em;font-weight:700;max-width:26ch;margin:0 auto}
-.vista img{max-width:1280px;width:100%;margin:28px auto 0;border-radius:14px;
-  box-shadow:0 0 0 1px rgba(18,39,51,.07),0 22px 60px rgba(18,39,51,.14)}
+.vista .laptop,.vista .suelta{margin-top:30px}
 .funciones{display:grid;grid-template-columns:repeat(3,1fr);gap:0 36px;margin-top:44px}
 .funciones div{border-top:1px solid var(--linea);padding:14px 0 16px;font-size:15px;color:var(--gris);line-height:1.45}
 .funciones b{display:block;color:var(--tinta);font-size:16px;margin-bottom:2px}
