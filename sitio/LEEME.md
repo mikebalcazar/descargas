@@ -71,16 +71,28 @@ Mike pidió tomar apple.com como referencia. Lo que se tomó de ahí:
   encima y el fondo alterno, en vez de capturas apiladas.
 - **Ficha técnica** al final de «Qué trae», con etiquetas en letra normal, no en
   mayúsculas.
+- **Laptop.** Las capturas de computadora van montadas en una laptop hecha con
+  CSS, sin imagen: tapa con marco oscuro y cámara, la captura dentro con su
+  proporción, y la base más ancha. Las capturas más altas que anchas van sueltas
+  y angostas. Lo decide `equipo()` en el guion, con la medida del PNG.
+- **Movimiento al bajar** (`movimiento.js`, lo escribe el guion). Cada laptop
+  sube y crece un poco al entrar a la pantalla; la primera de la portada, y la
+  principal de cada programa, además enciende la pantalla. Es el único gesto
+  grande. Se probó levantar la tapa y se quitó: de frente, la tapa inclinada se
+  veía más grande en vez de cerrada. Si el sistema pide menos movimiento no se
+  mueve nada, y sin JavaScript todo se ve quieto y completo.
+- **Logotipos en un solo archivo**, `marca/logos.svg`, que arma el guion a partir
+  de `marca/<app>.svg`. Las páginas los llaman con `<use>` y el color lo pone el
+  CSS. La portada bajó de 45 KB a 10 KB.
 
 Reglas que no se rompen:
 
 - **Ninguna imagen se estira.** `img{height:auto}`: manda el ancho y la altura
   sale de la proporción. El 10-sep el montaje de la portada salía de 390 × 1020
   en el celular porque traía `height="1020"` en el HTML sin `height:auto`.
-- **En el celular se recorta, no se encoge.** El montaje y las pantallas de los
-  mosaicos se cortan con `object-fit:cover` (el montaje en cuadrado, los
-  mosaicos en 4:5), para que se lean. La pantalla completa está en la página de
-  cada programa.
+- **En el celular.** El montaje de la portada se corta en cuadrado con
+  `object-fit:cover` para que se lea. Las laptops se dejan un poco más anchas que
+  la pantalla: la tapa se ve entera y sólo se cortan las puntas de la base.
 - **Dos azules.** `--azul` (#0080C1) es el de la marca, para logotipos y
   acentos. Para letra y botones va `--azul-texto` (#0074ad): el de la marca da
   4.3 de contraste sobre blanco y la norma pide 4.5. Sobre fondo oscuro los
