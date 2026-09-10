@@ -254,9 +254,12 @@ APPS = {
 # Orden en que se enseñan, el mismo que sigue el mueble por el taller.
 ORDEN = ['quote101','nest101','draw101','quell101','roster101','dash101','peek101']
 
-CSS = """
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--azul:#0080C1;--claro:#3AA3DC;--tinta:#122733;--gris:#5b6b76;--linea:#dfe6ea}
+CSS = """*{box-sizing:border-box;margin:0;padding:0}
+/* Paleta. --azul es el de la marca (logotipos y acentos); --azul-texto es el
+   mismo tono un punto más hondo para letra y botones: el #0080C1 da 4.3 de
+   contraste sobre blanco y la norma pide 4.5 para texto normal. */
+:root{--azul:#0080C1;--azul-texto:#0074ad;--claro:#3AA3DC;--tinta:#122733;--gris:#5b6b76;
+  --nube:#f4f7f9;--linea:#dfe6ea;--en-oscuro:#a9c0ce}
 @font-face{font-family:"Cifras";src:url(../fuentes/fira-cifras-400.woff2) format("woff2");font-weight:400;
   font-display:swap;unicode-range:U+0030-0039,U+00B0,U+00B1,U+00D7,U+0025}
 @font-face{font-family:"Cifras";src:url(../fuentes/fira-cifras-600.woff2) format("woff2");font-weight:600 700;
@@ -265,87 +268,166 @@ CSS = """
 @font-face{font-family:"Raleway";src:url(../fuentes/raleway-600.woff2) format("woff2");font-weight:600;font-display:swap}
 @font-face{font-family:"Raleway";src:url(../fuentes/raleway-700.woff2) format("woff2");font-weight:700;font-display:swap}
 @font-face{font-family:"Sansation";src:url(../fuentes/sansation-700.woff2) format("woff2");font-weight:700;font-display:swap}
-html{scroll-behavior:smooth}
+html{-webkit-text-size-adjust:100%}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{font-family:"Cifras","Raleway",system-ui,sans-serif;font-variant-numeric:tabular-nums;
-  font-feature-settings:"tnum";color:var(--tinta);background:#fff;line-height:1.55;-webkit-font-smoothing:antialiased}
+  font-feature-settings:"tnum";color:var(--tinta);background:#fff;font-size:17px;line-height:1.5;
+  -webkit-font-smoothing:antialiased}
+/* Ninguna imagen se estira: manda el ancho y la altura sale de su proporción.
+   Antes la del montaje traía height="1020" en el HTML y width:100% en el CSS,
+   y en el celular se pintaba de 390 × 1020. */
+img{display:block;max-width:100%;height:auto}
 a{color:inherit}
-.env{max-width:1120px;margin:0 auto;padding:0 24px}
-.barra{position:sticky;top:0;z-index:9;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--linea)}
-.barra .env{display:flex;align-items:center;justify-content:space-between;height:64px}
-.marca{font-family:"Cifras","Sansation",sans-serif;font-size:20px;color:var(--azul);text-decoration:none;letter-spacing:.02em}
-.barra nav a{margin-left:22px;text-decoration:none;font-size:14px;font-weight:600;color:var(--gris)}
-.barra nav a:hover{color:var(--azul)}
-.hero{background:var(--tinta);color:#eaf2f7;padding:48px 0 40px}
-.hero h1{font-size:clamp(30px,5vw,50px);line-height:1.12;font-weight:700;letter-spacing:-.015em;max-width:16ch}
-.hero p{margin-top:20px;font-size:clamp(16px,2.2vw,19px);color:#a9c0ce;max-width:60ch}
-.hero .cifra{color:var(--claro);font-weight:700}
-.btn{display:inline-block;margin-top:28px;background:var(--azul);color:#fff;text-decoration:none;
-  padding:13px 24px;border-radius:6px;font-weight:700;font-size:15px}
-.btn:hover{background:var(--claro)}
-.btn.fantasma{background:transparent;border:1px solid rgba(255,255,255,.35);margin-left:10px}
-section{padding:28px 0}
-h2{font-size:clamp(21px,2.7vw,27px);letter-spacing:-.01em;margin-bottom:8px}
-.sub{color:var(--gris);max-width:62ch;margin-bottom:20px}
-.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(500px,100%),1fr));gap:22px}
-.tarjeta{border:1px solid var(--linea);border-radius:12px;padding:0;text-decoration:none;display:block;
-  transition:border-color .15s,transform .15s;background:#fff;overflow:hidden}
-.tarjeta:hover{border-color:var(--azul);transform:translateY(-2px)}
-.tarjeta img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top left;display:block;
-  border-bottom:1px solid var(--linea)}
-.tarjeta .letra{padding:16px 20px 18px}
-.tarjeta svg{height:34px;width:auto;display:block;margin-bottom:12px}
-.tarjeta p{font-size:15px;color:var(--gris);min-height:0;margin-bottom:10px}
-.sello{display:inline-block;margin-top:0;font-size:11px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--azul);background:#eaf5fb;padding:4px 9px;border-radius:99px}
-.flujo{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:14px;margin-top:8px}
-.paso{border-top:3px solid var(--azul);padding-top:12px;font-size:14px;color:var(--gris)}
-.paso b{display:block;font-family:"Cifras","Sansation",sans-serif;color:var(--tinta);font-size:15px;margin-bottom:3px}
-.cierre{background:#f4f7f9;border-top:1px solid var(--linea)}
-footer{padding:28px 0;font-size:13px;color:var(--gris);border-top:1px solid var(--linea)}
-footer .env{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-/* página de app */
-.tapa{padding:36px 0 28px}
-.tapa svg{height:72px;width:auto;display:block;margin-bottom:18px}
-.tapa .lema{font-size:clamp(21px,3.2vw,30px);font-weight:700;letter-spacing:-.01em;max-width:22ch;color:var(--azul)}
-.tapa .entrada{margin-top:14px;font-size:17px;color:#31434f;max-width:66ch}
-.tapa .btn{background:var(--azul)}
-figure{margin:0}
-figure img{width:100%;display:block}
-figcaption{font-size:13px;color:var(--gris);padding:9px 24px 0;max-width:1120px;margin:0 auto}
-.tira{background:var(--tinta);padding:0 0 6px}
-.tira figure{margin:0 0 6px}
-.tira figcaption{color:#9fb6c4;padding:10px 24px 14px}
-.galeria{background:var(--tinta);padding-bottom:6px}
-.galeria figure{margin-bottom:6px}
-.galeria figure img{border-radius:0}
+:focus-visible{outline:2px solid var(--azul-texto);outline-offset:3px;border-radius:6px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.env{max-width:1024px;margin:0 auto;padding:0 22px}
+.estrecho{max-width:760px}
 
-.dos{display:grid;grid-template-columns:1fr 1fr;gap:14px 46px}
-.tres{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 34px}
-.cuatro{display:grid;grid-template-columns:repeat(4,1fr);gap:0 26px}
-@media(max-width:900px){.cuatro{grid-template-columns:1fr 1fr}}
-@media(max-width:900px){.tres{grid-template-columns:1fr 1fr}}
-.ben b{display:block}
-.ben>div{padding-left:32px;position:relative;margin-bottom:13px;color:var(--gris);font-size:15px;line-height:1.45}
-.ben>div span{position:absolute;left:0;top:-2px;font-size:19px;font-weight:700;color:var(--azul)}
-.fn>div{border-top:1px solid var(--linea);padding:8px 0;font-size:14.5px;color:var(--gris);line-height:1.45}
-.fn b{color:var(--tinta)}
-.datos{background:var(--tinta);color:#dfe8ee;border-radius:10px;padding:20px 26px;display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px;font-size:14.5px}
-.datos b{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--claro);margin-bottom:4px}
-@media(max-width:720px){.dos{grid-template-columns:1fr}.hero{padding:46px 0 40px}section{padding:34px 0}
-  .tapa svg{height:52px}.tarjeta svg{height:30px}}
+/* Barras: la de la suite y, en cada app, la de la app debajo, como en Apple. */
+.barra,.subbarra{position:sticky;z-index:20;background:rgba(255,255,255,.84);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(18,39,51,.09)}
+.barra{top:0}
+.barra .env,.subbarra .env{display:flex;align-items:center;justify-content:space-between;height:52px}
+.marca{font-family:"Cifras","Sansation",sans-serif;font-size:19px;color:var(--azul);text-decoration:none}
+.barra nav{display:flex;gap:24px}
+.barra nav a{font-size:13px;text-decoration:none;color:rgba(18,39,51,.78)}
+.barra nav a:hover{color:var(--azul-texto)}
+.subbarra{top:52px;z-index:19}
+.subbarra svg{height:24px;width:auto;display:block}
+.subbarra .chica{font-size:12.5px;padding:5px 13px}
+
+/* Botones: píldora llena para la acción principal, de contorno para la otra. */
+.acciones{display:flex;flex-wrap:wrap;gap:12px 14px;justify-content:center;margin-top:24px}
+.btn{display:inline-block;padding:11px 22px;border-radius:980px;font-size:16px;font-weight:600;
+  text-decoration:none;background:var(--azul-texto);color:#fff;border:1px solid var(--azul-texto)}
+.btn:hover{background:#005f8e;border-color:#005f8e}
+.btn.contorno{background:transparent;color:var(--azul-texto)}
+.btn.contorno:hover{background:var(--azul-texto);color:#fff}
+.oscuro .btn.contorno{color:var(--claro);border-color:var(--claro)}
+.oscuro .btn.contorno:hover{background:var(--claro);color:var(--tinta)}
+
+/* Portada */
+.hero{background:var(--tinta);color:#fff;text-align:center;padding:72px 0 0;overflow:hidden}
+.hero h1{font-size:clamp(40px,6.4vw,76px);line-height:1.04;letter-spacing:-.022em;font-weight:700;
+  max-width:19ch;margin:0 auto}
+.baja{font-size:clamp(19px,2.2vw,25px);line-height:1.35;max-width:34ch;margin:18px auto 0;color:var(--gris)}
+.hero .baja,.oscuro .baja{color:var(--en-oscuro)}
+.montaje{max-width:1600px;margin:44px auto 0}
+/* En el celular el montaje entero queda de 200 px de alto y no se lee nada:
+   se recorta al centro, que es donde se enciman las tres pantallas. */
+@media(max-width:640px){.montaje img{aspect-ratio:1/1;object-fit:cover;object-position:56% 50%}}
+
+/* Mosaicos: cada programa, a todo lo ancho o de a dos, con su pantalla asomando por abajo. */
+.mosaico{text-align:center;padding:48px 3vw 0;overflow:hidden;background:#fff}
+.mosaico.nube{background:var(--nube)}
+.mosaico.oscuro{background:var(--tinta);color:#fff}
+.nombre svg{height:clamp(44px,4.4vw,58px);width:auto;margin:0 auto;display:block}
+.lema{font-size:clamp(28px,3.5vw,44px);line-height:1.1;letter-spacing:-.015em;font-weight:700;
+  max-width:28ch;margin:14px auto 0}
+.estado{font-size:14px;color:var(--gris);margin-top:12px}
+.oscuro .estado{color:var(--en-oscuro)}
+.asoma{max-width:1280px;margin:30px auto 0;padding-bottom:48px}
+.asoma img{width:100%;border-radius:14px;box-shadow:0 0 0 1px rgba(18,39,51,.07),0 22px 60px rgba(18,39,51,.16)}
+.oscuro .asoma img{box-shadow:0 0 0 1px rgba(255,255,255,.10)}
+.pares{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;background:#fff}
+.pares .mosaico{padding-top:52px}
+.pares .nombre svg{height:clamp(36px,3.4vw,44px)}
+.pares .lema{font-size:clamp(24px,2.5vw,32px);max-width:19ch}
+.pares .asoma{margin-top:30px;padding-bottom:3vw}
+.pares .mosaico{padding-left:3vw;padding-right:3vw}
+@media(max-width:820px){.pares{grid-template-columns:1fr;padding:12px 0}}
+/* En el celular una pantalla de computadora entera queda de 200 px de alto y
+   no se lee. Como hace Apple, se recorta en vertical: se ve una parte, pero
+   grande. Se recorta, nunca se estira; la pantalla completa está en la página
+   de cada programa. */
+@media(max-width:640px){.asoma img{aspect-ratio:4/5;object-fit:cover;object-position:0 0}}
+
+/* Cómo encajan: es una secuencia de verdad (el orden en que el mueble pasa por
+   el taller), por eso va unida por una línea. */
+.encajan{background:var(--nube);text-align:center;padding:80px 0}
+.grande{font-size:clamp(32px,4.6vw,56px);line-height:1.06;letter-spacing:-.02em;font-weight:700;
+  max-width:17ch;margin:0 auto}
+.cadena{display:grid;grid-template-columns:repeat(7,1fr);margin-top:56px;text-align:left}
+.eslabon{border-top:2px solid var(--azul);padding:16px 12px 0 0;font-size:14px;color:var(--gris);line-height:1.4}
+.eslabon svg{display:block;height:22px;width:auto;margin-bottom:8px}
+@media(max-width:820px){.cadena{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}
+  .eslabon{border-top:0;border-left:2px solid var(--azul);padding:0 0 22px 18px}}
+
+/* Cierre y pie */
+.cierre{text-align:center;padding:80px 0}
+.cierre.nube{background:var(--nube)}
+.cierre .baja{max-width:40ch}
+footer{background:var(--nube);border-top:1px solid var(--linea);font-size:12.5px;color:var(--gris);padding:30px 0 34px}
+footer .cols{display:flex;flex-wrap:wrap;gap:22px 64px}
+footer h3{font-size:12.5px;font-weight:700;color:var(--tinta);margin-bottom:8px}
+footer ul{list-style:none}
+footer li{margin:5px 0}
+footer a{text-decoration:none}
+footer a:hover{text-decoration:underline;color:var(--tinta)}
+footer .firma{margin-top:24px;padding-top:14px;border-top:1px solid var(--linea);display:flex;
+  flex-wrap:wrap;justify-content:space-between;gap:8px}
+
+/* Página de cada programa */
+.tapa{text-align:center;padding:72px 0 0}
+.tapa .nombre svg{height:clamp(52px,6vw,72px)}
+.tapa h1{font-size:clamp(36px,5.4vw,64px);line-height:1.06;letter-spacing:-.02em;font-weight:700;
+  max-width:17ch;margin:20px auto 0}
+.principal{max-width:1280px;margin:48px auto 0;padding:0 3vw}
+.principal img{border-radius:14px;box-shadow:0 0 0 1px rgba(18,39,51,.07),0 26px 70px rgba(18,39,51,.18)}
+.principal figcaption{font-size:14px;color:var(--gris);margin-top:14px}
+.intro{padding:64px 0 60px}
+.intro p{font-size:clamp(21px,2.3vw,27px);line-height:1.42;font-weight:600;color:var(--tinta)}
+.bloque{padding:72px 0}
+.bloque.nube{background:var(--nube)}
+.bloque h2{font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.018em;font-weight:700;text-align:center}
+.ventajas{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 36px;margin-top:52px}
+.ventajas b{display:block;font-size:20px;line-height:1.25;margin-bottom:8px}
+.ventajas p{color:var(--gris);font-size:16px;line-height:1.5}
+@media(max-width:900px){.ventajas{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.ventajas{grid-template-columns:1fr;gap:30px}}
+/* Una pantalla por sección, grande, con su frase encima: así recorre Apple
+   una página de producto. Fondo alterno para que se sienta el paso. */
+.vista{text-align:center;padding:56px 3vw 56px}
+.vista.nube{background:var(--nube)}
+.vista h2{font-size:clamp(24px,3vw,38px);line-height:1.15;letter-spacing:-.015em;font-weight:700;max-width:26ch;margin:0 auto}
+.vista img{max-width:1280px;width:100%;margin:28px auto 0;border-radius:14px;
+  box-shadow:0 0 0 1px rgba(18,39,51,.07),0 22px 60px rgba(18,39,51,.14)}
+.funciones{display:grid;grid-template-columns:repeat(3,1fr);gap:0 36px;margin-top:44px}
+.funciones div{border-top:1px solid var(--linea);padding:14px 0 16px;font-size:15px;color:var(--gris);line-height:1.45}
+.funciones b{display:block;color:var(--tinta);font-size:16px;margin-bottom:2px}
+@media(max-width:900px){.funciones{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.funciones{grid-template-columns:1fr}}
+.ficha{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 30px;margin-top:56px;padding-top:26px;
+  border-top:1px solid var(--tinta)}
+.ficha span{display:block;font-size:13px;color:var(--gris);margin-bottom:4px}
+.ficha b{font-size:16px;font-weight:600;line-height:1.35}
+@media(max-width:760px){.ficha{grid-template-columns:1fr 1fr}}
+.nohace{margin-top:64px}
+.nohace h3{font-size:21px}
+.nohace p.nota{color:var(--gris);font-size:15px;margin-top:4px}
+.nohace .funciones{margin-top:18px;grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.nohace .funciones{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.nohace .funciones{grid-template-columns:1fr}}
+/* En el celular las dos píldoras caben lado a lado, como en Apple. */
+@media(max-width:600px){.hero .btn,.mosaico .btn{font-size:15px;padding:9px 16px}.acciones{gap:10px}}
+@media(max-width:600px){.hero,.tapa{padding-top:52px}.mosaico{padding-top:48px}
+  .intro,.bloque,.encajan,.cierre{padding:64px 0}.barra nav{gap:15px}.barra nav a{font-size:12.5px}}
 """
 
 def barra(pref=''):
     return f"""<header class="barra"><div class="env">
 <a class="marca" href="{pref}index.html">suite101</a>
-<nav><a href="{pref}index.html#apps">Programas</a><a href="{pref}index.html#flujo">Cómo encajan</a>
+<nav aria-label="Principal"><a href="{pref}index.html#programas">Programas</a><a href="{pref}index.html#encajan">Cómo encajan</a>
 <a href="mailto:{CORREO}">Contacto</a></nav></div></header>"""
 
-def pie():
-    return f"""<footer><div class="env"><span>Taller 101 · Suite 101 · Hecho en el taller, probado en obra</span>
-<a href="mailto:{CORREO}">{CORREO}</a></div></footer>"""
+def pie(pref=''):
+    enlaces = ''.join(f'<li><a href="{pref}app/{a}.html">{a}</a></li>' for a in ORDEN)
+    return f"""<footer><div class="env"><div class="cols">
+<div><h3>Programas</h3><ul>{enlaces}</ul></div>
+<div><h3>Contacto</h3><ul><li><a href="mailto:{CORREO}">{CORREO}</a></li>
+<li><a href="mailto:{CORREO}?subject=Demostración">Pedir una demostración</a></li></ul></div></div>
+<div class="firma"><span>Taller 101 · Suite 101 · Hecho en el taller, probado en obra</span></div></div></footer>"""
 
 def cabeza(titulo, desc, css='estilo.css'):
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8">
@@ -353,15 +435,33 @@ def cabeza(titulo, desc, css='estilo.css'):
 <title>{html.escape(titulo)}</title><meta name="description" content="{html.escape(desc)}">
 <link rel="stylesheet" href="{css}"></head><body>"""
 
-# ------------------------------------------------------------------ portada
-tarjetas = []
-for app in ORDEN:
+def nombre(app, d, etiqueta='div', en_oscuro=False):
+    # El logotipo es el título; el nombre en texto va oculto para lectores de pantalla.
+    svg = logo(app, d.get('vb'), d.get('color')).replace('<svg', '<svg aria-hidden="true"', 1)
+    if en_oscuro:
+        # El azul de la marca sobre la tinta da 3.2 de contraste; el claro, 5.5.
+        svg = svg.replace('#0080C1', '#3AA3DC')
+    return f'<{etiqueta} class="nombre"><span class="vh">{app}</span>{svg}</{etiqueta}>'
+
+def acciones(app, pref=''):
+    return (f'<div class="acciones"><a class="btn" href="{pref}app/{app}.html">Más información</a>'
+            f'<a class="btn contorno" href="mailto:{CORREO}?subject={app}">Pedir demostración</a></div>')
+
+def mosaico(app, fondo):
     d = APPS[app]
-    mini = d['img'][0][0] if d['img'] else None
-    tapa_img = f'<img src="img/{app}/{mini}" alt="{app} en uso" loading="lazy">' if mini else ''
-    tarjetas.append(f"""<a class="tarjeta" href="app/{app}.html">{tapa_img}<div class="letra">
-{logo(app, d.get('vb'), d.get('color'))}
-<p>{html.escape(d['corto'])}</p><span class="sello">{html.escape(d['estado'])}</span></div></a>""")
+    img = ''
+    if d['img']:
+        f, c = d['img'][0]
+        img = f'<div class="asoma"><img src="img/{app}/{f}" alt="{html.escape(c)}" loading="lazy"></div>'
+    return (f'<section class="mosaico {fondo}" aria-label="{app}">{nombre(app, d, "h2", fondo == "oscuro")}'
+            f'<p class="lema">{html.escape(d["lema"])}</p>{acciones(app)}'
+            f'<p class="estado">{html.escape(d["estado"])}</p>{img}</section>')
+
+# ------------------------------------------------------------------ portada
+# Tres a todo lo ancho —los que tocan el mueble antes de fabricarlo— y los
+# otros cuatro de a dos, en damero claro y oscuro, como la portada de Apple.
+anchos = [('quote101', ''), ('nest101', 'nube'), ('draw101', 'oscuro')]
+de_a_dos = [('quell101', 'nube'), ('roster101', 'oscuro'), ('dash101', 'oscuro'), ('peek101', 'nube')]
 
 pasos = [('quote101','Se cotiza el mueble, componente por componente.'),
          ('nest101','Se despieza: lista de corte y herrajes.'),
@@ -370,104 +470,99 @@ pasos = [('quote101','Se cotiza el mueble, componente por componente.'),
          ('roster101','La gente que la hace, con su expediente en regla.'),
          ('dash101','Las cuentas cierran solas.'),
          ('peek101','Y el cliente ve su proyecto y su estado de cuenta.')]
+eslabones = []
+for a, t in pasos:
+    svg = logo(a, APPS[a].get('vb'), APPS[a].get('color')).replace('<svg', f'<svg role="img" aria-label="{a}"', 1)
+    eslabones.append(f'<div class="eslabon">{svg}{html.escape(t)}</div>')
+cadena = ''.join(eslabones)
 
 portada = cabeza('Suite 101 — programas para taller de muebles',
                  'Siete programas para el taller que ya trabaja: cotización, despiece, planos, obra, personal, cuentas y cliente.') + f"""
 {barra()}
-<div class="hero"><div class="env">
+<main>
+<section class="hero">
+<div class="env">
 <h1>El taller entero, de la cotización a la entrega.</h1>
-<p>Suite 101 son <span class="cifra">siete</span> programas que se hablan entre ellos: cotizas, despiezas, dibujas,
-sigues la obra, llevas al personal, cierras las cuentas y le enseñas al cliente su proyecto. Cada uno funciona por su cuenta; juntos, el dato se captura
-<span class="cifra">una</span> vez.</p>
-<a class="btn" href="#apps">Ver los programas</a>
-<a class="btn fantasma" href="mailto:{CORREO}">Pedir una demostración</a>
-</div></div>
-<div class="tira"><figure><img src="img/portada.png" alt="Tres programas de Suite 101 en uso: la cotización, el tablero de cuentas y la lista de corte" width="2000" height="1020">
-<figcaption>quote101, dash101 y nest101 trabajando sobre el mismo proyecto.</figcaption></figure></div>
-
-<section id="apps"><div class="env">
-<h2>Los programas</h2>
-<p class="sub">Hechos en un taller que fabrica todos los días, no en un escritorio. Lo que nadie usaba, no se quedó.</p>
-<div class="rejilla">{''.join(tarjetas)}</div>
-</div></section>
-
-<section id="flujo" class="cierre"><div class="env">
-<h2>Cómo encajan</h2>
-<p class="sub">El mismo mueble recorre los siete programas sin volver a capturarse.</p>
-<div class="flujo">{''.join(f'<div class="paso"><b>{a}</b>{html.escape(t)}</div>' for a, t in pasos)}</div>
-</div></section>
-
-<div class="galeria">
-<figure><img src="img/roster101/07-panel-empresa.png" alt="El panel de expedientes de roster101" loading="lazy">
-<figcaption>roster101: quién tiene su expediente completo y a quién le falta qué.</figcaption></figure>
-<figure><img src="img/quell101/1-plano.png" alt="El plano de obra de quell101 con sus pines" loading="lazy">
-<figcaption>quell101: la obra sobre el plano, un pin por mueble.</figcaption></figure>
-<figure><img src="img/peek101/maqueta-estado-de-cuenta.png" alt="El estado de cuenta que ve el cliente en peek101" loading="lazy">
-<figcaption>peek101: lo que ve el cliente cuando quiere saber cómo va lo suyo.</figcaption></figure>
-<figure><img src="img/draw101/01-modelo-cocina.png" alt="Un alzado de cocina acotado en draw101" loading="lazy">
-<figcaption>draw101: el alzado acotado, con las capas del taller.</figcaption></figure>
-<figure><img src="img/nest101/maqueta-lista-de-corte.png" alt="La lista de corte de nest101" loading="lazy">
-<figcaption>nest101: el mueble convertido en lista de corte.</figcaption></figure>
-<figure><img src="img/dash101/maqueta-tablero.png" alt="El tablero de cuentas de dash101" loading="lazy">
-<figcaption>dash101: si el proyecto ya se pagó solo o todavía va perdiendo.</figcaption></figure>
+<p class="baja">Siete programas que se hablan entre ellos. Cada uno funciona por su cuenta; juntos, el dato se captura una vez.</p>
+<div class="acciones oscuro"><a class="btn" href="#programas">Ver los programas</a>
+<a class="btn contorno" href="mailto:{CORREO}?subject=Demostración">Pedir demostración</a></div>
 </div>
-<section><div class="env">
-<h2>¿Le sirve a tu taller?</h2>
-<p class="sub">Se instala por partes: se empieza por el programa que más duele y los demás entran después.
-Escríbenos y te enseñamos el que necesites, con datos de una obra de verdad.</p>
-<a class="btn" href="mailto:{CORREO}">Escríbenos</a>
+<div class="montaje"><img src="img/portada.png" alt="Tres programas de Suite 101 sobre el mismo proyecto: la cotización, el tablero de cuentas y la lista de corte" width="2000" height="1020"></div>
+</section>
+<div id="programas">
+{''.join(mosaico(a, f) for a, f in anchos)}
+<div class="pares">{''.join(mosaico(a, f) for a, f in de_a_dos)}</div>
+</div>
+<section id="encajan" class="encajan"><div class="env">
+<h2 class="grande">El mismo mueble recorre los siete programas.</h2>
+<p class="baja">Sin volver a capturarse.</p>
+<div class="cadena">{cadena}</div>
 </div></section>
+<section class="cierre"><div class="env">
+<h2 class="grande">¿Le sirve a tu taller?</h2>
+<p class="baja">Se instala por partes: se empieza por el programa que más duele y los demás entran después.
+Escríbenos y te enseñamos el que necesites, con datos de una obra de verdad.</p>
+<div class="acciones"><a class="btn" href="mailto:{CORREO}?subject=Demostración">Pedir una demostración</a></div>
+</div></section>
+</main>
 {pie()}</body></html>"""
 (S / 'index.html').write_text(portada)
 
 # --------------------------------------------------------- páginas por app
 for app, d in APPS.items():
-    ben = ''.join(f'<div><span>{i+1}</span><b>{html.escape(t)}</b>{html.escape(x)}</div>'
-                  for i, (t, x) in enumerate(d['ben']))
-    fn = ''.join(f'<div><b>{html.escape(t)}</b> · {html.escape(x)}</div>' for t, x in d['fn'])
-    dat = ''.join(f'<div><b>{html.escape(k)}</b>{html.escape(v)}</div>' for k, v in d['datos'])
-    def fig(f, c, cargar='lazy'):
-        return (f'<figure><img src="../img/{app}/{f}" alt="{html.escape(c)}" loading="{cargar}">'
-                f'<figcaption>{html.escape(c)}</figcaption></figure>')
-    # La primera va a todo lo ancho, en oscuro; las demás en galería de a dos.
-    # La imagen manda en la página: es lo que enseña la aplicación funcionando.
-    primera, galeria = '', ''
+    ven = ''.join(f'<div><b>{html.escape(t)}</b><p>{html.escape(x)}</p></div>' for t, x in d['ben'])
+    fn = ''.join(f'<div><b>{html.escape(t)}</b>{html.escape(x)}</div>' for t, x in d['fn'])
+    ficha = ''.join(f'<div><span>{html.escape(k)}</span><b>{html.escape(v)}</b></div>' for k, v in d['datos'])
+    principal, galeria = '', ''
     if d['img']:
         f0, c0 = d['img'][0]
-        primera = f'<div class="tira">{fig(f0, c0, "eager")}</div>\n'
-        resto = ''.join(fig(f, c) for f, c in d['img'][1:])
-        if resto:
-            galeria = f'<div class="galeria">{resto}</div>\n'
+        principal = (f'<figure class="principal"><img src="../img/{app}/{f0}" alt="{html.escape(c0)}">'
+                     f'<figcaption>{html.escape(c0)}</figcaption></figure>')
+        # Después de «Por qué sirve» (en nube) los fondos se alternan de uno en
+        # uno hasta el cierre, para que nunca queden dos iguales pegados.
+        galeria = ''.join(f'<section class="vista{" nube" if i % 2 else ""}"><h2>{html.escape(c)}</h2>'
+                          f'<img src="../img/{app}/{f}" alt="" loading="lazy"></section>'
+                          for i, (f, c) in enumerate(d['img'][1:]))
+    n_vistas = max(len(d['img']) - 1, 0)
+    trae_nube = n_vistas % 2 == 1          # si la última vista quedó en blanco, «Qué trae» va en nube
+    cierre_nube = not trae_nube
     # «Qué no hace» sólo donde se decidió decirlo. Vender lo que no existe sale caro.
     nohace = ''
     if d.get('no'):
         puntos = ''.join(f'<div>{html.escape(x)}</div>' for x in d['no'])
-        # Va pegado a «Qué trae», sin sección aparte: la misma información con
-        # menos alto, que en esta página lo que tiene que mandar es la imagen.
-        nohace = (f'<div style="height:26px"></div><h2>Qué no hace</h2>'
-                  f'<p class="sub">Se dice de una vez, porque vender lo que no existe sale caro.</p>'
-                  f'<div class="cuatro fn">{puntos}</div>')
+        nohace = (f'<div class="nohace"><h3>Qué no hace</h3>'
+                  f'<p class="nota">Se dice de una vez, porque vender lo que no existe sale caro.</p>'
+                  f'<div class="funciones">{puntos}</div></div>')
     pag = cabeza(f'{app} — Suite 101', d['corto'], css='../estilo.css') + f"""
 {barra('../')}
-<div class="tapa"><div class="env">
-{logo(app, d.get('vb'), d.get('color'))}
-<div class="lema">{html.escape(d['lema'])}</div>
-<p class="entrada">{html.escape(d['entrada'])}</p>
-<a class="btn" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a>
+<div class="subbarra"><div class="env">
+<a href="{app}.html" aria-label="{app}">{logo(app, d.get('vb'), d.get('color'))}</a>
+<a class="btn chica" href="mailto:{CORREO}?subject={app}">Pedir demostración</a>
 </div></div>
-
-{primera}
-<section class="cierre"><div class="env">
-<h2>Por qué sirve</h2><div class="dos ben">{ben}</div>
+<main>
+<section class="tapa"><div class="env">
+{nombre(app, d)}
+<h1>{html.escape(d['lema'])}</h1>
+<div class="acciones"><a class="btn" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a></div>
+<p class="estado">{html.escape(d['estado'])} · {html.escape(d['plataforma'])}</p>
+</div>{principal}</section>
+<section class="intro"><div class="env estrecho"><p>{html.escape(d['entrada'])}</p></div></section>
+<section class="bloque nube"><div class="env">
+<h2>Por qué sirve</h2><div class="ventajas">{ven}</div>
 </div></section>
 {galeria}
-
-<section><div class="env">
-<h2>Qué trae</h2><div class="tres fn">{fn}</div>
-<div style="height:24px"></div>
-<div class="datos">{dat}</div>
+<section class="bloque{' nube' if trae_nube else ''}"><div class="env">
+<h2>Qué trae</h2><div class="funciones">{fn}</div>
+<div class="ficha">{ficha}</div>
 {nohace}</div></section>
-{pie()}</body></html>"""
+<section class="cierre{' nube' if cierre_nube else ''}"><div class="env">
+<h2 class="grande">¿Le sirve a tu taller?</h2>
+<p class="baja">Te enseñamos {app} con datos de una obra de verdad.</p>
+<div class="acciones"><a class="btn" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a>
+<a class="btn contorno" href="../index.html#programas">Ver los siete programas</a></div>
+</div></section>
+</main>
+{pie('../')}</body></html>"""
     (S / 'app' / f'{app}.html').write_text(pag)
 
 (S / 'estilo.css').write_text(CSS)
