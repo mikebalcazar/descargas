@@ -184,8 +184,14 @@ def armar(palabra):
     partes.append(f'<path d="{_aro(inicio_aro)}"/>')
     partes.append(CIENTOUNO)
 
-    vx, vy = izq - 10, ARO_ARRIBA - 10
-    vw, vh = (ARO_DER + 10.09) - vx, (ARO_ABAJO + 10.49) - vy
+    # El recorte va pegado al aro, sin aire. El aro es lo más alto del dibujo
+    # —la palabra no le llega arriba ni con ascendentes, ni abajo con
+    # descendentes—, así que al recortar así el aro mide exactamente el alto
+    # del logotipo. Puesto en la página con una altura fija, el aro sale del
+    # mismo tamaño en los siete: es la pieza que los une. El aire se pone en
+    # el CSS, no aquí dentro.
+    vx, vy = izq, ARO_ARRIBA
+    vw, vh = ARO_DER - vx, ARO_ABAJO - vy
     cuerpo = '\n'.join(partes)
     return (f'<!-- {palabra}101: el logotipo de taller101 con la palabra cambiada.\n'
             f'     Lo arma sitio/herramientas/armar-logo.py; no se edita a mano.\n'

@@ -40,7 +40,6 @@ def logo(app, viewbox=None, color=None):
 
 APPS = {
  'roster101': dict(
-   vb='83.84 198.74 455 215',
    lema='El expediente laboral lo arma el propio trabajador, desde su celular.',
    corto='Expedientes del personal, capturados desde el celular.',
    estado='En producción', plataforma='Web · celular y computadora',
@@ -65,12 +64,12 @@ APPS = {
    img=[('07-panel-empresa.png','El panel de la empresa: quién está completo y a quién le falta qué'),
         ('09-celular.png','La captura, desde el celular del trabajador'),
         ('05-documentos.png','Documentos escaneados con la cámara'),
-        ('04-expediente-completo.png','El expediente completo, listo para el contador')],
+        ('04-expediente-completo.png','El expediente completo, listo para el contador'),
+        ('01-acceso-correo.png','Se entra con un código que llega al correo, sin contraseña')],
    datos=[('Versión','portal 0.10.0 · central 0.4.0'),('Plataforma','Web · celular y computadora'),
           ('Estado','En producción con el primer cliente'),('Modelo','Renta mensual por empresa')]),
 
  'quell101': dict(
-   vb='118 198 418 216', color='#0381c2',
    lema='La obra, mueble por mueble, sobre el plano.',
    corto='El avance de la obra, pin por pin, sobre el plano.',
    estado='En uso', plataforma='Web · Windows · Android en preparación',
@@ -100,7 +99,6 @@ APPS = {
           ('Estado','En uso, primera obra'),('Sin señal','Sí, lectura y escritura')]),
 
  'draw101': dict(
-   vb='-16 -12 980 465',
    lema='CAD 2D para taller de muebles y despachos: abre el DWG, dibuja, acota e imprime.',
    corto='CAD 2D que abre el DWG del arquitecto y saca el plano de fabricación.',
    estado='Uso interno · v1 en curso', plataforma='Windows · macOS en preparación',
@@ -124,7 +122,8 @@ APPS = {
    img=[('01-modelo-cocina.png','Alzado de cocina acotado, con las capas del taller'),
         ('04-hoja-pie-de-plano.png','La hoja con pie de plano, lista para imprimir'),
         ('03-galeria-rayado.png','La galería de achurados, con vista previa al momento'),
-        ('02-propiedades-en-vivo.png','Las propiedades del objeto, al momento')],
+        ('02-propiedades-en-vivo.png','Las propiedades del objeto, al momento'),
+        ('06-vista-previa.png','La vista previa antes de mandar a imprimir')],
    datos=[('Versión','0.20.1 · 9-sep-2026'),('Plataforma','Windows · macOS en preparación'),
           ('Estado','En uso interno, v1 comercial en curso'),('Entrega','Instalador con actualizador')]),
 
@@ -174,7 +173,11 @@ APPS = {
        ('Archivo .t101x','el puente hacia draw101 y quote101'),
        ('Cifras legibles','medidas, cantidades, precios y fechas con cifras de una sola altura'),
        ('Instalador de Windows','con actualizador')],
-   img=[],
+   img=[('maqueta-lista-de-corte.png','La lista de corte del mueble, pieza por pieza, con material y canto'),
+        ('maqueta-plano-acotado.png','El plano acotado del despiece, listo para imprimir'),
+        ('maqueta-herrajes.png','Los herrajes del proyecto, con lo que hay y lo que falta pedir'),
+        ('maqueta-ficha-mueble.png','La ficha del mueble, la que se lleva quien lo arma'),
+        ('maqueta-proyectos.png','Los proyectos del taller y en qué va el despiece de cada uno')],
    datos=[('Versión','0.15.6 · 8-sep-2026'),('Plataforma','Windows'),
           ('Estado','En producción'),('Entrega','Instalador con actualizador')]),
 
@@ -204,7 +207,12 @@ APPS = {
        'No hace contabilidad electrónica ni pólizas.',
        'No se conecta al banco: los movimientos se capturan a mano.',
        'No maneja inventario ni nómina.'],
-   img=[],
+   img=[('maqueta-tablero.png','El tablero: saldos, flujo a 52 semanas y el margen de cada proyecto'),
+        ('maqueta-movimientos.png','Los movimientos del mes, cada uno amarrado a su proyecto'),
+        ('maqueta-proyectos.png','Cada obra con lo cobrado, lo pagado y su margen'),
+        ('maqueta-gastos-fijos.png','Los gastos fijos y las cuentas que alimentan la proyección'),
+        ('maqueta-equipo.png','Quién entra y hasta dónde ve: se invita por correo, con puesto y alcance'),
+        ('maqueta-flujo.png','Las 52 semanas por delante, semana por semana, con el aviso de cuándo se va a cero')],
    datos=[('Versión','0.1.0'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción, uso interno'),('Alcance','Varios negocios en una cuenta')]),
 
@@ -233,7 +241,12 @@ APPS = {
        'No sirve para pedir cambios, autorizar diseños ni levantar aclaraciones: es solo de lectura.',
        'No manda avisos cuando algo avanza; el cliente entra a ver.',
        'No enseña facturas: los montos son los del control interno del taller.'],
-   img=[],
+   img=[('maqueta-estado-de-cuenta.png','Lo que ve el cliente: sus totales y la etapa de cada proyecto'),
+        ('maqueta-pagos.png','Sus muebles y cada pago recibido, con fecha y referencia'),
+        ('maqueta-proyecto.png','Un proyecto por dentro: monto, saldo y en qué etapa va cada mueble'),
+        ('maqueta-entrar.png','Se entra con el correo y un PIN de seis dígitos'),
+        ('maqueta-celular.png','En el teléfono del cliente, que es donde se consulta'),
+        ('maqueta-lista.png','Sus proyectos, con lo pagado y lo que resta de cada uno')],
    datos=[('Versión','v0 · 7-sep-2026'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción con clientes de prueba'),('Para entrar','Correo y PIN de seis dígitos')]),
 }
@@ -263,7 +276,7 @@ a{color:inherit}
 .marca{font-family:"Cifras","Sansation",sans-serif;font-size:20px;color:var(--azul);text-decoration:none;letter-spacing:.02em}
 .barra nav a{margin-left:22px;text-decoration:none;font-size:14px;font-weight:600;color:var(--gris)}
 .barra nav a:hover{color:var(--azul)}
-.hero{background:var(--tinta);color:#eaf2f7;padding:86px 0 78px}
+.hero{background:var(--tinta);color:#eaf2f7;padding:48px 0 40px}
 .hero h1{font-size:clamp(30px,5vw,50px);line-height:1.12;font-weight:700;letter-spacing:-.015em;max-width:16ch}
 .hero p{margin-top:20px;font-size:clamp(16px,2.2vw,19px);color:#a9c0ce;max-width:60ch}
 .hero .cifra{color:var(--claro);font-weight:700}
@@ -271,17 +284,19 @@ a{color:inherit}
   padding:13px 24px;border-radius:6px;font-weight:700;font-size:15px}
 .btn:hover{background:var(--claro)}
 .btn.fantasma{background:transparent;border:1px solid rgba(255,255,255,.35);margin-left:10px}
-section{padding:64px 0}
-h2{font-size:clamp(22px,3vw,30px);letter-spacing:-.01em;margin-bottom:10px}
-.sub{color:var(--gris);max-width:62ch;margin-bottom:32px}
-.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.tarjeta{border:1px solid var(--linea);border-radius:10px;padding:24px;text-decoration:none;display:block;
-  transition:border-color .15s,transform .15s;background:#fff}
+section{padding:28px 0}
+h2{font-size:clamp(21px,2.7vw,27px);letter-spacing:-.01em;margin-bottom:8px}
+.sub{color:var(--gris);max-width:62ch;margin-bottom:20px}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(500px,100%),1fr));gap:22px}
+.tarjeta{border:1px solid var(--linea);border-radius:12px;padding:0;text-decoration:none;display:block;
+  transition:border-color .15s,transform .15s;background:#fff;overflow:hidden}
 .tarjeta:hover{border-color:var(--azul);transform:translateY(-2px)}
-.tarjeta svg{height:26px;width:auto;display:block;margin-bottom:14px}
-.tarjeta p{font-size:15px;color:var(--gris);min-height:48px}
-.tarjeta.pronto{opacity:.62;pointer-events:none}
-.sello{display:inline-block;margin-top:14px;font-size:11px;font-weight:700;letter-spacing:.1em;
+.tarjeta img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top left;display:block;
+  border-bottom:1px solid var(--linea)}
+.tarjeta .letra{padding:16px 20px 18px}
+.tarjeta svg{height:34px;width:auto;display:block;margin-bottom:12px}
+.tarjeta p{font-size:15px;color:var(--gris);min-height:0;margin-bottom:10px}
+.sello{display:inline-block;margin-top:0;font-size:11px;font-weight:700;letter-spacing:.1em;
   text-transform:uppercase;color:var(--azul);background:#eaf5fb;padding:4px 9px;border-radius:99px}
 .flujo{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:14px;margin-top:8px}
 .paso{border-top:3px solid var(--azul);padding-top:12px;font-size:14px;color:var(--gris)}
@@ -290,24 +305,36 @@ h2{font-size:clamp(22px,3vw,30px);letter-spacing:-.01em;margin-bottom:10px}
 footer{padding:28px 0;font-size:13px;color:var(--gris);border-top:1px solid var(--linea)}
 footer .env{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 /* página de app */
-.tapa{padding:64px 0 44px;border-bottom:1px solid var(--linea)}
-.tapa svg{height:40px;width:auto;display:block;margin-bottom:22px}
+.tapa{padding:36px 0 28px}
+.tapa svg{height:72px;width:auto;display:block;margin-bottom:18px}
 .tapa .lema{font-size:clamp(21px,3.2vw,30px);font-weight:700;letter-spacing:-.01em;max-width:22ch;color:var(--azul)}
-.tapa .entrada{margin-top:18px;font-size:17px;color:#31434f;max-width:66ch}
+.tapa .entrada{margin-top:14px;font-size:17px;color:#31434f;max-width:66ch}
 .tapa .btn{background:var(--azul)}
-figure{margin:0 0 38px}
-figure img{width:100%;border:1px solid var(--linea);border-radius:8px;display:block}
-figcaption{font-size:13px;color:var(--gris);margin-top:9px}
-.dos{display:grid;grid-template-columns:1fr 1fr;gap:22px 46px}
+figure{margin:0}
+figure img{width:100%;display:block}
+figcaption{font-size:13px;color:var(--gris);padding:9px 24px 0;max-width:1120px;margin:0 auto}
+.tira{background:var(--tinta);padding:0 0 6px}
+.tira figure{margin:0 0 6px}
+.tira figcaption{color:#9fb6c4;padding:10px 24px 14px}
+.galeria{background:var(--tinta);padding-bottom:6px}
+.galeria figure{margin-bottom:6px}
+.galeria figure img{border-radius:0}
+
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:14px 46px}
+.tres{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 34px}
+.cuatro{display:grid;grid-template-columns:repeat(4,1fr);gap:0 26px}
+@media(max-width:900px){.cuatro{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.tres{grid-template-columns:1fr 1fr}}
 .ben b{display:block}
-.ben>div{padding-left:34px;position:relative;margin-bottom:18px;color:var(--gris);font-size:15px}
+.ben>div{padding-left:32px;position:relative;margin-bottom:13px;color:var(--gris);font-size:15px;line-height:1.45}
 .ben>div span{position:absolute;left:0;top:-2px;font-size:19px;font-weight:700;color:var(--azul)}
-.fn>div{border-top:1px solid var(--linea);padding:10px 0;font-size:14.5px;color:var(--gris)}
+.fn>div{border-top:1px solid var(--linea);padding:8px 0;font-size:14.5px;color:var(--gris);line-height:1.45}
 .fn b{color:var(--tinta)}
-.datos{background:var(--tinta);color:#dfe8ee;border-radius:10px;padding:26px 30px;display:grid;
+.datos{background:var(--tinta);color:#dfe8ee;border-radius:10px;padding:20px 26px;display:grid;
   grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px;font-size:14.5px}
 .datos b{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--claro);margin-bottom:4px}
-@media(max-width:720px){.dos{grid-template-columns:1fr}.hero{padding:60px 0 54px}section{padding:46px 0}}
+@media(max-width:720px){.dos{grid-template-columns:1fr}.hero{padding:46px 0 40px}section{padding:34px 0}
+  .tapa svg{height:52px}.tarjeta svg{height:30px}}
 """
 
 def barra(pref=''):
@@ -330,8 +357,11 @@ def cabeza(titulo, desc, css='estilo.css'):
 tarjetas = []
 for app in ORDEN:
     d = APPS[app]
-    tarjetas.append(f"""<a class="tarjeta" href="app/{app}.html">{logo(app, d.get('vb'), d.get('color'))}
-<p>{html.escape(d['corto'])}</p><span class="sello">{html.escape(d['estado'])}</span></a>""")
+    mini = d['img'][0][0] if d['img'] else None
+    tapa_img = f'<img src="img/{app}/{mini}" alt="{app} en uso" loading="lazy">' if mini else ''
+    tarjetas.append(f"""<a class="tarjeta" href="app/{app}.html">{tapa_img}<div class="letra">
+{logo(app, d.get('vb'), d.get('color'))}
+<p>{html.escape(d['corto'])}</p><span class="sello">{html.escape(d['estado'])}</span></div></a>""")
 
 pasos = [('quote101','Se cotiza el mueble, componente por componente.'),
          ('nest101','Se despieza: lista de corte y herrajes.'),
@@ -352,6 +382,8 @@ sigues la obra, llevas al personal, cierras las cuentas y le enseñas al cliente
 <a class="btn" href="#apps">Ver los programas</a>
 <a class="btn fantasma" href="mailto:{CORREO}">Pedir una demostración</a>
 </div></div>
+<div class="tira"><figure><img src="img/portada.png" alt="Tres programas de Suite 101 en uso: la cotización, el tablero de cuentas y la lista de corte" width="2000" height="1020">
+<figcaption>quote101, dash101 y nest101 trabajando sobre el mismo proyecto.</figcaption></figure></div>
 
 <section id="apps"><div class="env">
 <h2>Los programas</h2>
@@ -365,6 +397,20 @@ sigues la obra, llevas al personal, cierras las cuentas y le enseñas al cliente
 <div class="flujo">{''.join(f'<div class="paso"><b>{a}</b>{html.escape(t)}</div>' for a, t in pasos)}</div>
 </div></section>
 
+<div class="galeria">
+<figure><img src="img/roster101/07-panel-empresa.png" alt="El panel de expedientes de roster101" loading="lazy">
+<figcaption>roster101: quién tiene su expediente completo y a quién le falta qué.</figcaption></figure>
+<figure><img src="img/quell101/1-plano.png" alt="El plano de obra de quell101 con sus pines" loading="lazy">
+<figcaption>quell101: la obra sobre el plano, un pin por mueble.</figcaption></figure>
+<figure><img src="img/peek101/maqueta-estado-de-cuenta.png" alt="El estado de cuenta que ve el cliente en peek101" loading="lazy">
+<figcaption>peek101: lo que ve el cliente cuando quiere saber cómo va lo suyo.</figcaption></figure>
+<figure><img src="img/draw101/01-modelo-cocina.png" alt="Un alzado de cocina acotado en draw101" loading="lazy">
+<figcaption>draw101: el alzado acotado, con las capas del taller.</figcaption></figure>
+<figure><img src="img/nest101/maqueta-lista-de-corte.png" alt="La lista de corte de nest101" loading="lazy">
+<figcaption>nest101: el mueble convertido en lista de corte.</figcaption></figure>
+<figure><img src="img/dash101/maqueta-tablero.png" alt="El tablero de cuentas de dash101" loading="lazy">
+<figcaption>dash101: si el proyecto ya se pagó solo o todavía va perdiendo.</figcaption></figure>
+</div>
 <section><div class="env">
 <h2>¿Le sirve a tu taller?</h2>
 <p class="sub">Se instala por partes: se empieza por el programa que más duele y los demás entran después.
@@ -380,17 +426,27 @@ for app, d in APPS.items():
                   for i, (t, x) in enumerate(d['ben']))
     fn = ''.join(f'<div><b>{html.escape(t)}</b> · {html.escape(x)}</div>' for t, x in d['fn'])
     dat = ''.join(f'<div><b>{html.escape(k)}</b>{html.escape(v)}</div>' for k, v in d['datos'])
-    figs = ''.join(f'<figure><img src="../img/{app}/{f}" alt="{html.escape(c)}" loading="lazy">'
-                   f'<figcaption>{html.escape(c)}</figcaption></figure>' for f, c in d['img'])
-    # Sin capturas no se deja la sección vacía: se salta y ya.
-    vista = f'<section><div class="env">{figs}</div></section>\n' if figs else ''
+    def fig(f, c, cargar='lazy'):
+        return (f'<figure><img src="../img/{app}/{f}" alt="{html.escape(c)}" loading="{cargar}">'
+                f'<figcaption>{html.escape(c)}</figcaption></figure>')
+    # La primera va a todo lo ancho, en oscuro; las demás en galería de a dos.
+    # La imagen manda en la página: es lo que enseña la aplicación funcionando.
+    primera, galeria = '', ''
+    if d['img']:
+        f0, c0 = d['img'][0]
+        primera = f'<div class="tira">{fig(f0, c0, "eager")}</div>\n'
+        resto = ''.join(fig(f, c) for f, c in d['img'][1:])
+        if resto:
+            galeria = f'<div class="galeria">{resto}</div>\n'
     # «Qué no hace» sólo donde se decidió decirlo. Vender lo que no existe sale caro.
     nohace = ''
     if d.get('no'):
         puntos = ''.join(f'<div>{html.escape(x)}</div>' for x in d['no'])
-        nohace = (f'<section><div class="env"><h2>Qué no hace</h2>'
+        # Va pegado a «Qué trae», sin sección aparte: la misma información con
+        # menos alto, que en esta página lo que tiene que mandar es la imagen.
+        nohace = (f'<div style="height:26px"></div><h2>Qué no hace</h2>'
                   f'<p class="sub">Se dice de una vez, porque vender lo que no existe sale caro.</p>'
-                  f'<div class="dos fn">{puntos}</div></div></section>\n')
+                  f'<div class="cuatro fn">{puntos}</div>')
     pag = cabeza(f'{app} — Suite 101', d['corto'], css='../estilo.css') + f"""
 {barra('../')}
 <div class="tapa"><div class="env">
@@ -400,17 +456,18 @@ for app, d in APPS.items():
 <a class="btn" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a>
 </div></div>
 
-{vista}
+{primera}
 <section class="cierre"><div class="env">
 <h2>Por qué sirve</h2><div class="dos ben">{ben}</div>
 </div></section>
+{galeria}
 
 <section><div class="env">
-<h2>Qué trae</h2><div class="dos fn">{fn}</div>
-<div style="height:36px"></div>
+<h2>Qué trae</h2><div class="tres fn">{fn}</div>
+<div style="height:24px"></div>
 <div class="datos">{dat}</div>
-</div></section>
-{nohace}{pie()}</body></html>"""
+{nohace}</div></section>
+{pie()}</body></html>"""
     (S / 'app' / f'{app}.html').write_text(pag)
 
 (S / 'estilo.css').write_text(CSS)
