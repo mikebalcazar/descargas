@@ -72,6 +72,10 @@ dígitos caigan solos en Fira sin tocar el marcado. Ver
   quell101 en Android va «en preparación» (el APK no se ha probado en un
   teléfono); draw101 ya no promete fluidez al editar (es su objetivo 1
   abierto); y «el despiezador» se llama nest101.
+- **Las maquetas se quedan como están**, sin pie que las marque; Mike dice
+  cuándo se cambian por capturas. Se le planteó sabiendo que su texto
+  alternativo dice «en uso» y que la pantalla de peek101 todavía está por
+  construir. Es una decisión, no un descuido.
 
 ## Regla
 
