@@ -160,11 +160,11 @@ pathlib.Path(OUT / 'quell101-ficha.html').write_text(hoja(
      ('Punchlist', 'asignación, evidencia, cierre del supervisor'),
      ('Dudas', 'buzón con foto en la pregunta y en la respuesta'),
      ('Roles', 'dueño, supervisor, contratista y trabajador'),
-     ('Sin señal', 'apps de Android y Windows, además del sitio')],
+     ('Sin señal', 'en el sitio y en la app de Windows')],
     q / '1-plano.png', 'El plano de la obra: cada pin es un ítem y su color dice el tipo.',
     [(q / '2-item.png', 'Bitácora del ítem'), (q / '3-lista.png', 'La obra en lista'),
      (q / '4-dudas.png', 'Dudas desde la obra')],
-    [('Versión', 'Publicación continua'), ('Plataforma', 'Web · Android · Windows'),
+    [('Versión', 'Publicación continua'), ('Plataforma', 'Web · Windows · Android en preparación'),
      ('Estado', 'En uso, primera obra'), ('Sin señal', 'Sí, lectura y escritura')]))
 
 # ------------------------------------------------------------------ draw101
@@ -178,9 +178,9 @@ pathlib.Path(OUT / 'draw101-ficha.html').write_text(hoja(
     'propio e impresión a PDF a tamaño real. <b>Sin suscripción</b>: se instala y se usa.',
     [('Abre el DWG del cliente', 'R2000 a R2018. Lo que no se entiende se conserva y vuelve a salir intacto.'),
      ('Flujo de uso familiar','Los comandos de AutoCAD que ya usas, y un menú radial con clic derecho: lo de todos los días queda donde está el cursor.'),
-     ('Rápido con planos pesados','El plano pesado no se arrastra: repintar cuesta lo que cambió, no lo que mide el plano.'),
+     ('Aguanta el plano de obra','El plano del arquitecto entra entero; pan y zoom navegan sobre él sin redibujarlo.'),
      ('Del modelo al plano', 'Hojas con pie de plano, escala por lista y vista previa antes de imprimir.'),
-     ('Conectado al taller', 'Importa las cocinas del despiezador, las acota solas y las actualiza.'),
+     ('Conectado al taller', 'Importa las cocinas de nest101, las acota solas y las actualiza.'),
      ('Se mantiene solo', 'Avisa y se actualiza. Autoguardado y recuperación tras un cierre inesperado.')],
     [('Trazo completo', 'línea, arco, spline, texto, rayado con galería de patrones'),
      ('Edición con el ratón', 'recortar, extender, empalme, chaflán, arreglos, grips'),

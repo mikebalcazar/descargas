@@ -40,7 +40,7 @@ h2{font-size:clamp(22px,3vw,30px);letter-spacing:-.01em;margin-bottom:10px}
 .tarjeta.pronto{opacity:.62;pointer-events:none}
 .sello{display:inline-block;margin-top:14px;font-size:11px;font-weight:700;letter-spacing:.1em;
   text-transform:uppercase;color:var(--azul);background:#eaf5fb;padding:4px 9px;border-radius:99px}
-.flujo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:8px}
+.flujo{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:14px;margin-top:8px}
 .paso{border-top:3px solid var(--azul);padding-top:12px;font-size:14px;color:var(--gris)}
 .paso b{display:block;font-family:"Cifras","Sansation",sans-serif;color:var(--tinta);font-size:15px;margin-bottom:3px}
 .cierre{background:#f4f7f9;border-top:1px solid var(--linea)}

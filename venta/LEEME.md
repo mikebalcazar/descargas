@@ -62,6 +62,17 @@ dígitos caigan solos en Fira sin tocar el marcado. Ver
   comandos de AutoCAD que el dibujante ya trae, más el menú radial para lo
   frecuente.
 
+## Decisiones de Mike (10-sep-2026)
+
+- **La integración se vende como parte de la suite**: «el dato se captura una
+  vez» y «el mismo mueble recorre los siete programas» se quedan. Se preguntó
+  sabiendo que hoy draw101 y nest101 todavía no hablan con la base unificada
+  (el puente real es el `.t101x`, por archivo). No es un descuido que corregir:
+  es una decisión. Lo que sí se corrigió el mismo día: son **siete** programas;
+  quell101 en Android va «en preparación» (el APK no se ha probado en un
+  teléfono); draw101 ya no promete fluidez al editar (es su objetivo 1
+  abierto); y «el despiezador» se llama nest101.
+
 ## Regla
 
 Si cambia lo que hace la app, cambian `ficha.md`, `datos.md` y las capturas

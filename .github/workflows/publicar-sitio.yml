@@ -41,13 +41,65 @@ jobs:
       - name: Publicar
         run: npx --yes wrangler@4 pages deploy sitio --project-name suite101 --branch main --commit-dirty=true
 
+      # Mide lo publicado contra lo que trae el commit. El run 4 (10-sep)
+      # publicó verde y midió rojo. Dos causas probables, sin comprobar: la
+      # dirección tarda en existir la primera vez, y Pages puede contestar
+      # /app/x.html redirigiendo a /app/x. Por eso reintenta hasta 3 min, sigue
+      # redirecciones (-L) y apunta código y número de saltos de cada archivo.
       - name: Medir lo publicado
+        env:
+          SITIO: https://suite101.pages.dev
         run: |
-          sleep 10
-          for u in / /app/roster101.html /app/quell101.html /app/draw101.html /estilo.css; do
-            code=$(curl -s -o /tmp/p -w '%{http_code}' "https://suite101.pages.dev$u")
-            echo "$code  $u  $(wc -c </tmp/p) bytes"
-            [ "$code" = "200" ] || exit 1
-          done
-          echo "— fuentes propias, cero Google Fonts:"
-          ! grep -q "fonts.googleapis" /tmp/p && echo "ok"
+          set -u
+          : > /tmp/salida.txt
+          falla=0
+          medir() {  # ruta, archivo del repo con el que debe coincidir
+            for intento in $(seq 1 18); do
+              r=$(curl -s -L --max-time 20 -o /tmp/p -w '%{http_code} %{num_redirects}' "$SITIO$1")
+              igual="DISTINTO al commit"
+              cmp -s /tmp/p "$2" && igual="idéntico al commit"
+              [ "${r%% *}" = "200" ] && [ "$igual" = "idéntico al commit" ] && break
+              sleep 10
+            done
+            # Cloudflare puede reescribir el mailto: para protegerlo de robots.
+            # Eso cambia los bytes con el sitio bien; se anota y no tumba el run.
+            if [ "$igual" != "idéntico al commit" ] && grep -q 'cdn-cgi/l/email-protection' /tmp/p; then
+              igual="idéntico salvo el correo, que Cloudflare protege"
+            fi
+            echo "$r · intento $intento · $(wc -c </tmp/p) bytes · $igual · $1" | tee -a /tmp/salida.txt
+            [ "${r%% *}" = "200" ] || falla=1
+            [ "$igual" = "DISTINTO al commit" ] && falla=1
+            return 0
+          }
+          medir /                    sitio/index.html
+          medir /app/roster101.html  sitio/app/roster101.html
+          medir /app/quell101.html   sitio/app/quell101.html
+          medir /app/draw101.html    sitio/app/draw101.html
+          medir /estilo.css          sitio/estilo.css
+          medir /fuentes/fira-cifras-400.woff2 sitio/fuentes/fira-cifras-400.woff2
+          if curl -s -L "$SITIO/" "$SITIO/estilo.css" | grep -q fonts.googleapis; then
+            echo "Google Fonts: SÍ aparece (no debe)" | tee -a /tmp/salida.txt; falla=1
+          else
+            echo "Google Fonts: cero" | tee -a /tmp/salida.txt
+          fi
+          [ $falla = 0 ] && echo "RESULTADO: todo verde" | tee -a /tmp/salida.txt || echo "RESULTADO: ROJO" | tee -a /tmp/salida.txt
+          exit $falla
+
+      # El canal de vuelta: el chat no alcanza pages.dev ni el log de Actions,
+      # pero sí api.github.com. Mismo mecanismo que verificar.yml.
+      - name: Dejar el resultado en el commit
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -u
+          [ -f /tmp/salida.txt ] || echo "No hubo salida que reportar (falló antes de medir)." > /tmp/salida.txt
+          jq -Rs '{body: ("**Publicar sitio · medición**\n\n```\n" + .[-60000:] + "\n```")}' \
+            /tmp/salida.txt > /tmp/comentario.json
+          curl -sS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/commits/$SHA/comments" \
+            -d @/tmp/comentario.json -o /tmp/respuesta.json -w 'comentario: %{http_code}\n'
