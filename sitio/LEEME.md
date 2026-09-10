@@ -46,8 +46,14 @@ python3 sitio/herramientas/armar-logo.py quote nest dash peek
 La geometría se midió sobre `roster101.svg` y `quell101.svg`, que ya venían del
 original: Sansation Bold en trazos, apretón de -0.05 em, la palabra alineada a
 la derecha por su avance y el aro y el «101» en coordenadas fijas. El guion
-reproduce `roster` con 0.01 de diferencia. `draw101.svg` no sale de ahí: es un
-dibujo aparte, anterior.
+reproduce `roster` con 0.01 de diferencia.
+
+El recorte va **pegado al aro**, sin aire: el aro es lo más alto del dibujo, así
+que puesto en la página con una altura fija sale del mismo tamaño en los siete
+—72 px en la tapa de cada ficha, 34 px en las tarjetas de la portada—. Es la
+pieza que los une, y por eso no se toca. El aire va en el CSS, nunca dentro del
+SVG. Los siete se arman con el mismo guion, `draw101` incluido: antes era un
+dibujo aparte y su aro no medía igual que el de los demás.
 
 ## Identidad
 
@@ -57,14 +63,43 @@ Fira sin tocar el marcado. Ver `claude/tipografia-cifras-suite101.md`.
 
 ## Qué falta
 
-- Capturas de nest101, dash101 y peek101. Sus páginas ya están, pero sin
-  imagen: el repositorio de nest101 está vacío, y de dash101 y peek101 nadie ha
-  tomado capturas todavía (`conta-master/claude/venta/*/capturas/README.md`
-  dice cómo: 1600 px, tema claro, datos falsos). Mientras no lleguen, esas
-  páginas se arman sin la sección de imágenes; el guion la salta solo.
+- **Capturas de verdad de nest101, dash101 y peek101.** Hoy el escaparate las
+  enseña con **maquetas**, no con capturas: ver más abajo.
+- **Dos capturas más de quote101.** Sólo tiene dos, y por eso su página es la
+  única que no llega al 70 % de imagen (se queda en 51 %). Las demás van entre
+  70 % y 81 %.
 - La ficha de nest101 es la más corta de las siete: se armó con lo que consta
   en `nest101.json` y con lo que draw101 y quote101 documentan del `.t101x`,
   porque el repositorio `nest101` no tiene material de venta.
+
+## Maquetas, no capturas
+
+De nest101, dash101 y peek101 no hay captura y no se les puede tomar una: el
+repositorio de nest101 está vacío, y dash101 y peek101 piden cuenta y hoy sólo
+tienen datos de clientes de verdad. Para que el escaparate no saliera cojo se
+armaron **maquetas** con `sitio/herramientas/armar-maquetas.py`:
+
+```bash
+python3 sitio/herramientas/armar-maquetas.py
+```
+
+Son dibujos de la pantalla, hechos con la identidad de la suite y con datos
+inventados. **Ninguna enseña una función que no esté en la ficha de su
+aplicación**, pero no son la aplicación: son un cómo se vería. Se llaman
+`maqueta-*.png` para que se distingan de un vistazo.
+
+**Se van en cuanto haya capturas de verdad.** Se borran los `maqueta-*.png` de
+la carpeta, se ponen las capturas con su nombre y se corrige la lista `img=`
+de esa aplicación en `armar-sitio.py`. Las capturas se toman a 1600 px, tema
+claro y con datos falsos (`conta-master/claude/venta/*/capturas/README.md`).
+
+## La imagen manda
+
+Se pidió que la imagen ocupara el 70 % de la página. Medido con Chromium a
+1440 px, sumando el área de cada `img` y `svg` contra el área total de la
+página: portada 72 %, nest101 72 %, draw101 75 %, quell101 70 %, roster101
+81 %, dash101 72 %, peek101 72 % y **quote101 51 %**, que es la excepción y se
+arregla con dos capturas más. En conjunto, 72 %.
 - Dominio propio. Cloudflare Pages lo conecta gratis cuando lo haya.
 - Precios: **no van en el sitio**. Decidido por Mike el 9-sep: la única
   llamada a la acción es pedir una demostración. Si alguien pide número, se
