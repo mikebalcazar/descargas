@@ -254,6 +254,43 @@ APPS = {
 # Orden en que se enseñan, el mismo que sigue el mueble por el taller.
 ORDEN = ['quote101','nest101','draw101','quell101','roster101','dash101','peek101']
 
+# Los siete logotipos van en un solo archivo, marca/logos.svg, y cada página los
+# llama con <use>. Antes cada página traía el dibujo completo de cada logotipo
+# (la portada, catorce veces): 45 KB de trazos repetidos. El color lo pone el CSS
+# (fill), así que el mismo logotipo sale azul sobre claro y claro sobre oscuro.
+MEDIDA = {}
+simbolos = []
+for _app, _d in APPS.items():
+    _s = logo(_app, _d.get('vb'), _d.get('color'))
+    _vb = re.search(r'viewBox="([^"]*)"', _s).group(1).split()
+    MEDIDA[_app] = (_vb[2], _vb[3])
+    _dentro = _s[_s.index('>') + 1:_s.rindex('</svg>')].strip()
+    simbolos.append(f'<symbol id="{_app}" viewBox="{" ".join(_vb)}">\n{_dentro}\n</symbol>')
+(S / 'marca' / 'logos.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg">\n' + '\n'.join(simbolos) + '\n</svg>\n')
+
+def marca(app, pref='', nombre_visible=False):
+    w, h = MEDIDA[app]
+    rol = f'role="img" aria-label="{app}"' if nombre_visible else 'aria-hidden="true"'
+    return f'<svg class="logo" viewBox="0 0 {w} {h}" {rol}><use href="{pref}marca/logos.svg#{app}"/></svg>'
+
+def medida_png(ruta):
+    # Ancho y alto del PNG leídos de su cabecera, sin librerías.
+    with open(ruta, 'rb') as f:
+        cab = f.read(24)
+    return int.from_bytes(cab[16:20], 'big'), int.from_bytes(cab[20:24], 'big')
+
+def equipo(app, archivo, alt, pref='', perezosa=True, enciende=False):
+    # Las capturas de computadora van montadas en una laptop; las que son más
+    # altas que anchas (un expediente completo, por ejemplo) van sueltas y
+    # angostas, porque en una laptop quedarían como una tira.
+    w, h = medida_png(S / 'img' / app / archivo)
+    perez = ' loading="lazy"' if perezosa else ''
+    img = f'<img src="{pref}img/{app}/{archivo}" alt="{html.escape(alt)}" width="{w}" height="{h}"{perez}>'
+    if w / h < 1.2:
+        return f'<div class="suelta" data-mueve>{img}</div>'
+    return (f'<div class="laptop{" enciende" if enciende else ""}" data-mueve><div class="pantalla">{img}</div>'
+            f'<div class="base"></div></div>')
+
 CSS = """*{box-sizing:border-box;margin:0;padding:0}
 /* Paleta. --azul es el de la marca (logotipos y acentos); --azul-texto es el
    mismo tono un punto más hondo para letra y botones: el #0080C1 da 4.3 de
@@ -295,6 +332,10 @@ a{color:inherit}
 .barra nav a:hover{color:var(--azul-texto)}
 .subbarra{top:52px;z-index:19}
 .subbarra svg{height:24px;width:auto;display:block}
+/* Los logotipos salen de marca/logos.svg; el color lo pone esta regla. El azul
+   de la marca sobre la tinta da 3.2 de contraste; el claro, 5.5. */
+.logo{fill:var(--azul)}
+.oscuro .logo{fill:var(--claro)}
 .subbarra .chica{font-size:12.5px;padding:5px 13px}
 
 /* Botones: píldora llena para la acción principal, de contorno para la otra. */
@@ -327,9 +368,7 @@ a{color:inherit}
   max-width:28ch;margin:14px auto 0}
 .estado{font-size:14px;color:var(--gris);margin-top:12px}
 .oscuro .estado{color:var(--en-oscuro)}
-.asoma{max-width:1280px;margin:30px auto 0;padding-bottom:48px}
-.asoma img{width:100%;border-radius:14px;box-shadow:0 0 0 1px rgba(18,39,51,.07),0 22px 60px rgba(18,39,51,.16)}
-.oscuro .asoma img{box-shadow:0 0 0 1px rgba(255,255,255,.10)}
+.asoma{max-width:1180px;margin:34px auto 0;padding-bottom:56px}
 .pares{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;background:#fff}
 .pares .mosaico{padding-top:52px}
 .pares .nombre svg{height:clamp(36px,3.4vw,44px)}
@@ -337,11 +376,36 @@ a{color:inherit}
 .pares .asoma{margin-top:30px;padding-bottom:3vw}
 .pares .mosaico{padding-left:3vw;padding-right:3vw}
 @media(max-width:820px){.pares{grid-template-columns:1fr;padding:12px 0}}
-/* En el celular una pantalla de computadora entera queda de 200 px de alto y
-   no se lee. Como hace Apple, se recorta en vertical: se ve una parte, pero
-   grande. Se recorta, nunca se estira; la pantalla completa está en la página
-   de cada programa. */
-@media(max-width:640px){.asoma img{aspect-ratio:4/5;object-fit:cover;object-position:0 0}}
+/* La laptop. Hecha con CSS, sin imagen: la tapa con su marco oscuro y la
+   cámara, la captura dentro, y la base más ancha que la tapa, como una
+   MacBook vista de frente. La captura conserva su proporción. */
+.laptop{position:relative;max-width:1180px;margin:0 auto;padding:0 6.5%;
+  filter:drop-shadow(0 28px 36px rgba(18,39,51,.20))}
+.oscuro .laptop{filter:drop-shadow(0 28px 40px rgba(0,0,0,.45))}
+.pantalla{position:relative;background:#0c1116;border-radius:clamp(10px,1.6vw,20px) clamp(10px,1.6vw,20px) 4px 4px;
+  padding:clamp(6px,1.4%,16px) clamp(6px,1.4%,16px) clamp(8px,2%,22px);box-shadow:inset 0 0 0 1px #2b3842}
+.pantalla::before{content:"";position:absolute;top:clamp(2px,.55%,6px);left:50%;width:clamp(3px,.45%,6px);
+  aspect-ratio:1;border-radius:50%;background:#2a3640;transform:translateX(-50%)}
+.pantalla img{width:100%;border-radius:3px}
+.base{position:relative;height:clamp(8px,1.5vw,20px);margin:0 -6.9%;border-radius:0 0 45% 45%/0 0 100% 100%;
+  background:linear-gradient(#e4e8eb,#b7bfc6 60%,#98a1a9)}
+.base::before{content:"";position:absolute;top:0;left:50%;width:15%;height:45%;transform:translateX(-50%);
+  border-radius:0 0 10px 10px;background:linear-gradient(#aab2b9,#c9cfd4)}
+/* Las altas van sueltas: angostas y con esquina redonda. */
+.suelta{max-width:520px;margin:0 auto}
+.suelta img{border-radius:14px;box-shadow:0 0 0 1px rgba(18,39,51,.07),0 22px 60px rgba(18,39,51,.14)}
+/* En el celular la laptop se deja un poco más ancha que la pantalla: la tapa
+   se ve entera y sólo se cortan las puntas de la base, así se lee mejor y
+   sigue viéndose como laptop. Nunca se estira. */
+@media(max-width:640px){.mosaico .laptop,.principal .laptop,.vista .laptop{width:114%;max-width:none;margin-left:-7%}}
+
+/* Movimiento: sólo si movimiento.js corrió (pone .mueve) y el sistema no pide
+   menos movimiento. --p va de 0 a 1 mientras la pieza entra a la pantalla. */
+@media(prefers-reduced-motion:no-preference){
+  .mueve [data-mueve]{transform:translateY(calc((1 - var(--p,1)) * 64px)) scale(calc(.9 + .1 * var(--p,1)));
+    opacity:calc(.25 + .75 * var(--p,1));will-change:transform,opacity}
+  .mueve .laptop.enciende .pantalla img{opacity:clamp(0,calc((var(--p,1) - .4) * 1.7),1)}
+}
 
 /* Cómo encajan: es una secuencia de verdad (el orden en que el mueble pasa por
    el taller), por eso va unida por una línea. */
@@ -373,8 +437,7 @@ footer .firma{margin-top:24px;padding-top:14px;border-top:1px solid var(--linea)
 .tapa .nombre svg{height:clamp(52px,6vw,72px)}
 .tapa h1{font-size:clamp(36px,5.4vw,64px);line-height:1.06;letter-spacing:-.02em;font-weight:700;
   max-width:17ch;margin:20px auto 0}
-.principal{max-width:1280px;margin:48px auto 0;padding:0 3vw}
-.principal img{border-radius:14px;box-shadow:0 0 0 1px rgba(18,39,51,.07),0 26px 70px rgba(18,39,51,.18)}
+.principal{max-width:1280px;margin:48px auto 0;padding:0 3vw;overflow:hidden}
 .principal figcaption{font-size:14px;color:var(--gris);margin-top:14px}
 .intro{padding:64px 0 60px}
 .intro p{font-size:clamp(21px,2.3vw,27px);line-height:1.42;font-weight:600;color:var(--tinta)}
@@ -388,11 +451,10 @@ footer .firma{margin-top:24px;padding-top:14px;border-top:1px solid var(--linea)
 @media(max-width:600px){.ventajas{grid-template-columns:1fr;gap:30px}}
 /* Una pantalla por sección, grande, con su frase encima: así recorre Apple
    una página de producto. Fondo alterno para que se sienta el paso. */
-.vista{text-align:center;padding:56px 3vw 56px}
+.vista{text-align:center;padding:56px 3vw 64px;overflow:hidden}
 .vista.nube{background:var(--nube)}
 .vista h2{font-size:clamp(24px,3vw,38px);line-height:1.15;letter-spacing:-.015em;font-weight:700;max-width:26ch;margin:0 auto}
-.vista img{max-width:1280px;width:100%;margin:28px auto 0;border-radius:14px;
-  box-shadow:0 0 0 1px rgba(18,39,51,.07),0 22px 60px rgba(18,39,51,.14)}
+.vista .laptop,.vista .suelta{margin-top:30px}
 .funciones{display:grid;grid-template-columns:repeat(3,1fr);gap:0 36px;margin-top:44px}
 .funciones div{border-top:1px solid var(--linea);padding:14px 0 16px;font-size:15px;color:var(--gris);line-height:1.45}
 .funciones b{display:block;color:var(--tinta);font-size:16px;margin-bottom:2px}
@@ -415,6 +477,41 @@ footer .firma{margin-top:24px;padding-top:14px;border-top:1px solid var(--linea)
   .intro,.bloque,.encajan,.cierre{padding:64px 0}.barra nav{gap:15px}.barra nav a{font-size:12.5px}}
 """
 
+# Movimiento al bajar, como en apple.com: cada equipo sube y crece un poco al
+# entrar a la pantalla, y en la laptop marcada con .enciende se prende la
+# pantalla. (Se probó levantar la tapa: de frente, la tapa inclinada se veía
+# más grande en vez de cerrada, así que se quitó.) El avance
+# va de 0 (asoma por abajo) a 1 (su borde de arriba ya pasó el 70 % de la
+# pantalla) y se le pasa al CSS en --p. Si el sistema pide menos movimiento no
+# se mueve nada, y sin JavaScript todo se ve quieto y completo.
+MOVIMIENTO = """(() => {
+  if (!('IntersectionObserver' in window)) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const piezas = [...document.querySelectorAll('[data-mueve]')];
+  if (!piezas.length) return;
+  const activas = new Set();
+  let pendiente = false;
+  const pinta = () => {
+    pendiente = false;
+    const alto = innerHeight;
+    for (const el of activas) {
+      const arriba = el.getBoundingClientRect().top;
+      const p = Math.min(1, Math.max(0, (alto - arriba) / (alto * 0.45)));
+      el.style.setProperty('--p', p.toFixed(3));
+    }
+  };
+  const pide = () => { if (!pendiente) { pendiente = true; requestAnimationFrame(pinta); } };
+  const vigia = new IntersectionObserver(entradas => {
+    for (const e of entradas) e.isIntersecting ? activas.add(e.target) : activas.delete(e.target);
+    pide();
+  }, { rootMargin: '25% 0px' });
+  piezas.forEach(el => vigia.observe(el));
+  document.documentElement.classList.add('mueve');
+  addEventListener('scroll', pide, { passive: true });
+  addEventListener('resize', pide);
+})();
+"""
+
 def barra(pref=''):
     return f"""<header class="barra"><div class="env">
 <a class="marca" href="{pref}index.html">suite101</a>
@@ -429,19 +526,15 @@ def pie(pref=''):
 <li><a href="mailto:{CORREO}?subject=Demostración">Pedir una demostración</a></li></ul></div></div>
 <div class="firma"><span>Taller 101 · Suite 101 · Hecho en el taller, probado en obra</span></div></div></footer>"""
 
-def cabeza(titulo, desc, css='estilo.css'):
+def cabeza(titulo, desc, pref=''):
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(titulo)}</title><meta name="description" content="{html.escape(desc)}">
-<link rel="stylesheet" href="{css}"></head><body>"""
+<link rel="stylesheet" href="{pref}estilo.css"><script src="{pref}movimiento.js" defer></script></head><body>"""
 
-def nombre(app, d, etiqueta='div', en_oscuro=False):
+def nombre(app, d, etiqueta='div', pref=''):
     # El logotipo es el título; el nombre en texto va oculto para lectores de pantalla.
-    svg = logo(app, d.get('vb'), d.get('color')).replace('<svg', '<svg aria-hidden="true"', 1)
-    if en_oscuro:
-        # El azul de la marca sobre la tinta da 3.2 de contraste; el claro, 5.5.
-        svg = svg.replace('#0080C1', '#3AA3DC')
-    return f'<{etiqueta} class="nombre"><span class="vh">{app}</span>{svg}</{etiqueta}>'
+    return f'<{etiqueta} class="nombre"><span class="vh">{app}</span>{marca(app, pref)}</{etiqueta}>'
 
 def acciones(app, pref=''):
     return (f'<div class="acciones"><a class="btn" href="{pref}app/{app}.html">Más información</a>'
@@ -452,8 +545,10 @@ def mosaico(app, fondo):
     img = ''
     if d['img']:
         f, c = d['img'][0]
-        img = f'<div class="asoma"><img src="img/{app}/{f}" alt="{html.escape(c)}" loading="lazy"></div>'
-    return (f'<section class="mosaico {fondo}" aria-label="{app}">{nombre(app, d, "h2", fondo == "oscuro")}'
+        # La primera laptop de la portada enciende su pantalla al llegar: es el
+        # único gesto grande del sitio. Las demás sólo suben y crecen un poco.
+        img = f'<div class="asoma">{equipo(app, f, c, enciende=(app == ORDEN[0]))}</div>'
+    return (f'<section class="mosaico {fondo}" aria-label="{app}">{nombre(app, d, "h2")}'
             f'<p class="lema">{html.escape(d["lema"])}</p>{acciones(app)}'
             f'<p class="estado">{html.escape(d["estado"])}</p>{img}</section>')
 
@@ -470,14 +565,11 @@ pasos = [('quote101','Se cotiza el mueble, componente por componente.'),
          ('roster101','La gente que la hace, con su expediente en regla.'),
          ('dash101','Las cuentas cierran solas.'),
          ('peek101','Y el cliente ve su proyecto y su estado de cuenta.')]
-eslabones = []
-for a, t in pasos:
-    svg = logo(a, APPS[a].get('vb'), APPS[a].get('color')).replace('<svg', f'<svg role="img" aria-label="{a}"', 1)
-    eslabones.append(f'<div class="eslabon">{svg}{html.escape(t)}</div>')
+eslabones = [f'<div class="eslabon">{marca(a, nombre_visible=True)}{html.escape(t)}</div>' for a, t in pasos]
 cadena = ''.join(eslabones)
 
 portada = cabeza('Suite 101 — programas para taller de muebles',
-                 'Siete programas para el taller que ya trabaja: cotización, despiece, planos, obra, personal, cuentas y cliente.') + f"""
+                 'Siete programas para el taller que ya trabaja: cotización, despiece, planos, obra, personal, cuentas y cliente.', '') + f"""
 {barra()}
 <main>
 <section class="hero">
@@ -516,12 +608,12 @@ for app, d in APPS.items():
     principal, galeria = '', ''
     if d['img']:
         f0, c0 = d['img'][0]
-        principal = (f'<figure class="principal"><img src="../img/{app}/{f0}" alt="{html.escape(c0)}">'
+        principal = (f'<figure class="principal">{equipo(app, f0, c0, "../", perezosa=False, enciende=True)}'
                      f'<figcaption>{html.escape(c0)}</figcaption></figure>')
         # Después de «Por qué sirve» (en nube) los fondos se alternan de uno en
         # uno hasta el cierre, para que nunca queden dos iguales pegados.
         galeria = ''.join(f'<section class="vista{" nube" if i % 2 else ""}"><h2>{html.escape(c)}</h2>'
-                          f'<img src="../img/{app}/{f}" alt="" loading="lazy"></section>'
+                          f'{equipo(app, f, "", "../")}</section>'
                           for i, (f, c) in enumerate(d['img'][1:]))
     n_vistas = max(len(d['img']) - 1, 0)
     trae_nube = n_vistas % 2 == 1          # si la última vista quedó en blanco, «Qué trae» va en nube
@@ -533,15 +625,15 @@ for app, d in APPS.items():
         nohace = (f'<div class="nohace"><h3>Qué no hace</h3>'
                   f'<p class="nota">Se dice de una vez, porque vender lo que no existe sale caro.</p>'
                   f'<div class="funciones">{puntos}</div></div>')
-    pag = cabeza(f'{app} — Suite 101', d['corto'], css='../estilo.css') + f"""
+    pag = cabeza(f'{app} — Suite 101', d['corto'], '../') + f"""
 {barra('../')}
 <div class="subbarra"><div class="env">
-<a href="{app}.html" aria-label="{app}">{logo(app, d.get('vb'), d.get('color'))}</a>
+<a href="{app}.html" aria-label="{app}">{marca(app, '../')}</a>
 <a class="btn chica" href="mailto:{CORREO}?subject={app}">Pedir demostración</a>
 </div></div>
 <main>
 <section class="tapa"><div class="env">
-{nombre(app, d)}
+{nombre(app, d, pref='../')}
 <h1>{html.escape(d['lema'])}</h1>
 <div class="acciones"><a class="btn" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a></div>
 <p class="estado">{html.escape(d['estado'])} · {html.escape(d['plataforma'])}</p>
@@ -566,4 +658,5 @@ for app, d in APPS.items():
     (S / 'app' / f'{app}.html').write_text(pag)
 
 (S / 'estilo.css').write_text(CSS)
+(S / 'movimiento.js').write_text(MOVIMIENTO)
 print('portada + ', len(APPS), 'páginas')
