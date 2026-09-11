@@ -260,7 +260,8 @@ ORDEN = ['quote101','nest101','draw101','quell101','roster101','dash101','peek10
 # (fill), así que el mismo logotipo sale azul sobre claro y claro sobre oscuro.
 MEDIDA = {}
 simbolos = []
-for _app, _d in APPS.items():
+# El de la suite va primero: aro relleno y «101» calado (lo arma armar-logo.py).
+for _app, _d in [('suite101', {})] + list(APPS.items()):
     _s = logo(_app, _d.get('vb'), _d.get('color'))
     _vb = re.search(r'viewBox="([^"]*)"', _s).group(1).split()
     MEDIDA[_app] = (_vb[2], _vb[3])
@@ -326,14 +327,18 @@ a{color:inherit}
   border-bottom:1px solid rgba(18,39,51,.09)}
 .barra{top:0}
 .barra .env,.subbarra .env{display:flex;align-items:center;justify-content:space-between;height:52px}
-.marca{font-family:"Cifras","Sansation",sans-serif;font-size:19px;color:var(--azul);text-decoration:none}
+/* La barra lleva el logotipo de la suite: aro relleno y «101» calado, que
+   deja ver el blanco de la barra. 26 px de alto, arriba del mínimo de 24. */
+.marca{display:block;line-height:0}
+.marca svg{height:26px;width:auto;display:block}
 .barra nav{display:flex;gap:24px}
 .barra nav a{font-size:13px;text-decoration:none;color:rgba(18,39,51,.78)}
 .barra nav a:hover{color:var(--azul-texto)}
 .subbarra{top:52px;z-index:19}
 .subbarra svg{height:24px;width:auto;display:block}
 /* Los logotipos salen de marca/logos.svg; el color lo pone esta regla. El azul
-   de la marca sobre la tinta da 3.2 de contraste; el claro, 5.5. */
+   de la marca sobre la tinta da 3.6 de contraste (pasa para un logotipo, pero
+   se ve apagado); el claro, 5.5. */
 .logo{fill:var(--azul)}
 .oscuro .logo{fill:var(--claro)}
 .subbarra .chica{font-size:12.5px;padding:5px 13px}
@@ -514,7 +519,7 @@ MOVIMIENTO = """(() => {
 
 def barra(pref=''):
     return f"""<header class="barra"><div class="env">
-<a class="marca" href="{pref}index.html">suite101</a>
+<a class="marca" href="{pref}index.html" aria-label="Suite 101, inicio">{marca('suite101', pref)}</a>
 <nav aria-label="Principal"><a href="{pref}index.html#programas">Programas</a><a href="{pref}index.html#encajan">Cómo encajan</a>
 <a href="mailto:{CORREO}">Contacto</a></nav></div></header>"""
 
