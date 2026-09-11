@@ -141,7 +141,7 @@ aplicación**, pero no son la aplicación: son un cómo se vería. Se llaman
 **Se van en cuanto haya capturas de verdad.** Se borran los `maqueta-*.png` de
 la carpeta, se ponen las capturas con su nombre y se corrige la lista `img=`
 de esa aplicación en `armar-sitio.py`. Las capturas se toman a 1600 px, tema
-claro y con datos falsos (`conta-master/claude/venta/*/capturas/README.md`).
+claro y con datos falsos (`dash101/claude/venta/*/capturas/README.md`).
 
 ## La imagen manda
 

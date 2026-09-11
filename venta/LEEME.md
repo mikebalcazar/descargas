@@ -91,5 +91,5 @@ promete lo que la app ya no hace es peor que no tener ficha.
 | quell101 | `bitacora-obra/claude/venta/` | ✅ |
 | draw101 | `venta/draw101/` | ✅ |
 | quote101 | `cotizador-t101/claude/venta/` | falta: capturas en tema claro |
-| dash101 · peek101 | `conta-master/claude/venta/` | pendiente |
+| dash101 · peek101 | `dash101/claude/venta/` | pendiente |
 | nest101 | `venta/nest101/` | pendiente |
