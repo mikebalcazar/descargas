@@ -17,6 +17,12 @@
 #     corta bajo los descendentes (q, p, g, j, y) con 8.01 de holgura a cada
 #     lado. Medido en la q de quell101: 8.01 exactos de los dos lados.
 #   · El aro y el «101» no se tocan nunca: van en coordenadas fijas.
+#
+# El de la suite (suite101) es el mismo dibujo con una diferencia, dicha por
+# Mike el 10-sep: el aro es un círculo relleno y el «101» va calado,
+# transparente. Se hace con un solo trazo y fill-rule evenodd: el disco con su
+# subrayado, menos el «0» y los dos «1», más el hueco del «0», que vuelve a
+# quedar relleno. Así el «101» deja ver lo que haya detrás.
 
 import pathlib, sys
 from fontTools.ttLib import TTFont
@@ -135,14 +141,19 @@ def _descendentes(puestos):
     return tramos
 
 
-def _aro(izq):
-    """El aro con su subrayado, que arranca en `izq`."""
+def _disco(izq):
+    """El borde de afuera del aro con su subrayado, que arranca en `izq`."""
     l1 = SUB_CODO - izq
     l2 = SUB_FIN - izq
     return (f'M431.49,{ARO_ARRIBA}c-53.63,0-97.26,43.63-97.26,97.26,0,20.28,'
             f'6.25,39.12,16.91,54.72h-{l1:.2f}v{SUB_ALTO}h{l2:.2f}'
             'c17.85,21.95,45.05,36.01,75.48,36.01,53.63,0,97.26-43.63,97.26-97.26'
-            's-43.63-97.26-97.26-97.26ZM431.49,396.74c-29.48,0-55.72-14.14-72.3-35.99'
+            's-43.63-97.26-97.26-97.26Z')
+
+
+def _aro(izq):
+    """El aro con su subrayado: el disco menos el hueco de adentro."""
+    return (_disco(izq) + 'M431.49,396.74c-29.48,0-55.72-14.14-72.3-35.99'
             'v-.02h-.01c-11.55-15.22-18.42-34.18-18.42-54.72,0-50.03,40.7-90.74,'
             '90.74-90.74s90.73,40.7,90.73,90.74-40.7,90.74-90.73,90.74Z')
 
@@ -155,6 +166,18 @@ CIENTOUNO = (
  '-7.2,30.63-21.61,30.63Z"/>\n'
  '<rect x="366.4" y="261.5" width="16.27" height="89.61"/>\n'
  '<rect x="479.98" y="261.19" width="16.27" height="89.61"/>')
+
+
+# El mismo «101» como trazos, para calarlo en el disco de la suite.
+CIENTOUNO_TRAZO = ('M431.81,262.73c-26.11,0-39.16,14.87-39.16,44.62s13.05,44.38,39.16,'
+                   '44.38,38.48-14.79,38.48-44.38-12.83-44.62-38.48-44.62ZM431.81,337.61c-14.85,'
+                   '0-22.28-10.21-22.28-30.63s7.43-30.14,22.28-30.14,21.61,10.05,21.61,30.14'
+                   '-7.2,30.63-21.61,30.63Z'
+                   'M366.4,261.5h16.27v89.61h-16.27Z'
+                   'M479.98,261.19h16.27v89.61h-16.27Z')
+
+# Las palabras que llevan el aro relleno y el «101» calado.
+SOLIDOS = {'suite'}
 
 
 def armar(palabra):
@@ -181,8 +204,11 @@ def armar(palabra):
     for a, b in trozos:
         partes.append(f'<rect x="{a:.2f}" y="{SUB_Y}" '
                       f'width="{b - a:.2f}" height="{SUB_ALTO}"/>')
-    partes.append(f'<path d="{_aro(inicio_aro)}"/>')
-    partes.append(CIENTOUNO)
+    if palabra in SOLIDOS:
+        partes.append(f'<path fill-rule="evenodd" d="{_disco(inicio_aro)}{CIENTOUNO_TRAZO}"/>')
+    else:
+        partes.append(f'<path d="{_aro(inicio_aro)}"/>')
+        partes.append(CIENTOUNO)
 
     # El recorte va pegado al aro, sin aire. El aro es lo más alto del dibujo
     # —la palabra no le llega arriba ni con ascendentes, ni abajo con
