@@ -55,6 +55,13 @@ pieza que los une, y por eso no se toca. El aire va en el CSS, nunca dentro del
 SVG. Los siete se arman con el mismo guion, `draw101` incluido: antes era un
 dibujo aparte y su aro no medía igual que el de los demás.
 
+**El de la suite, `suite101.svg`**, sale del mismo guion con una diferencia que
+dijo Mike el 10-sep: el aro es un círculo relleno y el «101» va calado,
+transparente. Es un solo trazo con `fill-rule="evenodd"`, así que el «101» deja
+ver el fondo de verdad, no se pinta de blanco. El aro lleno es sólo de la
+suite; los programas llevan el aro abierto. Desde el 11-sep va en la barra
+del sitio, a 26 px de alto, en lugar de la palabra escrita.
+
 ## Diseño (10-sep, inspirado en apple.com)
 
 Mike pidió tomar apple.com como referencia. Lo que se tomó de ahí:
