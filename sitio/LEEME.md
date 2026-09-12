@@ -99,11 +99,17 @@ Mike pidió tomar apple.com como referencia. Lo que se tomó de ahí:
   de la laptop y se quitó: de frente, la tapa inclinada se veía más grande en
   vez de cerrada.
 - **Pantalla de arranque** en nest101 y draw101, que son programas que se
-  instalan: al entrar se ve el arranque —logotipo sobre la tinta de la marca,
-  con su barra de carga— y al seguir bajando funde a la captura. **No es un
-  archivo del programa**: está dibujada con CSS a partir del logotipo, porque en
-  los repositorios no hay ninguna imagen de arranque. Si aparece la de verdad,
-  se cambia sin tocar nada más.
+  instalan: al entrar se ve el arranque y al seguir bajando funde a la captura.
+  - **draw101 es el de verdad** (12-sep). Su arranque no es una imagen: es
+    `electron/cargando.html` en su repositorio, un plano de cocina en planta,
+    en perspectiva, que el programa traza solo mientras arranca el motor de
+    Python. Aquí está recreado con los mismos trazos, las mismas cotas, el
+    mismo rótulo y los colores de su `core/config.py`; lo único que cambia es
+    que **se traza con el scroll y no con el reloj**. El fondo es claro porque
+    en el programa la ventana es transparente y se ve el escritorio.
+  - **nest101 todavía no.** Su arranque existe —`electron/splash.html`, 61 KB—
+    pero no se ha abierto; mientras tanto lleva el genérico: logotipo sobre la
+    tinta de la marca con una barra de carga. Se cambia en cuanto se lea.
 - **Planos de fondo con parallax.** Tres capas de trazos en azul claro
   —retícula, cotas y el alzado de un mueble— que se mueven a distinta velocidad
   con el scroll. Van dibujadas en el propio `estilo.css` como SVG en
