@@ -194,7 +194,7 @@ pathlib.Path(OUT / 'draw101-ficha.html').write_text(hoja(
     [(d / '04-hoja-pie-de-plano.png', 'Hoja con pie de plano'),
      (d / '03-galeria-rayado.png', 'Galería de rayados'),
      (d / '06-vista-previa.png', 'Vista previa de impresión')],
-    [('Versión', '0.20.1 · 9-sep-2026'), ('Plataforma', 'Windows · macOS en preparación'),
+    [('Versión', '0.20.2 · 12-sep-2026'), ('Plataforma', 'Windows · macOS en preparación'),
      ('Estado', 'En uso interno, v1 comercial en curso'), ('Entrega', 'Instalador con actualizador')]))
 
 print('listo')

@@ -1,0 +1,275 @@
+# Publica un instalador ya armado: crea la release, sube el .exe, mueve la
+# página fija «…-ultima» y mide lo que quedó publicado.
+#
+# POR QUÉ ESTE FLUJO EXISTE
+#
+# El instalador se arma en la sesión de Claude Code (Linux + wine) o en la
+# máquina de Mike, pero **una sesión de Claude Code no puede crear releases**:
+# la API contesta, palabra por palabra, «Creating, editing, or deleting
+# releases is not permitted for this session type». Lo que sí puede es empujar
+# ramas y disparar Actions. Así que el binario viaja por git —partido en
+# pedazos, porque git rechaza archivos de más de 100 MB— y aquí se vuelve a
+# juntar y se publica con el token del propio repositorio.
+#
+# CÓMO SE USA
+#
+#   1. Se arma el instalador y se mide su sha256 y su tamaño en bytes.
+#   2. Se hace una rama `claude/carga-<programa>-<version>` con:
+#        carga/meta.json        los datos de abajo
+#        carga/notas.md         las notas de la release, en el idioma del taller
+#        carga/partes/*.bin     el .exe partido (`split -b 40000000 -d -a 2
+#                               --additional-suffix=.bin ... parte-`)
+#   3. Se empuja esa rama. Este flujo arranca solo.
+#   4. Cuando sale verde, `limpiar-carga.yml` **borra la rama** sin que nadie se
+#      lo pida. Los pedazos quedan huérfanos y no viajan en un `git clone`:
+#      nadie carga con 120 MB de lastre. Lo hace un flujo aparte porque borrar
+#      la rama desde aquí dentro puede cancelar este mismo run.
+#
+# El sha256 de `meta.json` no es decorativo: si lo que se junta no da ese
+# número exacto, el flujo se cae **antes** de publicar nada. Es la única
+# defensa contra un pedazo corrupto o traspuesto, y contra publicar un binario
+# distinto del que se probó.
+#
+# carga/meta.json:
+#   programa, version, tag, nombre, archivo, bytes, sha256,
+#   ultima_tag, ultima_nombre
+#
+# El canal de vuelta es el comentario del commit (OPERAR.md §6): el chat no
+# alcanza el log de Actions, pero sí api.github.com. Ojo: ese commit vive en la
+# rama de carga, que se borra enseguida, así que el comentario **se lee al
+# terminar el run**, no una hora después. Lo que queda para siempre es la
+# release publicada, que es justo lo que el último paso vuelve a medir.
+
+name: Publicar instalador
+
+on:
+  push:
+    branches: ['claude/carga-*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publicar-instalador
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Juntar los pedazos y comprobar la huella
+        id: juntar
+        run: |
+          set -euo pipefail
+          exec > >(tee -a /tmp/salida.txt) 2>&1
+          test -f carga/meta.json || { echo "no hay carga/meta.json en esta rama"; exit 1; }
+          test -f carga/notas.md || { echo "no hay carga/notas.md en esta rama"; exit 1; }
+
+          for k in programa version tag nombre archivo bytes sha256 ultima_tag ultima_nombre; do
+            v=$(jq -r --arg k "$k" '.[$k] // empty' carga/meta.json)
+            [ -n "$v" ] || { echo "falta «$k» en carga/meta.json"; exit 1; }
+            echo "$k=$v" >> "$GITHUB_OUTPUT"
+          done
+
+          ARCHIVO=$(jq -r .archivo carga/meta.json)
+          ESPERADO_SHA=$(jq -r .sha256 carga/meta.json)
+          ESPERADO_BYTES=$(jq -r .bytes carga/meta.json)
+
+          n=$(ls carga/partes/*.bin | wc -l)
+          echo "pedazos: $n"
+          cat $(ls carga/partes/*.bin | sort) > "/tmp/$ARCHIVO"
+
+          SHA=$(sha256sum "/tmp/$ARCHIVO" | cut -d' ' -f1)
+          B=$(stat -c '%s' "/tmp/$ARCHIVO")
+          echo "juntado: $B bytes · sha256 $SHA"
+          echo "esperado: $ESPERADO_BYTES bytes · sha256 $ESPERADO_SHA"
+          if [ "$SHA" != "$ESPERADO_SHA" ] || [ "$B" != "$ESPERADO_BYTES" ]; then
+            echo "NO CUADRA: no se publica nada."
+            exit 1
+          fi
+          echo "cuadra: es el mismo binario que se armó y se probó ✓"
+
+      - name: Crear la release y subir el instalador
+        id: publicar
+        env:
+          TAG: ${{ steps.juntar.outputs.tag }}
+          NOMBRE: ${{ steps.juntar.outputs.nombre }}
+          ARCHIVO: ${{ steps.juntar.outputs.archivo }}
+          SHA256: ${{ steps.juntar.outputs.sha256 }}
+          BYTES: ${{ steps.juntar.outputs.bytes }}
+        run: |
+          set -euo pipefail
+          exec > >(tee -a /tmp/salida.txt) 2>&1
+          api () { curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$@"; }
+
+          MB=$(( (BYTES + 500000) / 1000000 ))
+          FECHA=$(date -u +%Y-%m-%d)
+          {
+            cat carga/notas.md
+            echo
+            echo "sha256 \`$SHA256\` · $MB MB · $FECHA"
+          } > /tmp/cuerpo.md
+          jq -Rs --arg t "$TAG" --arg n "$NOMBRE" \
+            '{tag_name:$t, target_commitish:"main", name:$n, body:., draft:false, prerelease:false}' \
+            /tmp/cuerpo.md > /tmp/release.json
+
+          # Idempotente: si ya existe (un reintento), se reusa y se actualiza.
+          ID=$(api "https://api.github.com/repos/$REPO/releases/tags/$TAG" | jq -r '.id // empty')
+          if [ -n "$ID" ]; then
+            echo "la release $TAG ya existía (id $ID): se actualiza"
+            api -X PATCH -H 'Content-Type: application/json' \
+              "https://api.github.com/repos/$REPO/releases/$ID" -d @/tmp/release.json > /dev/null
+          else
+            ID=$(api -X POST -H 'Content-Type: application/json' \
+              "https://api.github.com/repos/$REPO/releases" -d @/tmp/release.json | jq -r '.id')
+            [ "$ID" != "null" ] && [ -n "$ID" ] || { echo "no pude crear la release"; exit 1; }
+            echo "release $TAG creada (id $ID)"
+          fi
+          echo "id=$ID" >> "$GITHUB_OUTPUT"
+
+          subir () {  # id de la release, nombre del archivo
+            local rid="$1" nombre="$2"
+            # Si ya hay un adjunto con ese nombre se borra: GitHub no lo
+            # reemplaza, le pone «-1» al final y la liga del .json se rompe.
+            api "https://api.github.com/repos/$REPO/releases/$rid/assets" \
+              | jq -r --arg n "$nombre" '.[] | select(.name==$n) | .id' \
+              | while read -r aid; do
+                  echo "  quito el adjunto viejo $nombre (id $aid)"
+                  api -X DELETE "https://api.github.com/repos/$REPO/releases/assets/$aid" > /dev/null
+                done
+            curl -sS -X POST \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/octet-stream" \
+              --data-binary "@/tmp/$ARCHIVO" \
+              "https://uploads.github.com/repos/$REPO/releases/$rid/assets?name=$nombre" \
+              | jq -r '"  subido: " + (.name // "SIN NOMBRE") + " " + ((.size // 0) | tostring) + " bytes · " + (.state // "?")'
+          }
+          subir "$ID" "$ARCHIVO"
+
+      - name: Mover la página fija (…-ultima)
+        env:
+          ULTIMA_TAG: ${{ steps.juntar.outputs.ultima_tag }}
+          ULTIMA_NOMBRE: ${{ steps.juntar.outputs.ultima_nombre }}
+          VERSION: ${{ steps.juntar.outputs.version }}
+          ARCHIVO: ${{ steps.juntar.outputs.archivo }}
+          SHA256: ${{ steps.juntar.outputs.sha256 }}
+          BYTES: ${{ steps.juntar.outputs.bytes }}
+        run: |
+          set -euo pipefail
+          exec > >(tee -a /tmp/salida.txt) 2>&1
+          api () { curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$@"; }
+
+          MB=$(( (BYTES + 500000) / 1000000 ))
+          FECHA=$(date -u +%Y-%m-%d)
+          {
+            printf 'Siempre la última versión de %s. Hoy: **%s**.\n\n' \
+              "$(jq -r .programa carga/meta.json)" "$VERSION"
+            cat carga/notas.md
+            echo
+            echo "sha256 \`$SHA256\` · $MB MB · $FECHA"
+          } > /tmp/cuerpo-ultima.md
+          jq -Rs --arg t "$ULTIMA_TAG" --arg n "$ULTIMA_NOMBRE" \
+            '{tag_name:$t, target_commitish:"main", name:$n, body:., draft:false, prerelease:false}' \
+            /tmp/cuerpo-ultima.md > /tmp/ultima.json
+
+          IDU=$(api "https://api.github.com/repos/$REPO/releases/tags/$ULTIMA_TAG" | jq -r '.id // empty')
+          if [ -n "$IDU" ]; then
+            api -X PATCH -H 'Content-Type: application/json' \
+              "https://api.github.com/repos/$REPO/releases/$IDU" -d @/tmp/ultima.json > /dev/null
+            echo "página fija $ULTIMA_TAG actualizada (id $IDU)"
+          else
+            IDU=$(api -X POST -H 'Content-Type: application/json' \
+              "https://api.github.com/repos/$REPO/releases" -d @/tmp/ultima.json | jq -r '.id')
+            echo "página fija $ULTIMA_TAG creada (id $IDU)"
+          fi
+
+          # Aquí se borran TODOS los adjuntos, no sólo el del mismo nombre: el
+          # de la versión anterior se llama distinto y quedarse los dos deja la
+          # página fija ofreciendo dos instaladores, uno viejo.
+          api "https://api.github.com/repos/$REPO/releases/$IDU/assets" \
+            | jq -r '.[] | "\(.id) \(.name)"' \
+            | while read -r aid nom; do
+                echo "  quito el adjunto anterior $nom"
+                api -X DELETE "https://api.github.com/repos/$REPO/releases/assets/$aid" > /dev/null
+              done
+          curl -sS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary "@/tmp/$ARCHIVO" \
+            "https://uploads.github.com/repos/$REPO/releases/$IDU/assets?name=$ARCHIVO" \
+            | jq -r '"  subido: " + (.name // "SIN NOMBRE") + " " + ((.size // 0) | tostring) + " bytes"'
+
+      - name: Medir lo publicado (bajarlo de la liga pública)
+        id: medir
+        continue-on-error: true
+        env:
+          TAG: ${{ steps.juntar.outputs.tag }}
+          ULTIMA_TAG: ${{ steps.juntar.outputs.ultima_tag }}
+          ARCHIVO: ${{ steps.juntar.outputs.archivo }}
+          SHA256: ${{ steps.juntar.outputs.sha256 }}
+          BYTES: ${{ steps.juntar.outputs.bytes }}
+        run: |
+          set -u
+          exec > >(tee -a /tmp/salida.txt) 2>&1
+          falla=0
+          # Sin token y siguiendo redirecciones: exactamente como lo baja el
+          # actualizador de la app y como lo baja un cliente con el navegador.
+          bajar () {
+            local etiqueta="$1"
+            local url="https://github.com/$REPO/releases/download/$etiqueta/$ARCHIVO"
+            for i in $(seq 1 10); do
+              code=$(curl -s -L --max-time 300 -o /tmp/bajado -w '%{http_code}' "$url")
+              [ "$code" = "200" ] && break
+              sleep 6
+            done
+            local sha b
+            sha=$(sha256sum /tmp/bajado | cut -d' ' -f1); b=$(stat -c '%s' /tmp/bajado)
+            if [ "$code" = "200" ] && [ "$sha" = "$SHA256" ] && [ "$b" = "$BYTES" ]; then
+              echo "$etiqueta: $code · $b bytes · sha256 cuadra ✓"
+            else
+              echo "$etiqueta: $code · $b bytes · sha256 $sha — NO CUADRA (intento $i)"
+              falla=1
+            fi
+            rm -f /tmp/bajado
+          }
+          bajar "$TAG"
+          bajar "$ULTIMA_TAG"
+
+          # El manifiesto que lee el actualizador. En el commit de la rama de
+          # carga todavía puede decir la versión anterior; se anota tal cual y
+          # no tumba el run: lo que manda es lo que quede en `main`.
+          echo "--- manifiesto en main ---"
+          curl -s -L "https://raw.githubusercontent.com/$REPO/main/$(jq -r .programa carga/meta.json).json" \
+            | jq -r '.[] | .version, .windows.archivo, .windows.sha256, (.windows.bytes|tostring)' \
+            | sed 's/^/  /'
+          [ $falla = 0 ] && echo "RESULTADO: todo verde" || echo "RESULTADO: ROJO"
+          exit $falla
+
+      - name: Dejar lo medido en el commit
+        if: always()
+        env:
+          SHA: ${{ github.sha }}
+        run: |
+          set -u
+          [ -f /tmp/salida.txt ] || echo "No hubo salida que reportar (se cayó antes de medir)." > /tmp/salida.txt
+          jq -Rs '{body: ("**Publicar instalador · medición**\n\n```\n" + .[-60000:] + "\n```\n\n---\n_Generated by [Claude Code](https://claude.ai/code)_")}' \
+            /tmp/salida.txt > /tmp/comentario.json
+          curl -sS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Content-Type: application/json" \
+            "https://api.github.com/repos/$REPO/commits/$SHA/comments" \
+            -d @/tmp/comentario.json -o /tmp/respuesta.json -w 'comentario: %{http_code}\n'
+          head -c 200 /tmp/respuesta.json || true
+
+      - name: Que la medición mande
+        if: steps.medir.outcome != 'success'
+        run: exit 1

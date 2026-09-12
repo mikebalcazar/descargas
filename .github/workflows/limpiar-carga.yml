@@ -1,0 +1,83 @@
+# Borra la rama `claude/carga-*` en cuanto «Publicar instalador» sale verde.
+#
+# POR QUÉ NO LO HACE EL OTRO FLUJO
+#
+# Porque borrar la rama desde dentro del mismo run es borrarle el suelo: GitHub
+# puede cancelar un run cuya rama desaparece, y el run acabaría en «cancelled»
+# después de haber publicado bien. Un `workflow_run` corre aparte, ya terminado
+# el primero, y no se hace daño.
+#
+# POR QUÉ ALGUIEN TIENE QUE BORRARLA
+#
+# La rama de carga lleva el instalador partido en pedazos: 120 MB. Un `git
+# clone` normal se trae todas las ramas, así que dejarla viva le cuesta esos
+# 120 MB a cada quien que clone el repositorio. Borrada, los pedazos quedan
+# huérfanos y nadie los baja.
+#
+# Y no lo hace el chat: una sesión de Claude Code **no puede borrar ramas**. El
+# `git push --delete` se cae con «the remote end hung up unexpectedly» y la API
+# contesta «Write access to this GitHub API path is not permitted through this
+# proxy». Se midió el 12-sep, tres intentos de cada uno. Aquí dentro sí se
+# puede, con el token del propio repositorio.
+#
+# `workflow_dispatch` está para barrer una rama que quedó de antes: se le pasa
+# el nombre a mano.
+
+name: Limpiar carga
+
+on:
+  workflow_run:
+    workflows: ["Publicar instalador"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      rama:
+        description: 'rama claude/carga-* que hay que borrar'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  borrar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Borrar la rama de carga
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RAMA: ${{ github.event.inputs.rama || github.event.workflow_run.head_branch }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion || 'manual' }}
+        run: |
+          set -u
+          echo "rama: ${RAMA:-(ninguna)} · publicación: $CONCLUSION"
+
+          # Sólo se barre lo que es basura por diseño. Cualquier otro nombre se
+          # deja en paz: este flujo tiene permiso de escritura y una condición
+          # mal puesta aquí borra trabajo de alguien.
+          case "${RAMA:-}" in
+            claude/carga-*) ;;
+            *) echo "no es una rama de carga: no se toca"; exit 0 ;;
+          esac
+          if [ "$CONCLUSION" != "success" ] && [ "$CONCLUSION" != "manual" ]; then
+            echo "la publicación no salió verde ($CONCLUSION): la rama se queda para poder mirarla"
+            exit 0
+          fi
+
+          curl -sS -X DELETE \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/git/refs/heads/$RAMA" \
+            -o /tmp/r.json -w 'DELETE: %{http_code}\n'
+          head -c 300 /tmp/r.json || true
+          echo
+
+          # Se comprueba, no se supone (OPERAR.md §3).
+          code=$(curl -sS -o /dev/null -w '%{http_code}' \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/repos/$REPO/git/refs/heads/$RAMA")
+          if [ "$code" = "404" ]; then
+            echo "la rama $RAMA ya no existe ✓"
+          else
+            echo "la rama $RAMA sigue ahí (consulta: $code)"; exit 1
+          fi
