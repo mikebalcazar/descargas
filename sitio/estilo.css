@@ -87,9 +87,12 @@ a{color:inherit}
 .pares .asoma{margin-top:30px;padding-bottom:3vw}
 .pares .mosaico{padding-left:3vw;padding-right:3vw}
 @media(max-width:820px){.pares{grid-template-columns:1fr;padding:12px 0}}
-/* La laptop. Hecha con CSS, sin imagen: la tapa con su marco oscuro y la
-   cámara, la captura dentro, y la base más ancha que la tapa, como una
-   MacBook vista de frente. La captura conserva su proporción. */
+/* ---------------------------------------------------------------- equipos
+   El marco se dibuja con CSS, sin imagen. En el HTML todos nacen como laptop;
+   al cargar, movimiento.js le pone a cada uno el equipo que le toca (monitor
+   de escritorio con ratón para las apps de Windows, tableta para la de obra,
+   laptop para las de web). Si el JS no corre, se quedan como laptop, que es
+   lo que ya estaba publicado. */
 .laptop{position:relative;max-width:1180px;margin:0 auto;padding:0 6.5%;
   filter:drop-shadow(0 28px 36px rgba(18,39,51,.20))}
 .oscuro .laptop{filter:drop-shadow(0 28px 40px rgba(0,0,0,.45))}
@@ -102,21 +105,102 @@ a{color:inherit}
   background:linear-gradient(#e4e8eb,#b7bfc6 60%,#98a1a9)}
 .base::before{content:"";position:absolute;top:0;left:50%;width:15%;height:45%;transform:translateX(-50%);
   border-radius:0 0 10px 10px;background:linear-gradient(#aab2b9,#c9cfd4)}
+
+/* Monitor de escritorio: marco parejo, cuello y peana, y un ratón al lado.
+   Lo llevan nest101 y draw101, que se instalan en Windows. */
+.escritorio{padding:0 4%}
+.escritorio .pantalla{border-radius:clamp(6px,.9vw,12px);
+  padding:clamp(8px,1.7%,20px) clamp(8px,1.7%,20px) clamp(16px,3.2%,38px)}
+.escritorio .pantalla::after{content:"";position:absolute;left:50%;bottom:clamp(5px,1.05%,13px);
+  width:8%;height:clamp(2px,.32%,4px);border-radius:99px;background:#243039;transform:translateX(-50%)}
+.escritorio .base{height:clamp(26px,4.4vw,58px);margin:0;border-radius:0;background:none}
+.escritorio .base::before{width:clamp(34px,5.4%,70px);height:64%;top:0;border-radius:0 0 4px 4px;
+  background:linear-gradient(90deg,#aab2b9,#e0e5e9 45%,#9aa3ab)}
+.escritorio .base::after{content:"";position:absolute;left:50%;bottom:0;width:clamp(120px,20%,260px);
+  height:clamp(9px,1.5vw,18px);transform:translateX(-50%);border-radius:50%/70% 70% 100% 100%;
+  background:linear-gradient(#d7dce0,#aab3ba 60%,#8e979f)}
+.raton{position:absolute;right:2%;bottom:calc(clamp(9px,1.5vw,18px) - 2px);width:clamp(22px,2.6%,34px);
+  aspect-ratio:.62;border-radius:50%/38% 38% 62% 62%;background:linear-gradient(#f2f5f7,#cfd6db 65%,#aeb7be);
+  box-shadow:0 0 0 1px rgba(18,39,51,.10),0 6px 10px rgba(18,39,51,.18)}
+.raton::before{content:"";position:absolute;left:50%;top:9%;width:9%;height:26%;transform:translateX(-50%);
+  border-radius:99px;background:#c3cbd1}
+.oscuro .raton{background:linear-gradient(#40505c,#27333c 65%,#1b242b);box-shadow:0 0 0 1px rgba(255,255,255,.10)}
+.oscuro .escritorio .base::before{background:linear-gradient(90deg,#39464f,#5c6a74 45%,#333f47)}
+.oscuro .escritorio .base::after{background:linear-gradient(#44525c,#2c383f 60%,#1f292f)}
+
+/* Tableta: marco parejo y esquinas muy redondeadas, sin peana. La lleva
+   quell101, que se usa de pie en la obra. */
+.tableta{padding:0 22%}
+.tableta .pantalla{border-radius:clamp(12px,2.2vw,26px);
+  padding:clamp(10px,2.6%,26px) clamp(10px,2.6%,26px) clamp(10px,2.6%,26px)}
+.tableta .pantalla::before{top:clamp(4px,1%,11px)}
+.tableta .base{display:none}
+@media(max-width:900px){.tableta{padding:0 8%}}
+
 /* Las altas van sueltas: angostas y con esquina redonda. */
 .suelta{max-width:520px;margin:0 auto}
 .suelta img{border-radius:14px;box-shadow:0 0 0 1px rgba(18,39,51,.07),0 22px 60px rgba(18,39,51,.14)}
-/* En el celular la laptop se deja un poco más ancha que la pantalla: la tapa
-   se ve entera y sólo se cortan las puntas de la base, así se lee mejor y
-   sigue viéndose como laptop. Nunca se estira. */
-@media(max-width:640px){.mosaico .laptop,.principal .laptop,.vista .laptop{width:114%;max-width:none;margin-left:-7%}}
+/* En el celular el equipo se deja un poco más ancho que la pantalla: el marco
+   se ve entero y sólo se cortan las puntas de la peana. Nunca se estira. */
+@media(max-width:640px){.mosaico .laptop:not(.escritorio):not(.tableta),
+  .principal .laptop:not(.escritorio):not(.tableta),
+  .vista .laptop:not(.escritorio):not(.tableta){width:114%;max-width:none;margin-left:-7%}
+  .escritorio{padding:0 1%}.tableta{padding:0 6%}}
 
-/* Movimiento: sólo si movimiento.js corrió (pone .mueve) y el sistema no pide
-   menos movimiento. --p va de 0 a 1 mientras la pieza entra a la pantalla. */
+/* Pantalla de arranque. nest101 y draw101 son programas que se instalan: al
+   entrar a la pantalla se ve su arranque y, al seguir bajando, funde a la
+   captura. No es un archivo del programa: está dibujada aquí con el logotipo
+   y los colores de la marca. */
+.splash{position:absolute;inset:0;margin:clamp(8px,1.7%,20px);margin-bottom:clamp(16px,3.2%,38px);
+  border-radius:3px;background:var(--tinta);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:6%;overflow:hidden}
+.splash svg{width:34%;height:auto;fill:var(--claro)}
+.splash .carga{width:26%;height:3px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden}
+.splash .carga i{display:block;height:100%;width:100%;border-radius:99px;background:var(--claro);
+  transform-origin:left;transform:scaleX(var(--carga,1))}
+
+/* ------------------------------------------------------------- movimiento
+   Sólo si movimiento.js corrió (pone .mueve) y el sistema no pide menos
+   movimiento. --p va de 0 a 1 mientras la pieza entra a la pantalla, y cada
+   equipo entra distinto para que el recorrido no se sienta repetido. */
 @media(prefers-reduced-motion:no-preference){
-  .mueve [data-mueve]{transform:translateY(calc((1 - var(--p,1)) * 64px)) scale(calc(.9 + .1 * var(--p,1)));
-    opacity:calc(.25 + .75 * var(--p,1));will-change:transform,opacity}
-  .mueve .laptop.enciende .pantalla img{opacity:clamp(0,calc((var(--p,1) - .4) * 1.7),1)}
+  .mueve [data-mueve]{will-change:transform,opacity;opacity:calc(.3 + .7 * var(--p,1))}
+  .mueve .e-sube{transform:translateY(calc((1 - var(--p,1)) * 70px)) scale(calc(.92 + .08 * var(--p,1)))}
+  .mueve .e-izq{transform:translate(calc((1 - var(--p,1)) * -80px),calc((1 - var(--p,1)) * 26px))
+    rotate(calc((1 - var(--p,1)) * -2.5deg))}
+  .mueve .e-der{transform:translate(calc((1 - var(--p,1)) * 80px),calc((1 - var(--p,1)) * 26px))
+    rotate(calc((1 - var(--p,1)) * 2.5deg))}
+  .mueve .e-zoom{transform:scale(calc(.74 + .26 * var(--p,1)))}
+  .mueve .e-endereza{transform:perspective(1400px) rotateX(calc((1 - var(--p,1)) * 13deg))
+    translateY(calc((1 - var(--p,1)) * 30px));transform-origin:50% 100%}
+  /* La pantalla enciende, y donde hay arranque el splash se va y entra la captura. */
+  .mueve .enciende .pantalla img{opacity:clamp(0,calc((var(--p,1) - .4) * 1.7),1)}
+  .mueve .arranca .pantalla img{opacity:clamp(0,calc((var(--p,1) - .5) * 2.6),1)}
+  .mueve .arranca .splash{opacity:clamp(0,calc((.72 - var(--p,1)) * 4),1)}
+  /* El cursor del monitor cruza la pantalla mientras se baja. */
+  .mueve .escritorio .raton{transform:translateX(calc(var(--p,1) * -26px))}
 }
+
+/* ----------------------------------------------------- planos de fondo
+   Trazos de plano en azul claro, en tres capas que se mueven a distinta
+   velocidad con el scroll: retícula al fondo, cotas en medio y el alzado de
+   un mueble al frente. Los dibuja el CSS (SVG en la propia hoja, sin
+   archivos ni peticiones) y los coloca movimiento.js sección por sección. */
+.planos{position:absolute;inset:-14% 0;z-index:0;pointer-events:none;overflow:hidden;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cpath d='M0 .5H160M.5 0V160' fill='none' stroke='%230080C1' stroke-opacity='.20'/%3E%3C/svg%3E");
+  transform:translate3d(0,calc(var(--y,0) * 16px),0)}
+.planos::before,.planos::after{content:"";position:absolute;inset:0;background-repeat:repeat}
+.planos::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='460' height='320'%3E%3Cg fill='none' stroke='%230080C1' stroke-opacity='.30'%3E%3Cpath d='M60 60v-26M300 60v-26M60 47h240M54 41l6 6-6 6M306 41l-6 6 6 6'/%3E%3Cpath d='M392 96v180M379 96h26M379 276h26M386 90l6-6 6 6M386 282l6 6 6-6' stroke-opacity='.22'/%3E%3Cpath d='M60 120h150v96H60z' stroke-opacity='.24'/%3E%3Cpath d='M60 168h150M135 120v96' stroke-opacity='.30'/%3E%3C/g%3E%3C/svg%3E");
+  background-position:0 0;transform:translate3d(0,calc(var(--y,0) * 44px),0)}
+.planos::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='680' height='520'%3E%3Cg fill='none' stroke='%230080C1' stroke-opacity='.30'%3E%3Ccircle cx='150' cy='150' r='64'/%3E%3Ccircle cx='150' cy='150' r='30' stroke-opacity='.20'/%3E%3Cpath d='M150 62v176M62 150h176' stroke-opacity='.30' stroke-dasharray='10 7'/%3E%3Cpath d='M420 300h210v150H420z'/%3E%3Cpath d='M420 350h210M525 350v100M455 372h20M560 372h20' stroke-opacity='.22'/%3E%3Cpath d='M300 430a70 70 0 0 1 70-70' stroke-opacity='.24'/%3E%3C/g%3E%3C/svg%3E");
+  background-position:120px 40px;transform:translate3d(0,calc(var(--y,0) * 88px),0)}
+.oscuro .planos{filter:brightness(2.1)}
+/* El contenido va encima de los planos. El :not() importa: sin él, esta misma
+   regla le quitaba a .planos su position:absolute y el fondo se quedaba sin
+   alto, invisible. */
+.mosaico > *:not(.planos),.vista > *:not(.planos),.encajan > *:not(.planos),
+.cierre > *:not(.planos),.bloque > *:not(.planos),.intro > *:not(.planos){position:relative;z-index:1}
+.mosaico,.vista,.encajan,.cierre,.bloque,.intro{position:relative;overflow:hidden}
 
 /* Cómo encajan: es una secuencia de verdad (el orden en que el mueble pasa por
    el taller), por eso va unida por una línea. */
