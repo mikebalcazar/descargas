@@ -149,8 +149,7 @@ a{color:inherit}
 
 /* Pantalla de arranque. nest101 y draw101 son programas que se instalan: al
    entrar a la pantalla se ve su arranque y, al seguir bajando, funde a la
-   captura. No es un archivo del programa: está dibujada aquí con el logotipo
-   y los colores de la marca. */
+   captura. */
 .splash{position:absolute;inset:0;margin:clamp(8px,1.7%,20px);margin-bottom:clamp(16px,3.2%,38px);
   border-radius:3px;background:var(--tinta);display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:6%;overflow:hidden}
@@ -158,6 +157,32 @@ a{color:inherit}
 .splash .carga{width:26%;height:3px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden}
 .splash .carga i{display:block;height:100%;width:100%;border-radius:99px;background:var(--claro);
   transform-origin:left;transform:scaleX(var(--carga,1))}
+
+/* El de draw101 es el de verdad: su electron/cargando.html, que no es una
+   imagen sino un plano de cocina que el programa traza solo mientras arranca
+   el motor. Aquí se traza con el scroll en vez de con el reloj. Mismos trazos,
+   mismas cotas, mismo rótulo y los colores de core/config.py. El fondo es
+   claro porque en el programa la ventana es transparente y se ve el
+   escritorio. */
+.splash.plano{background:linear-gradient(#e9eff3,#dbe4ea);gap:0}
+.splash.plano .escena{position:absolute;inset:0;perspective:1100px;perspective-origin:50% 38%}
+.splash.plano .hoja3d{position:absolute;left:50%;top:50%;width:88%;aspect-ratio:620/420;
+  transform:translate(-50%,-52%) rotateX(56deg) rotateZ(-16deg) scale(.92);
+  filter:drop-shadow(0 5% 4% rgba(18,39,51,.28))}
+.splash.plano .hoja3d svg{width:100%;height:auto;fill:none;overflow:visible}
+.splash.plano .marca-arr{position:relative;text-align:center;padding:4% 8%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,255,255,.96) 45%,rgba(255,255,255,0) 100%)}
+.splash.plano .marca-arr svg{width:42%;margin:0 auto;fill:var(--azul)}
+.splash.plano .sub{margin-top:4%;font-size:clamp(7px,1.05%,13px);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--tinta);opacity:.75}
+.splash.plano .estado{margin-top:3%;font-size:clamp(7px,1.05%,13px);color:var(--azul);opacity:.9}
+/* Los trazos se van dibujando con el avance, escalonados como en el programa. */
+.mueve .splash.plano .traza{stroke-dasharray:1400}
+.mueve .splash.plano .t1{stroke-dashoffset:calc(1400 * (1 - clamp(0,var(--p,1) / .22,1)))}
+.mueve .splash.plano .t2{stroke-dashoffset:calc(1400 * (1 - clamp(0,(var(--p,1) - .12) / .22,1)))}
+.mueve .splash.plano .t3{stroke-dashoffset:calc(1400 * (1 - clamp(0,(var(--p,1) - .24) / .22,1)))}
+.mueve .splash.plano .t4{stroke-dashoffset:calc(1400 * (1 - clamp(0,(var(--p,1) - .34) / .22,1)))}
+.mueve .splash.plano .aparece{opacity:clamp(0,(var(--p,1) - .42) * 5,1)}
 
 /* ------------------------------------------------------------- movimiento
    Sólo si movimiento.js corrió (pone .mueve) y el sistema no pide menos
