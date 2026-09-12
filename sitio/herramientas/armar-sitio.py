@@ -297,6 +297,11 @@ def equipo(app, archivo, alt, pref='', perezosa=True, enciende=False):
 # archivo de logotipos, que es lo que sí se genera. Antes iban como cadenas
 # dentro de este archivo, y cualquier retoque de estilo obligaba a mover 56 KB.
 
+# Al pegar el enlace en WhatsApp o en un correo, el robot que arma la tarjeta
+# no ejecuta JavaScript y necesita la imagen con su dirección completa. Por eso
+# esta constante: es lo único que hay que cambiar el día que haya dominio propio.
+SITIO = 'https://suite101.pages.dev'
+
 def barra(pref=''):
     return f"""<header class="barra"><div class="env">
 <a class="marca" href="{pref}index.html" aria-label="Suite 101, inicio">{marca('suite101', pref)}</a>
@@ -311,10 +316,19 @@ def pie(pref=''):
 <li><a href="mailto:{CORREO}?subject=Demostración">Pedir una demostración</a></li></ul></div></div>
 <div class="firma"><span>Taller 101 · Suite 101 · Hecho en el taller, probado en obra</span></div></div></footer>"""
 
-def cabeza(titulo, desc, pref=''):
+def cabeza(titulo, desc, pref='', ruta='', img='img/portada.png'):
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(titulo)}</title><meta name="description" content="{html.escape(desc)}">
+<link rel="icon" href="{pref}icono.svg" type="image/svg+xml">
+<link rel="canonical" href="{SITIO}/{ruta}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Suite 101">
+<meta property="og:locale" content="es_MX">
+<meta property="og:title" content="{html.escape(titulo)}">
+<meta property="og:description" content="{html.escape(desc)}">
+<meta property="og:url" content="{SITIO}/{ruta}">
+<meta property="og:image" content="{SITIO}/{img}">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="{pref}estilo.css"><script src="{pref}movimiento.js" defer></script></head><body>"""
 
 def nombre(app, d, etiqueta='div', pref=''):
@@ -354,7 +368,7 @@ eslabones = [f'<div class="eslabon">{marca(a, nombre_visible=True)}{html.escape(
 cadena = ''.join(eslabones)
 
 portada = cabeza('Suite 101 — programas para taller de muebles',
-                 'Siete programas para el taller que ya trabaja: cotización, despiece, planos, obra, personal, cuentas y cliente.', '') + f"""
+                 'Siete programas para el taller que ya trabaja: cotización, despiece, planos, obra, personal, cuentas y cliente.') + f"""
 {barra()}
 <main>
 <section class="hero">
@@ -410,7 +424,8 @@ for app, d in APPS.items():
         nohace = (f'<div class="nohace"><h3>Qué no hace</h3>'
                   f'<p class="nota">Se dice de una vez, porque vender lo que no existe sale caro.</p>'
                   f'<div class="funciones">{puntos}</div></div>')
-    pag = cabeza(f'{app} — Suite 101', d['corto'], '../') + f"""
+    pag = cabeza(f'{app} — Suite 101', d['corto'], '../', f'app/{app}.html',
+                 f'img/{app}/{d["img"][0][0]}' if d['img'] else 'img/portada.png') + f"""
 {barra('../')}
 <div class="subbarra"><div class="env">
 <a href="{app}.html" aria-label="{app}">{marca(app, '../')}</a>
