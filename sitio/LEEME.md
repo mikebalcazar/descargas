@@ -19,6 +19,10 @@ a correr** desde la raíz del repositorio.
 
     python3 sitio/herramientas/armar-sitio.py
 
+**`estilo.css` y `movimiento.js` sí se editan directamente.** Antes vivían
+dentro del guion como cadenas, y retocar un color obligaba a mover 56 KB. El
+guion arma el HTML y `marca/logos.svg`; el estilo y el movimiento son suyos.
+
 El texto de cada programa está en el diccionario `APPS`. Cuando una app entrega
 su material en `claude/venta/` de su repositorio, se copian sus capturas a
 `sitio/img/<app>/`, su logotipo a `sitio/marca/<app>.svg`, se pasa la app de
@@ -78,16 +82,38 @@ Mike pidió tomar apple.com como referencia. Lo que se tomó de ahí:
   encima y el fondo alterno, en vez de capturas apiladas.
 - **Ficha técnica** al final de «Qué trae», con etiquetas en letra normal, no en
   mayúsculas.
-- **Laptop.** Las capturas de computadora van montadas en una laptop hecha con
-  CSS, sin imagen: tapa con marco oscuro y cámara, la captura dentro con su
-  proporción, y la base más ancha. Las capturas más altas que anchas van sueltas
-  y angostas. Lo decide `equipo()` en el guion, con la medida del PNG.
-- **Movimiento al bajar** (`movimiento.js`, lo escribe el guion). Cada laptop
-  sube y crece un poco al entrar a la pantalla; la primera de la portada, y la
-  principal de cada programa, además enciende la pantalla. Es el único gesto
-  grande. Se probó levantar la tapa y se quitó: de frente, la tapa inclinada se
-  veía más grande en vez de cerrada. Si el sistema pide menos movimiento no se
-  mueve nada, y sin JavaScript todo se ve quieto y completo.
+- **Tres equipos, dibujados con CSS, sin imagen** (11-sep). Cada programa sale
+  en el equipo donde se usa de verdad: **monitor de escritorio con ratón** para
+  nest101 y draw101, que se instalan en Windows; **tableta** para quell101, que
+  se usa de pie en la obra; **laptop** para las de web. Las capturas más altas
+  que anchas van sueltas y angostas, fuera de marco (lo decide `equipo()` en el
+  guion, con la medida del PNG).
+
+  En el HTML todas nacen como laptop; `movimiento.js` le pone a cada una su
+  equipo al cargar, leyendo a qué app pertenece la imagen (tabla `EQUIPOS`). Así
+  el marcado no cambia al cambiar de equipo y, sin JavaScript, todas se ven como
+  laptop, que es lo que ya estaba publicado.
+- **Cinco entradas distintas** (`e-sube`, `e-izq`, `e-der`, `e-zoom`,
+  `e-endereza`). La primera pantalla de cada app tiene la suya; las demás de esa
+  página rotan, para que bajar no se sienta repetido. Se probó levantar la tapa
+  de la laptop y se quitó: de frente, la tapa inclinada se veía más grande en
+  vez de cerrada.
+- **Pantalla de arranque** en nest101 y draw101, que son programas que se
+  instalan: al entrar se ve el arranque —logotipo sobre la tinta de la marca,
+  con su barra de carga— y al seguir bajando funde a la captura. **No es un
+  archivo del programa**: está dibujada con CSS a partir del logotipo, porque en
+  los repositorios no hay ninguna imagen de arranque. Si aparece la de verdad,
+  se cambia sin tocar nada más.
+- **Planos de fondo con parallax.** Tres capas de trazos en azul claro
+  —retícula, cotas y el alzado de un mueble— que se mueven a distinta velocidad
+  con el scroll. Van dibujadas en el propio `estilo.css` como SVG en
+  `background-image`: no son archivos ni peticiones. El JS pone un `.planos` por
+  sección y le lleva el avance `--y`.
+- **Movimiento al bajar** (`movimiento.js`). El avance `--p` va de 0 a 1
+  mientras cada pieza entra a la pantalla, y con él corren la entrada, el
+  arranque y el encendido. Si el sistema pide menos movimiento, los equipos se
+  arman igual pero no se mueve nada ni hay planos; sin JavaScript todo se ve
+  quieto y completo.
 - **Logotipos en un solo archivo**, `marca/logos.svg`, que arma el guion a partir
   de `marca/<app>.svg`. Las páginas los llaman con `<use>` y el color lo pone el
   CSS. La portada bajó de 45 KB a 10 KB.
@@ -99,7 +125,7 @@ Reglas que no se rompen:
   en el celular porque traía `height="1020"` en el HTML sin `height:auto`.
 - **En el celular.** El montaje de la portada se corta en cuadrado con
   `object-fit:cover` para que se lea. Las laptops se dejan un poco más anchas que
-  la pantalla: la tapa se ve entera y sólo se cortan las puntas de la base.
+  la pantalla; el monitor y la tableta no, porque su marco se vería cortado.
 - **Dos azules.** `--azul` (#0080C1) es el de la marca, para logotipos y
   acentos. Para letra y botones va `--azul-texto` (#0074ad): el de la marca da
   4.3 de contraste sobre blanco y la norma pide 4.5. Sobre fondo oscuro los
@@ -141,7 +167,7 @@ aplicación**, pero no son la aplicación: son un cómo se vería. Se llaman
 **Se van en cuanto haya capturas de verdad.** Se borran los `maqueta-*.png` de
 la carpeta, se ponen las capturas con su nombre y se corrige la lista `img=`
 de esa aplicación en `armar-sitio.py`. Las capturas se toman a 1600 px, tema
-claro y con datos falsos (`dash101/claude/venta/*/capturas/README.md`).
+claro y con datos falsos (`conta-master/claude/venta/*/capturas/README.md`).
 
 ## La imagen manda
 
