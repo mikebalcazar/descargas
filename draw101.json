@@ -1,24 +1,22 @@
 {
  "draw101": {
-  "version": "0.20.1",
-  "fecha": "2026-09-09",
+  "version": "0.20.2",
+  "fecha": "2026-09-12",
   "notas": [
-   "draw101 0.20.1 — aviso de versión al instante, vista en vivo en la ventana, cm por omisión (9-sep-2026)",
-   "Actualizador",
-   "ARREGLADO: el aviso de versión nueva tardaba o no salía. El motor consulta el sitio en un hilo desde que arranca (a los 2 s, reintentos cada 3 min sin red, luego cada 6 h) y la interfaz ya no espera a la red: avisa a los 3 s de abrir.",
-   "El aviso es un letrero arriba del lienzo con «Actualizar» y «Después», no sólo una línea en la consola.",
-   "Hojas",
-   "Al correr el dibujo dentro de una ventana (EDITARVENTANA, arrastrando el interior) se ve en vivo cómo queda: la hoja se pinta corrida con el ratón y recortada al marco. Ya no se mueve a ciegas.",
-   "Unidades",
-   "Los dibujos nuevos nacen en centímetros. La altura de texto por omisión (7.5 mm) y el paso de la rejilla se expresan en las unidades del dibujo. Importar DXF/DWG respeta las unidades del archivo.",
-   "ARREGLADO: al jalar un grip con la rejilla encendida, el paso se tomaba en unidades del dibujo en vez de en mm."
+   "draw101 0.20.2 — una medida negativa dibuja hacia el lado contrario del cursor (12-sep-2026)",
+   "Medidas",
+   "«-300» en el ancho o el alto de un RECTÁNGULO, tecleado en la cajita X/Y o en la línea de comandos, dibuja hacia la izquierda o hacia abajo, esté donde esté el ratón. Sin signo se trabaja como siempre: el tamaño lo pone el número y la dirección el cursor.",
+   "Lo mismo vale para la longitud de LÍNEA y para los demás comandos con medida fija: «-200» va al lado contrario del cursor.",
+   "ARREGLADO: el campo ya fijado de la cajita perdía el signo al rematar con Enter. Ahora enseña lo tecleado («-300») y es ese valor el que manda.",
+   "Pruebas",
+   "16 pruebas con 358 comprobaciones, todas verdes. La nueva t016 teclea medidas negativas en un navegador de verdad: 17 comprobaciones."
   ],
   "pagina": "https://github.com/mikebalcazar/descargas#readme",
   "windows": {
-   "archivo": "draw101-0.20.1-setup.exe",
-   "bytes": 109343594,
-   "sha256": "9993f1e1da977e08bd00d31aa2e345f0f1832e66c26d3106df2424f50569694a",
-   "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.1/draw101-0.20.1-setup.exe",
+   "archivo": "draw101-0.20.2-setup.exe",
+   "bytes": 119986731,
+   "sha256": "42ca8f687178d3d40495e5289d87123994d5a5b53b0391e32103449d8cc8b7dd",
+   "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.2/draw101-0.20.2-setup.exe",
    "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
   }
  }
