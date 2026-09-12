@@ -184,6 +184,19 @@ a{color:inherit}
 .mueve .splash.plano .t4{stroke-dashoffset:calc(1400 * (1 - clamp(0,(var(--p,1) - .34) / .22,1)))}
 .mueve .splash.plano .aparece{opacity:clamp(0,(var(--p,1) - .42) * 5,1)}
 
+/* El de nest101, también el de verdad: su electron/splash.html dibuja el
+   gabinete en isométrico y lo despieza. Aquí el despiece avanza con el scroll.
+   Fondo claro por lo mismo que en draw101: allá la ventana es transparente. */
+.splash.despiece{background:linear-gradient(#e6ecf1,#cfd8e0);gap:0}
+.splash.despiece canvas{position:absolute;inset:0;width:100%;height:100%;
+  filter:drop-shadow(0 2% 2% rgba(18,39,51,.38)) contrast(1.06)}
+.splash.despiece .marca-arr{position:relative;text-align:center;padding:3% 7%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,255,255,.88) 40%,rgba(255,255,255,0) 100%)}
+.splash.despiece .marca-arr svg{width:40%;margin:0 auto;fill:var(--azul)}
+.splash.despiece .carga{width:52%;margin:6% auto 0;background:rgba(23,27,33,.18)}
+.splash.despiece .carga i{background:var(--azul)}
+.splash.despiece .estado{margin-top:3%;font-size:clamp(7px,1.05%,13px);color:#39424e}
+
 /* ------------------------------------------------------------- movimiento
    Sólo si movimiento.js corrió (pone .mueve) y el sistema no pide menos
    movimiento. --p va de 0 a 1 mientras la pieza entra a la pantalla, y cada

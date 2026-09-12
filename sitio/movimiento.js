@@ -56,6 +56,103 @@ const PLANO = `<svg viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg">
 <text x="505" y="369">COCINA · PLANTA</text><text x="505" y="396">ESC 1:20</text><text x="576" y="396">A-01</text></g></g>
 </svg>`;
 
+// El arranque de nest101, tal como lo dibuja el programa en
+// electron/splash.html: su gabinete en isométrico, gris claro mate con las
+// aristas oscuras, que se despieza. Las diez piezas y su vector de despiece
+// (ex, ey, ez) son los suyos, que a su vez salen de iso.solidos_gabinete().
+// La proyección, el reparto de tonos y el orden de pintado son los de allá,
+// incluidas sus dos correcciones (#080): la profundidad es z−x−y y el costado
+// que se ve es el de −X. Lo único que cambia: el despiece avanza con el
+// scroll y no con el reloj.
+const PIEZAS = [{"x":0,"y":75,"z":0,"dx":900,"dy":18,"dz":100,"ex":0,"ey":-594,"ez":-54},
+{"x":0,"y":41,"z":100,"dx":18,"dy":559,"dz":760,"ex":-310.5,"ey":0,"ez":0},
+{"x":882,"y":41,"z":100,"dx":18,"dy":559,"dz":760,"ex":310.5,"ey":0,"ez":0},
+{"x":18,"y":41,"z":100,"dx":864,"dy":559,"dz":18,"ex":0,"ey":0,"ez":-270},
+{"x":18,"y":41,"z":842,"dx":864,"dy":559,"dz":18,"ex":0,"ey":0,"ez":310.5},
+{"x":10,"y":594,"z":110,"dx":880,"dy":6,"dz":740,"ex":0,"ey":405,"ez":0},
+{"x":19,"y":41,"z":484,"dx":862,"dy":533,"dz":18,"ex":0,"ey":-94.5,"ez":-121.5},
+{"x":18,"y":41,"z":810,"dx":864,"dy":18,"dz":50,"ex":0,"ey":-324,"ez":67.5},
+{"x":1.5,"y":20,"z":101.5,"dx":447,"dy":18,"dz":728.5,"ex":0,"ey":-405,"ez":0},
+{"x":451.5,"y":20,"z":101.5,"dx":447,"dy":18,"dz":728.5,"ex":0,"ey":-405,"ez":0}];
+
+const C30 = Math.cos(Math.PI / 6), S30 = Math.sin(Math.PI / 6);
+const proy = (x, y, z) => [(x - y) * C30, (x + y) * S30 + z];
+const hondo = (x, y, z) => z - x - y;
+const TONO = { arriba: '#f1f1f1', frente: '#d7d7d7', lado: '#b6b6b6' }, TINTA = '#101317';
+const mover = (p, f) => ({ x: p.x + p.ex * f, y: p.y + p.ey * f, z: p.z + p.ez * f,
+                           dx: p.dx, dy: p.dy, dz: p.dz });
+
+function caras(p) {
+  const { x, y, z, dx, dy, dz } = p;
+  return [['arriba', [[x, y, z + dz], [x + dx, y, z + dz], [x + dx, y + dy, z + dz], [x, y + dy, z + dz]]],
+          ['frente', [[x, y, z], [x + dx, y, z], [x + dx, y, z + dz], [x, y, z + dz]]],
+          ['lado',   [[x, y, z], [x, y + dy, z], [x, y + dy, z + dz], [x, y, z + dz]]]];
+}
+// Contorno grueso por fuera y línea fina adentro: es lo que hace que la tabla
+// se lea como sólido y no como papel doblado.
+function silueta(p) {
+  const { x, y, z, dx, dy, dz } = p, v = [];
+  for (const a of [x, x + dx]) for (const b of [y, y + dy]) for (const c of [z, z + dz]) v.push(proy(a, b, c));
+  v.sort((m, n) => m[0] - n[0] || m[1] - n[1]);
+  const giro = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const media = pts => { const r = []; for (const q of pts) {
+    while (r.length >= 2 && giro(r[r.length - 2], r[r.length - 1], q) <= 0) r.pop(); r.push(q); } r.pop(); return r; };
+  return media(v).concat(media(v.slice().reverse()));
+}
+// Para cajas alineadas, el eje que decide cuál tapa a cuál es el que NO
+// comparten. Preguntar eje por eje sin esa condición rompía el orden.
+const enc2 = (a0, a1, b0, b1) => a0 < b1 - 0.01 && b0 < a1 - 0.01;
+const cercaP = p => p.z - (p.x + p.dx) - (p.y + p.dy);
+const lejosP = p => (p.z + p.dz) - p.x - p.y;
+function tapa(a, b) {
+  const ox = enc2(a.x, a.x + a.dx, b.x, b.x + b.dx), oy = enc2(a.y, a.y + a.dy, b.y, b.y + b.dy),
+        oz = enc2(a.z, a.z + a.dz, b.z, b.z + b.dz);
+  if (oy && oz) return a.x + a.dx <= b.x + 0.01;
+  if (ox && oz) return a.y + a.dy <= b.y + 0.01;
+  if (ox && oy) return a.z >= b.z + b.dz - 0.01;
+  return cercaP(a) >= lejosP(b) - 0.01;
+}
+function ordenar(cajas) {
+  const n = cajas.length, c = cajas.map(p => hondo(p.x + p.dx / 2, p.y + p.dy / 2, p.z + p.dz / 2));
+  const grado = new Array(n).fill(0), despues = Array.from({ length: n }, () => []);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++)
+    if (i !== j && tapa(cajas[i], cajas[j])) { despues[j].push(i); grado[i]++; }
+  const listo = new Array(n).fill(false), orden = [];
+  for (let k = 0; k < n; k++) {
+    let e = -1;
+    for (let i = 0; i < n; i++) if (!listo[i] && grado[i] === 0 && (e < 0 || c[i] < c[e])) e = i;
+    if (e < 0) for (let i = 0; i < n; i++) if (!listo[i] && (e < 0 || c[i] < c[e])) e = i;
+    listo[e] = true; orden.push(e);
+    for (const s of despues[e]) grado[s]--;
+  }
+  return orden.map(i => cajas[i]);
+}
+// El encuadre se calcula con el despiece abierto del todo, así el mueble no
+// cambia de tamaño mientras se abre.
+function encuadre(cv) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const f of [0, 1]) for (const p of PIEZAS) for (const [, pts] of caras(mover(p, f))) for (const v of pts) {
+    const [a, b] = proy(v[0], v[1], v[2]);
+    x0 = Math.min(x0, a); x1 = Math.max(x1, a); y0 = Math.min(y0, b); y1 = Math.max(y1, b);
+  }
+  const m = 18, k = Math.min((cv.width - 2 * m) / (x1 - x0), (cv.height - 2 * m) / (y1 - y0));
+  return { k, ox: (cv.width - (x1 - x0) * k) / 2 - x0 * k, oy: (cv.height + (y1 - y0) * k) / 2 + y0 * k };
+}
+function despiezar(cv, enc, f) {
+  const cx = cv.getContext('2d');
+  const pant = ([a, b]) => [enc.ox + a * enc.k, enc.oy - b * enc.k];
+  const trazo = (pts, tresD) => { cx.beginPath(); pts.forEach((v, i) => {
+    const [px, py] = tresD ? pant(proy(v[0], v[1], v[2])) : pant(v);
+    i ? cx.lineTo(px, py) : cx.moveTo(px, py); }); cx.closePath(); };
+  cx.clearRect(0, 0, cv.width, cv.height);
+  cx.lineJoin = cx.lineCap = 'round'; cx.strokeStyle = TINTA;
+  for (const p of ordenar(PIEZAS.map(q => mover(q, f)))) {
+    for (const [cara, pts] of caras(p)) { trazo(pts, true); cx.fillStyle = TONO[cara]; cx.fill(); }
+    cx.lineWidth = 1; for (const [, pts] of caras(p)) { trazo(pts, true); cx.stroke(); }
+    cx.lineWidth = 2; trazo(silueta(p), false); cx.stroke();
+  }
+}
+
   const piezas = [...document.querySelectorAll('[data-mueve]')];
   const cuenta = {};
   for (const el of piezas) {
@@ -80,7 +177,13 @@ const PLANO = `<svg viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg">
           ? `<div class="splash plano" aria-hidden="true"><div class="escena"><div class="hoja3d">${PLANO}</div></div>` +
             `<div class="marca-arr">${logo}<div class="sub">Dibujo 2D · Taller 101</div>` +
             `<div class="estado">Cargando aplicación</div></div></div>`
+          : app === 'nest101'
+          ? `<div class="splash despiece" aria-hidden="true"><canvas width="1200" height="820"></canvas>` +
+            `<div class="marca-arr">${logo}<div class="carga"><i></i></div>` +
+            `<div class="estado">Iniciando…</div></div></div>`
           : `<div class="splash" aria-hidden="true">${logo}<div class="carga"><i></i></div></div>`);
+        const cv = el.querySelector('.despiece canvas');
+        if (cv) { el.__enc = encuadre(cv); despiezar(cv, el.__enc, 0); }
       } else if (el.classList.contains('enciende') === false) {
         el.classList.add('enciende');
       }
@@ -115,6 +218,10 @@ const PLANO = `<svg viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg">
       if (el.classList.contains('arranca')) {
         const barra = el.querySelector('.carga i');
         if (barra) barra.style.setProperty('--carga', Math.min(1, p / 0.55).toFixed(3));
+        const cv = el.querySelector('.despiece canvas');
+        // El mueble se abre entre 0.10 y 0.60 del avance; después ya está el
+        // despiece completo y lo que corre es el fundido a la captura.
+        if (cv) despiezar(cv, el.__enc, Math.min(1, Math.max(0, (p - 0.10) / 0.50)));
       }
     }
   };
