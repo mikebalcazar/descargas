@@ -20,8 +20,10 @@
 #        carga/partes/*.bin     el .exe partido (`split -b 40000000 -d -a 2
 #                               --additional-suffix=.bin ... parte-`)
 #   3. Se empuja esa rama. Este flujo arranca solo.
-#   4. Cuando sale verde, **se borra la rama**. Los pedazos quedan huérfanos y
-#      no viajan en un `git clone` de `main`: nadie carga con 120 MB de lastre.
+#   4. Cuando sale verde, `limpiar-carga.yml` **borra la rama** sin que nadie se
+#      lo pida. Los pedazos quedan huérfanos y no viajan en un `git clone`:
+#      nadie carga con 120 MB de lastre. Lo hace un flujo aparte porque borrar
+#      la rama desde aquí dentro puede cancelar este mismo run.
 #
 # El sha256 de `meta.json` no es decorativo: si lo que se junta no da ese
 # número exacto, el flujo se cae **antes** de publicar nada. Es la única
@@ -33,7 +35,10 @@
 #   ultima_tag, ultima_nombre
 #
 # El canal de vuelta es el comentario del commit (OPERAR.md §6): el chat no
-# alcanza el log de Actions, pero sí api.github.com.
+# alcanza el log de Actions, pero sí api.github.com. Ojo: ese commit vive en la
+# rama de carga, que se borra enseguida, así que el comentario **se lee al
+# terminar el run**, no una hora después. Lo que queda para siempre es la
+# release publicada, que es justo lo que el último paso vuelve a medir.
 
 name: Publicar instalador
 
