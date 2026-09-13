@@ -1,20 +1,20 @@
 {
- "shape101": {
-  "version": "0.0.1",
-  "fecha": "2026-09-13",
-  "notas": [
-   "shape101 0.0.1 — prueba de concepto, cascarón vacío (13-sep-2026)",
-   "No es la app todavía: una ventana en blanco de Electron con el motor de sólidos (Python 3.11 + OpenCascade vía build123d) empotrado, armada en un Windows de GitHub para medir cuánto pesa y cuánto tarda en arrancar.",
-   "Instalador 236 MB (umbral 400). Arranque del motor: 10 s en frío, 2,9–3,3 s en caliente.",
-   "Existe para que shape101 tenga su propia liga fija de descarga, separada de la de draw101. Los resultados de la prueba de concepto están en el repositorio shape101, poc/RESULTADOS.md."
-  ],
-  "pagina": "https://github.com/mikebalcazar/descargas#readme",
-  "windows": {
-   "archivo": "shape101-0.0.1-setup.exe",
-   "bytes": 236047670,
-   "sha256": "6e036f2bc3d904085cb18e0dd0956bae09173719f98c1b6b005228ccba4c226d",
-   "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.0.1/shape101-0.0.1-setup.exe",
-   "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
+  "shape101": {
+    "version": "0.1.0",
+    "fecha": "2026-09-13",
+    "notas": [
+      "shape101 0.1.0 (2026-09-13)",
+      "Primera versión que se puede instalar y usar, para probar el camino: una pieza con nombre, material y espesor; tablero; barrenos y cortes rectangulares pasantes; redondear las esquinas verticales; jalar cualquier cara en 3D (clic y arrastre, o una medida tecleada); historial editable; guardar y abrir .s101; exportar STEP, STL y glTF.",
+      "Lo que NO trae todavía: bocetos dibujados en draw101 (sólo formas paramétricas), bocetos en otros planos, cortes ciegos, revolucionar, chaflanes, vistas 2D a draw101, actualizador. Cada cosa tiene su bloque en el plan del chat de shape101.",
+      "Medidas en mm con centésimas. Un documento = una pieza."
+    ],
+    "pagina": "https://github.com/mikebalcazar/descargas#readme",
+    "windows": {
+      "archivo": "shape101-0.1.0-setup.exe",
+      "bytes": 236394359,
+      "sha256": "fd147c9eeb075b108acaacc940b52257b0bdb3ae8b4538a3a780324aa2fda758",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.1.0/shape101-0.1.0-setup.exe",
+      "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
+    }
   }
- }
 }
