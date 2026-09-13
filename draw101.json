@@ -1,23 +1,20 @@
 {
- "draw101": {
-  "version": "0.20.2",
-  "fecha": "2026-09-12",
-  "notas": [
-   "draw101 0.20.2 — una medida negativa dibuja hacia el lado contrario del cursor (12-sep-2026)",
-   "Medidas",
-   "«-300» en el ancho o el alto de un RECTÁNGULO, tecleado en la cajita X/Y o en la línea de comandos, dibuja hacia la izquierda o hacia abajo, esté donde esté el ratón. Sin signo se trabaja como siempre: el tamaño lo pone el número y la dirección el cursor.",
-   "Lo mismo vale para la longitud de LÍNEA y para los demás comandos con medida fija: «-200» va al lado contrario del cursor.",
-   "ARREGLADO: el campo ya fijado de la cajita perdía el signo al rematar con Enter. Ahora enseña lo tecleado («-300») y es ese valor el que manda.",
-   "Pruebas",
-   "16 pruebas con 358 comprobaciones, todas verdes. La nueva t016 teclea medidas negativas en un navegador de verdad: 17 comprobaciones."
-  ],
-  "pagina": "https://github.com/mikebalcazar/descargas#readme",
-  "windows": {
-   "archivo": "draw101-0.20.2-setup.exe",
-   "bytes": 119986731,
-   "sha256": "42ca8f687178d3d40495e5289d87123994d5a5b53b0391e32103449d8cc8b7dd",
-   "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.2/draw101-0.20.2-setup.exe",
-   "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
+  "draw101": {
+    "version": "0.20.3",
+    "fecha": "2026-09-12",
+    "notas": [
+      "draw101 0.20.3 (2026-09-12)",
+      "El valor tecleado manda sobre el snap. Una LÍNEA de «200» mide 200 aunque el ratón agarre un endpoint a 150 en el camino; el snap sólo da la dirección. En RECTÁNGULO, con la X tecleada, el snap ya no borra el valor: aporta la Y y la X sigue siendo la tecleada. Igual con ORTHO: el snap se proyecta al eje.",
+      "ESCALARD (ESD, SCD): escala en UNA sola dirección. Base → referencia marca el eje y lo que mide hoy; el punto nuevo (o el factor) dice lo que debe medir sobre ese eje. Lo perpendicular no se toca: un mueble de 900 de ancho pasa a 1000 sin cambiar el alto. Los círculos se vuelven la elipse exacta; los arcos sueltos no se escalan y se avisa.",
+      "Pruebas t017 (tecleado vs. snap, 11 comprobaciones) y t018 (ESCALARD, 13 comprobaciones). Se comprobó que en COPIAR el espacio ya confirma el valor como Enter, en la cajita y en la línea de comandos (venía de X.0.2)."
+    ],
+    "pagina": "https://github.com/mikebalcazar/descargas#readme",
+    "windows": {
+      "archivo": "draw101-0.20.3-setup.exe",
+      "bytes": 119989782,
+      "sha256": "4b39f1a7f102090470cc8fe91b2807ca7beecea3104fcc6d88b74c5cbfcd8f40",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.3/draw101-0.20.3-setup.exe",
+      "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
+    }
   }
- }
 }

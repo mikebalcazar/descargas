@@ -124,7 +124,7 @@ APPS = {
         ('03-galeria-rayado.png','La galería de achurados, con vista previa al momento'),
         ('02-propiedades-en-vivo.png','Las propiedades del objeto, al momento'),
         ('06-vista-previa.png','La vista previa antes de mandar a imprimir')],
-   datos=[('Versión','0.20.2 · 12-sep-2026'),('Plataforma','Windows · macOS en preparación'),
+   datos=[('Versión','0.20.3 · 12-sep-2026'),('Plataforma','Windows · macOS en preparación'),
           ('Estado','En uso interno, v1 comercial en curso'),('Entrega','Instalador con actualizador')]),
 
  'quote101': dict(
