@@ -5,7 +5,7 @@ Instaladores de la familia *101 para Windows. Cada programa se actualiza solo de
 | Programa | Última versión | Fecha | Descargar | Página fija (siempre la última) | Tamaño |
 |---|---|---|---|---|---|
 | **draw101** | 0.20.4 | 2026-09-13 | [draw101-0.20.4-setup.exe](https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.4/draw101-0.20.4-setup.exe) | [draw101-ultima](https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima) | 125 MB |
-| **shape101** | 0.2.0 | 2026-09-13 | [shape101-0.2.0-setup.exe](https://github.com/mikebalcazar/descargas/releases/download/shape101-0.2.0/shape101-0.2.0-setup.exe) | [shape101-ultima](https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima) | 236 MB |
+| **shape101** | 0.3.0 | 2026-09-14 | [shape101-0.3.0-setup.exe](https://github.com/mikebalcazar/descargas/releases/download/shape101-0.3.0/shape101-0.3.0-setup.exe) | [shape101-ultima](https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima) | 125 MB |
 | **nest101** | 0.15.6 | 2026-09-08 | [nest101-0.15.6-setup.exe](https://github.com/mikebalcazar/descargas/releases/download/nest101-0.15.6/nest101-0.15.6-setup.exe) | [nest101-ultima](https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima) | 167 MB |
 
 Cada versión queda en [Releases](https://github.com/mikebalcazar/descargas/releases) con sus notas y su huella sha256. El `.json` de cada programa es lo que lee su actualizador; `avisos.json` son los avisos que el programa enseña.

@@ -1,19 +1,19 @@
 {
   "shape101": {
-    "version": "0.2.0",
-    "fecha": "2026-09-13",
+    "version": "0.3.0",
+    "fecha": "2026-09-14",
     "notas": [
-      "shape101 0.2.0 (2026-09-13)",
-      "Bocetos dibujados en draw101: «Importar dibujo…» toma el contorno de un .t101d —líneas, arcos, círculos y polilíneas del modelo— y lo vuelve la pieza. Las cotas, los textos y lo que vive en una hoja de impresión no entran, y la pantalla dice cuántas cosas se dejaron fuera.",
-      "El dibujo se lee sin draw101 instalado. Si está en centímetros o en metros se convierte solo a milímetros: un tablero dibujado en cm entra midiendo lo mismo que uno dibujado en mm.",
-      "El boceto se guarda dentro del .s101, con el nombre del dibujo y la unidad en que venía: la pieza sigue abriendo aunque el .t101d ya no esté."
+      "shape101 0.3.0 (2026-09-14)",
+      "shape101 vuelve a nacer, ahora desde la fuente de draw101 0.20.4. Trae todo lo que draw101 sabe hacer en 2D; el modelado 3D empieza en la siguiente entrega.",
+      "Sus archivos son .101s y sus preferencias, bloques y autoguardado viven en su propia carpeta: draw101 y shape101 son dos programas distintos que comparten un abuelo. Ninguno le pisa el trabajo al otro.",
+      "La numeración arranca en 0.3.0 porque las versiones 0.1.0 y 0.2.0 de shape101 ya se publicaron con otro contenido, y un número repetido con contenido distinto es justo lo que no se debe hacer."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.2.0-setup.exe",
-      "bytes": 236393639,
-      "sha256": "4da1e5f75e0c216a9656405f4b38bc33eab3cf02010d970897780176fefdc96b",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.2.0/shape101-0.2.0-setup.exe",
+      "archivo": "shape101-0.3.0-setup.exe",
+      "bytes": 124675514,
+      "sha256": "4bd737b54ce524201cd0a2f0de360e85653c29e908c63f0a4696be60be60b2d2",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.3.0/shape101-0.3.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
