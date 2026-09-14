@@ -1,19 +1,21 @@
 {
   "draw101": {
-    "version": "0.20.3",
-    "fecha": "2026-09-12",
+    "version": "0.20.4",
+    "fecha": "2026-09-13",
     "notas": [
-      "draw101 0.20.3 (2026-09-12)",
-      "El valor tecleado manda sobre el snap. Una LÍNEA de «200» mide 200 aunque el ratón agarre un endpoint a 150 en el camino; el snap sólo da la dirección. En RECTÁNGULO, con la X tecleada, el snap ya no borra el valor: aporta la Y y la X sigue siendo la tecleada. Igual con ORTHO: el snap se proyecta al eje.",
-      "ESCALARD (ESD, SCD): escala en UNA sola dirección. Base → referencia marca el eje y lo que mide hoy; el punto nuevo (o el factor) dice lo que debe medir sobre ese eje. Lo perpendicular no se toca: un mueble de 900 de ancho pasa a 1000 sin cambiar el alto. Los círculos se vuelven la elipse exacta; los arcos sueltos no se escalan y se avisa.",
-      "Pruebas t017 (tecleado vs. snap, 11 comprobaciones) y t018 (ESCALARD, 13 comprobaciones). Se comprobó que en COPIAR el espacio ya confirma el valor como Enter, en la cajita y en la línea de comandos (venía de X.0.2)."
+      "draw101 0.20.4 (2026-09-13)",
+      "RECORTAR sobre polilíneas. Se quita sólo el trozo entre los dos cruces que rodean el clic y lo que queda sigue siendo polilínea: en un extremo se acorta, en medio quedan dos, una cerrada se abre por ahí. Los tramos curvos se cortan como arcos exactos.",
+      "Arreglo del índice de selección: tras recargar el dibujo entero sin picar nada en medio, la primera edición dejaba el índice del plano anterior (entidades borradas seguían «vivas» al clic y las nuevas no se dejaban picar).",
+      "Fluidez: los círculos y arcos viajan con tantos segmentos como pida su radio (un barreno de ⌀5 con 16 puntos, no 73); en planos con muchos barrenos baja lo que se pinta.",
+      "PERF anota las llamadas al motor que tardaron más de 150 ms o que obligaron a recargar todo (ruta, tiempo, peso), junto a los cuadros lentos: al reportar «se puso lento» ya se ve qué fue.",
+      "Prueba t019 (RECORTAR en polilínea, 19 comprobaciones) y plano sintético de 21 700 entidades para medir (pruebas/carga/)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.3-setup.exe",
-      "bytes": 119989782,
-      "sha256": "4b39f1a7f102090470cc8fe91b2807ca7beecea3104fcc6d88b74c5cbfcd8f40",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.3/draw101-0.20.3-setup.exe",
+      "archivo": "draw101-0.20.4-setup.exe",
+      "bytes": 124688320,
+      "sha256": "469f4630a1b220e6a9bf3be18cd60a6b0df4f8ebe4e267fdeb7df4862eb3454c",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.4/draw101-0.20.4-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
