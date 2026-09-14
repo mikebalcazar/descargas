@@ -42,16 +42,17 @@ a{color:inherit}
   -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
   border-bottom:1px solid rgba(18,39,51,.09)}
 .barra{top:0}
-.barra .env,.subbarra .env{display:flex;align-items:center;justify-content:space-between;height:52px}
+.barra .env,.subbarra .env{display:flex;align-items:center;justify-content:space-between;height:64px}
 /* La barra lleva el logotipo de la suite: aro relleno y «101» calado, que
-   deja ver el blanco de la barra. 26 px de alto, arriba del mínimo de 24. */
+   deja ver el blanco de la barra. Creció el 13-sep a petición de Mike, y con
+   él la barra, para que siga habiendo aire arriba y abajo. */
 .marca{display:block;line-height:0}
-.marca svg{height:26px;width:auto;display:block}
+.marca svg{height:38px;width:auto;display:block}
 .barra nav{display:flex;gap:24px}
 .barra nav a{font-size:13px;text-decoration:none;color:rgba(18,39,51,.78)}
 .barra nav a:hover{color:var(--azul-texto)}
-.subbarra{top:52px;z-index:19}
-.subbarra svg{height:24px;width:auto;display:block}
+.subbarra{top:64px;z-index:19}
+.subbarra svg{height:34px;width:auto;display:block}
 /* Los logotipos salen de marca/logos.svg; el color lo pone esta regla. El azul
    de la marca sobre la tinta da 3.6 de contraste (pasa para un logotipo, pero
    se ve apagado); el claro, 5.5. */
@@ -93,7 +94,7 @@ a{color:inherit}
 .mosaico{text-align:left;padding:64px 3vw 0;overflow:hidden;background-color:#fff}
 .mosaico.nube{background-color:var(--nube)}
 .mosaico.oscuro{background-color:var(--tinta);color:#fff}
-.nombre svg{height:clamp(44px,4.4vw,58px);width:auto;margin:0;display:block}
+.nombre svg{height:clamp(58px,5.8vw,78px);width:auto;margin:0;display:block}
 .lema{font-size:clamp(28px,3.5vw,44px);line-height:1.1;letter-spacing:-.015em;font-weight:700;
   max-width:28ch;margin:18px 0 0}
 .estado{font-size:14px;color:var(--gris);margin-top:12px}
@@ -101,7 +102,7 @@ a{color:inherit}
 .asoma{max-width:1180px;margin:34px auto 0;padding-bottom:56px}
 .pares{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;background:#fff}
 .pares .mosaico{padding-top:52px}
-.pares .nombre svg{height:clamp(36px,3.4vw,44px)}
+.pares .nombre svg{height:clamp(46px,4.4vw,58px)}
 .pares .lema{font-size:clamp(24px,2.5vw,32px);max-width:19ch}
 .pares .asoma{margin-top:30px;padding-bottom:3vw}
 .pares .mosaico{padding-left:3vw;padding-right:3vw}
@@ -275,7 +276,7 @@ a{color:inherit}
   border-bottom:1px solid rgba(255,255,255,.16);font-size:15px;color:var(--en-oscuro);line-height:1.45}
 .eslabon::before{counter-increment:paso;content:counter(paso,decimal-leading-zero);
   font-size:14px;letter-spacing:.1em;color:var(--acento)}
-.eslabon svg{display:block;height:clamp(30px,3.4vw,46px);width:auto;margin:0;fill:#fff}
+.eslabon svg{display:block;height:clamp(38px,4.4vw,60px);width:auto;margin:0;fill:#fff}
 /* En el celular no hay ancho para tres columnas. Y la frase de cada renglón es
    texto suelto dentro del .eslabon, sin etiqueta propia: en rejilla caía en la
    columna del número, de 2.6rem, y salía una palabra por renglón. Por eso aquí
@@ -283,7 +284,7 @@ a{color:inherit}
    debajo, como párrafo. */
 @media(max-width:760px){.eslabon{display:block;padding:20px 0}
   .eslabon::before{display:inline-block;margin-right:12px;vertical-align:middle}
-  .eslabon svg{display:inline-block;vertical-align:middle;height:28px;margin:0 14px 10px 0}}
+  .eslabon svg{display:inline-block;vertical-align:middle;height:36px;margin:0 14px 10px 0}}
 
 /* Cierre y pie */
 .cierre{text-align:left;padding:96px 0}
@@ -301,7 +302,7 @@ footer .firma{margin-top:24px;padding-top:14px;border-top:1px solid var(--linea)
 
 /* Página de cada programa */
 .tapa{text-align:left;padding:88px 0 0}
-.tapa .nombre svg{height:clamp(52px,6vw,72px)}
+.tapa .nombre svg{height:clamp(68px,7.6vw,96px)}
 .tapa h1{font-size:clamp(36px,5.4vw,64px);line-height:1.06;letter-spacing:-.02em;font-weight:700;
   max-width:17ch;margin:22px 0 0}
 .principal{max-width:1280px;margin:48px auto 0;padding:0 3vw;overflow:hidden}
@@ -343,3 +344,8 @@ footer .firma{margin-top:24px;padding-top:14px;border-top:1px solid var(--linea)
 @media(max-width:600px){.hero .btn,.mosaico .btn{font-size:15px;padding:9px 16px}.acciones{gap:10px}}
 @media(max-width:600px){.hero,.tapa{padding-top:52px}.mosaico{padding-top:48px}
   .intro,.bloque,.encajan,.cierre{padding:64px 0}.barra nav{gap:15px}.barra nav a{font-size:12.5px}}
+/* Los logotipos crecieron el 13-sep a petición de Mike. En el celular se dejan
+   un punto más chicos: con 38 px, el de la suite y los tres enlaces del menú
+   ya no caben en un renglón de 320. */
+@media(max-width:600px){.marca svg{height:30px}.subbarra svg{height:27px}
+  .barra .env,.subbarra .env{height:56px}.subbarra{top:56px}}
