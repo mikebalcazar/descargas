@@ -1,21 +1,19 @@
 {
   "draw101": {
-    "version": "0.20.4",
-    "fecha": "2026-09-13",
+    "version": "0.20.5",
+    "fecha": "2026-09-15",
     "notas": [
-      "draw101 0.20.4 (2026-09-13)",
-      "RECORTAR sobre polilíneas. Se quita sólo el trozo entre los dos cruces que rodean el clic y lo que queda sigue siendo polilínea: en un extremo se acorta, en medio quedan dos, una cerrada se abre por ahí. Los tramos curvos se cortan como arcos exactos.",
-      "Arreglo del índice de selección: tras recargar el dibujo entero sin picar nada en medio, la primera edición dejaba el índice del plano anterior (entidades borradas seguían «vivas» al clic y las nuevas no se dejaban picar).",
-      "Fluidez: los círculos y arcos viajan con tantos segmentos como pida su radio (un barreno de ⌀5 con 16 puntos, no 73); en planos con muchos barrenos baja lo que se pinta.",
-      "PERF anota las llamadas al motor que tardaron más de 150 ms o que obligaron a recargar todo (ruta, tiempo, peso), junto a los cuadros lentos: al reportar «se puso lento» ya se ve qué fue.",
-      "Prueba t019 (RECORTAR en polilínea, 19 comprobaciones) y plano sintético de 21 700 entidades para medir (pruebas/carga/)."
+      "draw101 0.20.5 (2026-09-15)",
+      "Seguridad del botón «Instalar ODA»: el instalador del convertidor sólo se baja de opendesign.com por https. El puntero de Taller 101 puede decir qué versión, pero ya no de dónde: una liga ajena se ignora. Antes se corría la liga que dijera el puntero, tal cual.",
+      "Si el puntero declara la huella sha256 del instalador, se comprueba antes de correr msiexec; si no cuadra, se borra y no se instala.",
+      "Prueba t020 (ODA: dominio y huella, 28 comprobaciones). Sin cambios en el dibujo."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.4-setup.exe",
-      "bytes": 124688320,
-      "sha256": "469f4630a1b220e6a9bf3be18cd60a6b0df4f8ebe4e267fdeb7df4862eb3454c",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.4/draw101-0.20.4-setup.exe",
+      "archivo": "draw101-0.20.5-setup.exe",
+      "bytes": 124689466,
+      "sha256": "47180f7ac35bd202e76c5f3b2c7e641088dd681d722652085eee2cc720161f3b",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.5/draw101-0.20.5-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
