@@ -1,19 +1,19 @@
 {
   "nest101": {
-    "version": "0.15.6",
-    "fecha": "2026-09-08",
+    "version": "0.16.0",
+    "fecha": "2026-09-15",
     "notas": [
-      "Los números cambian de tipografía. Medidas, cantidades, precios y fechas salen ahora en Fira Sans, que tiene cifras de la misma altura; el texto sigue igual.",
-      "Alcanza la pantalla y el papel: cotas, lista de corte, fichas, planos y Excel.",
-      "Raleway dibuja el 3, 4, 5, 7 y 9 colgando por debajo del renglón y el 6 y el 8 subidos. En un rótulo se ve bien; en una cota de corte no se lee de un golpe, y un número que no se lee de un golpe es una pieza mal cortada.",
-      "Las columnas de números de las tablas ahora quedan alineadas unas debajo de otras."
+      "El 3D responde al instante: dibuja solo cuando algo cambia, no 60 veces por segundo",
+      "Entrepano divisorio automatico donde se juntan un cajon y una puerta",
+      "Frente tipo abierto: nichos, con panel arriba y abajo",
+      "Las comprobaciones ya corren en la consola de Windows"
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.15.6-setup.exe",
-      "bytes": 166928819,
-      "sha256": "93326039905540157c8f81bea049acd1dbf70d8c28a0e440b623d7cfb1550697",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.15.6/nest101-0.15.6-setup.exe",
+      "archivo": "nest101-0.16.0-setup.exe",
+      "bytes": 119673072,
+      "sha256": "da3c81e7cc5e84f8c59e01a88fad4573f7948e12acbd1fd7d0a5ef538fa998a3",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.16.0/nest101-0.16.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
