@@ -1,18 +1,18 @@
 {
   "nest101": {
-    "version": "0.16.1",
-    "fecha": "2026-09-15",
+    "version": "0.16.2",
+    "fecha": "2026-09-16",
     "notas": [
-      "La app guarda el instalador con el nombre que publica el flujo, y ya no puede volver a bajarlo en cada arranque",
-      "El nombre que viene del contrato se sanea antes de tocar el disco",
-      "Once comprobaciones nuevas: 104 en total"
+      "Arreglado: el instalador salia sin cuatro librerias y la app se quedaba en la pantalla de arranque",
+      "La compilacion ahora comprueba que las once librerias carguen antes de publicar",
+      "OpenCV en su version ligera: mismas funciones, menos peso"
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.16.1-setup.exe",
-      "bytes": 119690105,
-      "sha256": "b661d661886f72c1a174e84674cef0aa6eef9e3b965c8e4fcc8d0654325c9b2a",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.16.1/nest101-0.16.1-setup.exe",
+      "archivo": "nest101-0.16.2-setup.exe",
+      "bytes": 158494616,
+      "sha256": "7eb29d31615cf5844f3261037709c9555fea2259e9c9f7dff96a397561ca669c",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.16.2/nest101-0.16.2-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
