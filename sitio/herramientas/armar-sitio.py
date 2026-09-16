@@ -66,6 +66,7 @@ APPS = {
         ('05-documentos.png','Documentos escaneados con la cámara'),
         ('04-expediente-completo.png','El expediente completo, listo para el contador'),
         ('01-acceso-correo.png','Se entra con un código que llega al correo, sin contraseña')],
+   enlace=('Entrar a la app','https://t101-portal.mike-929.workers.dev'),
    datos=[('Versión','portal 0.10.0 · central 0.4.0'),('Plataforma','Web · celular y computadora'),
           ('Estado','En producción con el primer cliente'),('Modelo','Renta mensual por empresa')]),
 
@@ -95,6 +96,7 @@ APPS = {
         ('2-item.png','La bitácora de la pieza, con lo que se acordó y cuándo'),
         ('3-lista.png','La obra entera en lista, cuando el plano ya no basta'),
         ('4-dudas.png','Las dudas de quien está en obra y no le toca decidir')],
+   enlace=('Entrar a la app','https://bitacora-obra.mike-929.workers.dev'),
    datos=[('Versión','Publicación continua'),('Plataforma','Web · Windows · Android en preparación'),
           ('Estado','En uso, primera obra'),('Sin señal','Sí, lectura y escritura')]),
 
@@ -124,6 +126,7 @@ APPS = {
         ('03-galeria-rayado.png','La galería de achurados, con vista previa al momento'),
         ('02-propiedades-en-vivo.png','Las propiedades del objeto, al momento'),
         ('06-vista-previa.png','La vista previa antes de mandar a imprimir')],
+   enlace=('Descargar para Windows','https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima'),
    datos=[('Versión','0.20.3 · 12-sep-2026'),('Plataforma','Windows · macOS en preparación'),
           ('Estado','En uso interno, v1 comercial en curso'),('Entrega','Instalador con actualizador')]),
 
@@ -150,6 +153,7 @@ APPS = {
        ('Importar de nest101','abre el .t101x, enseña los gabinetes con sus medidas y tú escoges cuáles entran')],
    img=[('01-clientes.png','Los clientes, con sus proyectos y sus cotizaciones'),
         ('02-cotizacion.png','La cotización armada, mueble por mueble')],
+   enlace=('Entrar a la app','https://quote101.mike-929.workers.dev'),
    datos=[('Versión','G80'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción, uso diario'),('Se conecta con','nest101, por archivo .t101x')]),
 
@@ -178,6 +182,7 @@ APPS = {
         ('maqueta-herrajes.png','Los herrajes del proyecto, con lo que hay y lo que falta pedir'),
         ('maqueta-ficha-mueble.png','La ficha del mueble, la que se lleva quien lo arma'),
         ('maqueta-proyectos.png','Los proyectos del taller y en qué va el despiece de cada uno')],
+   enlace=('Descargar para Windows','https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima'),
    datos=[('Versión','0.15.6 · 8-sep-2026'),('Plataforma','Windows'),
           ('Estado','En producción'),('Entrega','Instalador con actualizador')]),
 
@@ -213,6 +218,7 @@ APPS = {
         ('maqueta-gastos-fijos.png','Los gastos fijos y las cuentas que alimentan la proyección'),
         ('maqueta-equipo.png','Quién entra y hasta dónde ve: se invita por correo, con puesto y alcance'),
         ('maqueta-flujo.png','Las 52 semanas por delante, semana por semana, con el aviso de cuándo se va a cero')],
+   enlace=('Entrar a la app','https://dash101.mike-929.workers.dev'),
    datos=[('Versión','0.1.0'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción, uso interno'),('Alcance','Varios negocios en una cuenta')]),
 
@@ -247,6 +253,7 @@ APPS = {
         ('maqueta-entrar.png','Se entra con el correo y un PIN de seis dígitos'),
         ('maqueta-celular.png','En el teléfono del cliente, que es donde se consulta'),
         ('maqueta-lista.png','Sus proyectos, con lo pagado y lo que resta de cada uno')],
+   enlace=('Entrar a la app','https://peek101.mike-929.workers.dev'),
    datos=[('Versión','v0 · 7-sep-2026'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción con clientes de prueba'),('Para entrar','Correo y PIN de seis dígitos')]),
 }
@@ -414,6 +421,14 @@ for app, d in APPS.items():
         galeria = ''.join(f'<section class="vista{" nube" if i % 2 else ""}"><h2>{html.escape(c)}</h2>'
                           f'{equipo(app, f, "", "../")}</section>'
                           for i, (f, c) in enumerate(d['img'][1:]))
+    # El enlace a la app o a su descarga. Las que se instalan apuntan a la
+    # página fija de su última versión, que no caduca al sacar una nueva; las de
+    # web, a su dirección de producción. rel="noopener" porque abren en pestaña
+    # nueva: sin él, la página abierta puede tocar la nuestra por window.opener.
+    ira = ''
+    if d.get('enlace'):
+        txt, url = d['enlace']
+        ira = (f'<a class="btn" href="{url}" target="_blank" rel="noopener">{html.escape(txt)}</a>')
     n_vistas = max(len(d['img']) - 1, 0)
     trae_nube = n_vistas % 2 == 1          # si la última vista quedó en blanco, «Qué trae» va en nube
     cierre_nube = not trae_nube
@@ -435,7 +450,7 @@ for app, d in APPS.items():
 <section class="tapa"><div class="env">
 {nombre(app, d, pref='../')}
 <h1>{html.escape(d['lema'])}</h1>
-<div class="acciones"><a class="btn" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a></div>
+<div class="acciones">{ira}<a class="btn contorno" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a></div>
 <p class="estado">{html.escape(d['estado'])} · {html.escape(d['plataforma'])}</p>
 </div>{principal}</section>
 <section class="intro"><div class="env estrecho"><p>{html.escape(d['entrada'])}</p></div></section>
