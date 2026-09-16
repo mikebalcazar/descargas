@@ -1,18 +1,18 @@
 {
   "nest101": {
-    "version": "0.17.0",
+    "version": "0.18.0",
     "fecha": "2026-09-16",
     "notas": [
-      "La caja del cajon se dibuja pieza por pieza: laterales, frente, trasera y fondo",
-      "Cada pieza dibujada se comprueba contra la lista de corte: medidas, conteos y materiales",
-      "Los fondos de cajon se pueden encender y apagar aparte en la leyenda"
+      "El alto de las paredes del cajon ahora sale del frente: 80 por ciento redondeado al cm de arriba",
+      "Campo Caja por cajon para editar ese alto a mano",
+      "Los proyectos guardados se recalculan con la regla nueva"
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.17.0-setup.exe",
-      "bytes": 158498355,
-      "sha256": "43d9547a0352503d9aee9422cdee3c207cc20c144138066d33fa04b01f8f0f30",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.17.0/nest101-0.17.0-setup.exe",
+      "archivo": "nest101-0.18.0-setup.exe",
+      "bytes": 158500903,
+      "sha256": "ce12006fe44563f6b2304238d62dd8b0e56ef358968e186cd4045e1f57fabf96",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.18.0/nest101-0.18.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
