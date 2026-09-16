@@ -1,18 +1,18 @@
 {
   "nest101": {
-    "version": "0.18.0",
+    "version": "0.18.1",
     "fecha": "2026-09-16",
     "notas": [
-      "El alto de las paredes del cajon ahora sale del frente: 80 por ciento redondeado al cm de arriba",
-      "Campo Caja por cajon para editar ese alto a mano",
-      "Los proyectos guardados se recalculan con la regla nueva"
+      "Ahora el transparente es el mueble seleccionado, para verle las tripas",
+      "Boton Ver adentro en la barra del 3D, se recuerda entre sesiones",
+      "Textos que salian en espanol en la interfaz en ingles, traducidos"
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.18.0-setup.exe",
-      "bytes": 158500903,
-      "sha256": "ce12006fe44563f6b2304238d62dd8b0e56ef358968e186cd4045e1f57fabf96",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.18.0/nest101-0.18.0-setup.exe",
+      "archivo": "nest101-0.18.1-setup.exe",
+      "bytes": 158502402,
+      "sha256": "ff7bb76a60b65cd7dce1cd5cf99089b3d8f0470b2defa871abc8faaf3db2e7b3",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.18.1/nest101-0.18.1-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
