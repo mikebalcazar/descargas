@@ -1,17 +1,21 @@
 {
   "draw101": {
-    "version": "0.20.13",
+    "version": "0.20.14",
     "fecha": "2026-09-16",
     "notas": [
-      "draw101 0.20.13 (2026-09-16)",
-      "La lista de sugerencias es la tercera parte de grande: el ancho lo pone el contenido (antes se estiraba con la caja de comandos y quedaba medio panel vacío), la letra es más chica, los renglones más juntos y la ayuda va recortada a una idea, sin repetir el nombre del comando que ya encabeza la fila."
+      "draw101 0.20.14 (2026-09-16)",
+      "ARREGLADO: un DWG podía abrir en blanco. El convertidor que va dentro escribe el color de las capas en negativo, y en DXF eso significa «capa apagada»: en el plano de Mike llegaban apagadas 134 de 136 capas y se veían 54 entidades de 15 972. Cuando llegan apagadas casi todas se encienden y se avisa en el informe de apertura; un plano donde apagar capas fue una decisión de verdad no se toca.",
+      "Planos grandes, más ligeros: las coordenadas viajan con la precisión del taller (una centésima de milímetro) en vez de con dieciséis dígitos, y lo que es igual a lo de siempre (grosor 0.25, sin punteado, escala 1) ya no viaja. En el plano de 24 MB de Mike, lo que se manda al lienzo pasa de 50 a 30 MB.",
+      "«Guardar como…» ofrece DXF y DWG además del formato propio. Elegir DXF o DWG exporta: escribe el archivo y avisa de lo que no cupo, y el dibujo sigue siendo el .t101d de siempre.",
+      "Las pestañas de dibujos se ven siempre, aunque haya uno solo: se ve cómo se llama, si tiene cambios sin guardar y el botón para abrir otro, y el lienzo ya no brinca al abrir el segundo.",
+      "Pruebas t027 (guardar como), t028 (pestañas) y t029 (capas apagadas)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.13-setup.exe",
-      "bytes": 124699291,
-      "sha256": "f27b90715a271b28db42405073956d3f50ee4a7d6769b84b0ca937f165c5ed9e",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.13/draw101-0.20.13-setup.exe",
+      "archivo": "draw101-0.20.14-setup.exe",
+      "bytes": 124701325,
+      "sha256": "28bfb37357197b3221cc56d24b19393b20164b1ddbacb296fc7245ef23d37024",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.14/draw101-0.20.14-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
