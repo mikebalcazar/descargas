@@ -1,18 +1,19 @@
 {
   "draw101": {
-    "version": "0.20.10",
-    "fecha": "2026-09-15",
+    "version": "0.20.11",
+    "fecha": "2026-09-16",
     "notas": [
-      "draw101 0.20.10 (2026-09-15)",
-      "UNIDADES ya no escala el dibujo. Cambiar de mm a cm o a m cambia sólo lo que significan los números (el dato del archivo, los decimales de las cotas y la unidad con que sale el DXF); lo dibujado no se toca. Antes la casilla «escalar» venía marcada y un cambio a media chamba reescalaba el plano entero. Para escalar de verdad está ESCALAR (Mike, 15-sep-2026: «el dibujo nunca cambia de unidades»).",
-      "La pantalla de inicio ya dice la verdad: los dibujos nuevos nacen en centímetros (así es desde 0.20.1; el texto decía milímetros)."
+      "draw101 0.20.11 (2026-09-16)",
+      "Sugeridor de comandos: al teclear en la consola sale la lista de los que empiezan así, con sus atajos y para qué sirven. Encabeza lo que Enter correría ahora mismo (con «C», CIRCULO, que es su atajo). Las flechas eligen cuando hay algo tecleado y siguen siendo el historial con la caja vacía; al elegir, el nombre se escribe en la caja y Enter lo corre. Busca por nombre y por atajo, en español y en inglés: «CIRCLE» encuentra CIRCULO. Nada se completa solo.",
+      "De paso: teclear algo y apretar la flecha ya no borra lo escrito.",
+      "Prueba t025 (sugeridor, 23 comprobaciones). Mismas reglas que en shape101, que lo hizo primero."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.10-setup.exe",
-      "bytes": 124694325,
-      "sha256": "efdb837de4e9f0e371679bc5976d2f190d03cb4dc26124e3f59219a191f16120",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.10/draw101-0.20.10-setup.exe",
+      "archivo": "draw101-0.20.11-setup.exe",
+      "bytes": 124697129,
+      "sha256": "918c96a6aafd3792c90e7a0c31e7b423fd7447c582289bf49d9f47f0b297ad47",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.11/draw101-0.20.11-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
