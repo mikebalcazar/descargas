@@ -1,18 +1,17 @@
 {
   "nest101": {
-    "version": "0.16.2",
+    "version": "0.16.3",
     "fecha": "2026-09-16",
     "notas": [
-      "Arreglado: el instalador salia sin cuatro librerias y la app se quedaba en la pantalla de arranque",
-      "La compilacion ahora comprueba que las once librerias carguen antes de publicar",
-      "OpenCV en su version ligera: mismas funciones, menos peso"
+      "El entrepano divisorio del nicho ya no se mete en el respaldo: se le resta el espesor del panel de fondo",
+      "El despiece y el 3D ahora sacan ese fondo del mismo calculo"
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.16.2-setup.exe",
-      "bytes": 158494616,
-      "sha256": "7eb29d31615cf5844f3261037709c9555fea2259e9c9f7dff96a397561ca669c",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.16.2/nest101-0.16.2-setup.exe",
+      "archivo": "nest101-0.16.3-setup.exe",
+      "bytes": 158496210,
+      "sha256": "37cefe5af51a7b8950d5ee1476826bca8947fbbfd3b9cbc54f9dc258f79c4adb",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.16.3/nest101-0.16.3-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
