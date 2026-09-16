@@ -1,18 +1,18 @@
 {
   "draw101": {
-    "version": "0.20.9",
+    "version": "0.20.10",
     "fecha": "2026-09-15",
     "notas": [
-      "draw101 0.20.9 (2026-09-15)",
-      "Actualizar desde la app ya funciona en máquinas donde el motor no llega a GitHub (Mike: «SSL: CERTIFICATE_VERIFY_FAILED»: el Python empotrado no ve las raíces de Windows). El instalador lo baja Electron con la red de Chromium (certificados y proxy de Windows, sin la traba de CORS que tumbaba al navegador con «Failed to fetch») y el motor lo comprueba con su huella antes de instalar.",
-      "Prueba t022 ampliada (22 comprobaciones)."
+      "draw101 0.20.10 (2026-09-15)",
+      "UNIDADES ya no escala el dibujo. Cambiar de mm a cm o a m cambia sólo lo que significan los números (el dato del archivo, los decimales de las cotas y la unidad con que sale el DXF); lo dibujado no se toca. Antes la casilla «escalar» venía marcada y un cambio a media chamba reescalaba el plano entero. Para escalar de verdad está ESCALAR (Mike, 15-sep-2026: «el dibujo nunca cambia de unidades»).",
+      "La pantalla de inicio ya dice la verdad: los dibujos nuevos nacen en centímetros (así es desde 0.20.1; el texto decía milímetros)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.9-setup.exe",
-      "bytes": 124693916,
-      "sha256": "bd41455623f763d15a6481a5a0fa91380a1a021328250fead3a02d84bff0172d",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.9/draw101-0.20.9-setup.exe",
+      "archivo": "draw101-0.20.10-setup.exe",
+      "bytes": 124694325,
+      "sha256": "efdb837de4e9f0e371679bc5976d2f190d03cb4dc26124e3f59219a191f16120",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.10/draw101-0.20.10-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
