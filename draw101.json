@@ -1,18 +1,18 @@
 {
   "draw101": {
-    "version": "0.20.8",
+    "version": "0.20.9",
     "fecha": "2026-09-15",
     "notas": [
-      "draw101 0.20.8 (2026-09-15)",
-      "El aviso de versión nueva ya se ve al arrancar. La revisión sí corría y sí ponía el letrero, pero dentro del lienzo, tapado por la pantalla de inicio, que es donde uno está al abrir el programa. Ahora el letrero va fijo arriba, por encima del inicio.",
-      "Prueba t024 (letrero sobre la pantalla de inicio, 9 comprobaciones)."
+      "draw101 0.20.9 (2026-09-15)",
+      "Actualizar desde la app ya funciona en máquinas donde el motor no llega a GitHub (Mike: «SSL: CERTIFICATE_VERIFY_FAILED»: el Python empotrado no ve las raíces de Windows). El instalador lo baja Electron con la red de Chromium (certificados y proxy de Windows, sin la traba de CORS que tumbaba al navegador con «Failed to fetch») y el motor lo comprueba con su huella antes de instalar.",
+      "Prueba t022 ampliada (22 comprobaciones)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.8-setup.exe",
-      "bytes": 124692599,
-      "sha256": "a02b3e6a525816b99aaecbcc8a4b1f3a8d6020bdcc1704b477c6a247d09258d5",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.8/draw101-0.20.8-setup.exe",
+      "archivo": "draw101-0.20.9-setup.exe",
+      "bytes": 124693916,
+      "sha256": "bd41455623f763d15a6481a5a0fa91380a1a021328250fead3a02d84bff0172d",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.9/draw101-0.20.9-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
