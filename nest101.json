@@ -1,18 +1,18 @@
 {
   "nest101": {
-    "version": "0.18.1",
+    "version": "0.18.2",
     "fecha": "2026-09-16",
     "notas": [
-      "Ahora el transparente es el mueble seleccionado, para verle las tripas",
-      "Boton Ver adentro en la barra del 3D, se recuerda entre sesiones",
-      "Textos que salian en espanol en la interfaz en ingles, traducidos"
+      "Arreglado: Buscar actualizaciones decia sin internet aunque hubiera. Ahora usa los certificados de Windows",
+      "La camara del 3D ya no vuelve al encuadre general cuando cambias una medida",
+      "Si falla la revision, ahora dice por que"
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.18.1-setup.exe",
-      "bytes": 158502402,
-      "sha256": "ff7bb76a60b65cd7dce1cd5cf99089b3d8f0470b2defa871abc8faaf3db2e7b3",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.18.1/nest101-0.18.1-setup.exe",
+      "archivo": "nest101-0.18.2-setup.exe",
+      "bytes": 158520063,
+      "sha256": "4f428b3d0efe68f5924b428cfcd0c762dd7128dc3221d69931598cb84f13c706",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.18.2/nest101-0.18.2-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
