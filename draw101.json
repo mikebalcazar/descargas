@@ -1,18 +1,18 @@
 {
   "draw101": {
-    "version": "0.20.7",
+    "version": "0.20.8",
     "fecha": "2026-09-15",
     "notas": [
-      "draw101 0.20.7 (2026-09-15)",
-      "Pantalla de inicio: las rutas largas de los planos recientes ya no se salen de la ventana. Se enseña el arranque y el final de la ruta con «…» en medio (la ruta completa aparece al pasar el ratón), y la columna de recientes ya no se estira con el texto.",
-      "Prueba t023 (inicio: rutas largas, 9 comprobaciones)."
+      "draw101 0.20.8 (2026-09-15)",
+      "El aviso de versión nueva ya se ve al arrancar. La revisión sí corría y sí ponía el letrero, pero dentro del lienzo, tapado por la pantalla de inicio, que es donde uno está al abrir el programa. Ahora el letrero va fijo arriba, por encima del inicio.",
+      "Prueba t024 (letrero sobre la pantalla de inicio, 9 comprobaciones)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.7-setup.exe",
-      "bytes": 124692311,
-      "sha256": "04739c238058f80a265524f0f1614205c68071c506cc70d2df2ea603203f67be",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.7/draw101-0.20.7-setup.exe",
+      "archivo": "draw101-0.20.8-setup.exe",
+      "bytes": 124692599,
+      "sha256": "a02b3e6a525816b99aaecbcc8a4b1f3a8d6020bdcc1704b477c6a247d09258d5",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.8/draw101-0.20.8-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }

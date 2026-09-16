@@ -4,7 +4,7 @@ Instaladores de la familia *101 para Windows. Cada programa se actualiza solo de
 
 | Programa | Última versión | Fecha | Descargar | Página fija (siempre la última) | Tamaño |
 |---|---|---|---|---|---|
-| **draw101** | 0.20.7 | 2026-09-15 | [draw101-0.20.7-setup.exe](https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.7/draw101-0.20.7-setup.exe) | [draw101-ultima](https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima) | 125 MB |
+| **draw101** | 0.20.8 | 2026-09-15 | [draw101-0.20.8-setup.exe](https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.8/draw101-0.20.8-setup.exe) | [draw101-ultima](https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima) | 125 MB |
 | **shape101** | 0.3.0 | 2026-09-14 | [shape101-0.3.0-setup.exe](https://github.com/mikebalcazar/descargas/releases/download/shape101-0.3.0/shape101-0.3.0-setup.exe) | [shape101-ultima](https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima) | 125 MB |
 | **nest101** | 0.16.3 | 2026-09-16 | [nest101-0.16.3-setup.exe](https://github.com/mikebalcazar/descargas/releases/download/nest101-0.16.3/nest101-0.16.3-setup.exe) | [nest101-ultima](https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima) | 151 MB |
 
