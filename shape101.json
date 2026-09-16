@@ -1,17 +1,20 @@
 {
   "shape101": {
-    "version": "0.4.1",
+    "version": "0.5.0",
     "fecha": "2026-09-16",
     "notas": [
-      "shape101 0.4.1 (2026-09-16)",
-      "EXTRUIR ya pregunta el espesor como el resto del programa, con la cajita de siempre: acepta coma o punto y recuerda lo último que tecleaste. En 0.4.0 el comando se quedaba muerto sin preguntar nada."
+      "shape101 0.5.0 (2026-09-16)",
+      "Sugeridor de comandos: al teclear sale la lista de los que empiezan así, con sus atajos y para qué sirven. Las flechas eligen y Enter corre. Con la caja vacía las flechas siguen siendo el historial, como siempre.",
+      "El 3D ya no está escondido en la consola: tiene su bloque en la barra de herramientas —Extruir, Ver 3D, Jalar, STEP, STL— y su propia rueda con **Alt + clic derecho sostenido**. La rueda de siempre no cambió ni un ángulo.",
+      "JALAR mueve la cara señalada una medida exacta. Arrastrar da la sensación; teclear da el milímetro, y en un taller hacen falta los dos.",
+      "STEP y STL sacan la pieza desde la barra o la rueda, sin teclear."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.4.1-setup.exe",
-      "bytes": 248468293,
-      "sha256": "2360b71743346c72bc68c62e43dcb16bf37e0809943ae9a546b8bce9a38ac5e3",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.4.1/shape101-0.4.1-setup.exe",
+      "archivo": "shape101-0.5.0-setup.exe",
+      "bytes": 248464340,
+      "sha256": "ded38dbb5c579919eba639564cb2f3f6355ea4c172fcffff8e1cde53642f1ff4",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.5.0/shape101-0.5.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
