@@ -1,18 +1,17 @@
 {
   "draw101": {
-    "version": "0.20.12",
+    "version": "0.20.13",
     "fecha": "2026-09-16",
     "notas": [
-      "draw101 0.20.12 (2026-09-16)",
-      "Barra de progreso al bajar una versión nueva: arriba, con el nombre de la versión, los megas bajados de los totales y el porcentaje. Se pone verde al terminar y se cierra sola; si falla, roja. Cuando el servidor no dice cuánto pesa, la barra corre sola en vez de inventar un porcentaje. Antes sólo había un renglón de texto.",
-      "Prueba t026 (barra de descarga, 21 comprobaciones)."
+      "draw101 0.20.13 (2026-09-16)",
+      "La lista de sugerencias es la tercera parte de grande: el ancho lo pone el contenido (antes se estiraba con la caja de comandos y quedaba medio panel vacío), la letra es más chica, los renglones más juntos y la ayuda va recortada a una idea, sin repetir el nombre del comando que ya encabeza la fila."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.12-setup.exe",
-      "bytes": 124698490,
-      "sha256": "e83538199339fef44257819a803e6da6dfdd03a768fb67daa90b56fc4bfd1f5c",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.12/draw101-0.20.12-setup.exe",
+      "archivo": "draw101-0.20.13-setup.exe",
+      "bytes": 124699291,
+      "sha256": "f27b90715a271b28db42405073956d3f50ee4a7d6769b84b0ca937f165c5ed9e",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.13/draw101-0.20.13-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
