@@ -1,17 +1,18 @@
 {
   "nest101": {
-    "version": "0.16.3",
+    "version": "0.17.0",
     "fecha": "2026-09-16",
     "notas": [
-      "El entrepano divisorio del nicho ya no se mete en el respaldo: se le resta el espesor del panel de fondo",
-      "El despiece y el 3D ahora sacan ese fondo del mismo calculo"
+      "La caja del cajon se dibuja pieza por pieza: laterales, frente, trasera y fondo",
+      "Cada pieza dibujada se comprueba contra la lista de corte: medidas, conteos y materiales",
+      "Los fondos de cajon se pueden encender y apagar aparte en la leyenda"
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.16.3-setup.exe",
-      "bytes": 158496210,
-      "sha256": "37cefe5af51a7b8950d5ee1476826bca8947fbbfd3b9cbc54f9dc258f79c4adb",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.16.3/nest101-0.16.3-setup.exe",
+      "archivo": "nest101-0.17.0-setup.exe",
+      "bytes": 158498355,
+      "sha256": "43d9547a0352503d9aee9422cdee3c207cc20c144138066d33fa04b01f8f0f30",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.17.0/nest101-0.17.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
