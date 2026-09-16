@@ -1,20 +1,20 @@
 {
   "shape101": {
-    "version": "0.5.0",
+    "version": "0.6.0",
     "fecha": "2026-09-16",
     "notas": [
-      "shape101 0.5.0 (2026-09-16)",
-      "Sugeridor de comandos: al teclear sale la lista de los que empiezan así, con sus atajos y para qué sirven. Las flechas eligen y Enter corre. Con la caja vacía las flechas siguen siendo el historial, como siempre.",
-      "El 3D ya no está escondido en la consola: tiene su bloque en la barra de herramientas —Extruir, Ver 3D, Jalar, STEP, STL— y su propia rueda con **Alt + clic derecho sostenido**. La rueda de siempre no cambió ni un ángulo.",
-      "JALAR mueve la cara señalada una medida exacta. Arrastrar da la sensación; teclear da el milímetro, y en un taller hacen falta los dos.",
-      "STEP y STL sacan la pieza desde la barra o la rueda, sin teclear."
+      "shape101 0.6.0 (2026-09-16)",
+      "Un solo espacio. El 3D ya no es un visor pegado encima del dibujo: las piezas se pintan en el mismo lienzo que las líneas, con la misma cámara, y la pieza se para sobre el contorno del que salió. La vista de planta es un ángulo de cámara, no un modo: se dibuja igual que siempre.",
+      "ORBITAR gira la vista arrastrando, alrededor de lo que estás mirando. PLANTA, FRENTE, DERECHA e ISO son las vistas fijas. El comando 3D alterna planta e isométrica. Todo en la barra y en la rueda 3D (Alt + clic derecho sostenido).",
+      "Al jalar una cara ahora ves en tiempo real a dónde va: la cara punteada en su sitio nuevo, las líneas que la unen al viejo y la medida en milímetros siguiendo al cursor. Al soltar, la pieza se rehace. Si la cara se ve exactamente de canto, el programa lo dice en vez de inventar un número.",
+      "El sugeridor de comandos es cinco veces más chico: cinco filas, letra chica, pegado a la caja."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.5.0-setup.exe",
-      "bytes": 248464340,
-      "sha256": "ded38dbb5c579919eba639564cb2f3f6355ea4c172fcffff8e1cde53642f1ff4",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.5.0/shape101-0.5.0-setup.exe",
+      "archivo": "shape101-0.6.0-setup.exe",
+      "bytes": 248467384,
+      "sha256": "acb19275183d6f1cc6b899e41f66c6a549cd2a265b06d38cecdae7bbefb5fa35",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.6.0/shape101-0.6.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
