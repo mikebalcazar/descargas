@@ -1,19 +1,18 @@
 {
   "draw101": {
-    "version": "0.20.11",
+    "version": "0.20.12",
     "fecha": "2026-09-16",
     "notas": [
-      "draw101 0.20.11 (2026-09-16)",
-      "Sugeridor de comandos: al teclear en la consola sale la lista de los que empiezan así, con sus atajos y para qué sirven. Encabeza lo que Enter correría ahora mismo (con «C», CIRCULO, que es su atajo). Las flechas eligen cuando hay algo tecleado y siguen siendo el historial con la caja vacía; al elegir, el nombre se escribe en la caja y Enter lo corre. Busca por nombre y por atajo, en español y en inglés: «CIRCLE» encuentra CIRCULO. Nada se completa solo.",
-      "De paso: teclear algo y apretar la flecha ya no borra lo escrito.",
-      "Prueba t025 (sugeridor, 23 comprobaciones). Mismas reglas que en shape101, que lo hizo primero."
+      "draw101 0.20.12 (2026-09-16)",
+      "Barra de progreso al bajar una versión nueva: arriba, con el nombre de la versión, los megas bajados de los totales y el porcentaje. Se pone verde al terminar y se cierra sola; si falla, roja. Cuando el servidor no dice cuánto pesa, la barra corre sola en vez de inventar un porcentaje. Antes sólo había un renglón de texto.",
+      "Prueba t026 (barra de descarga, 21 comprobaciones)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.11-setup.exe",
-      "bytes": 124697129,
-      "sha256": "918c96a6aafd3792c90e7a0c31e7b423fd7447c582289bf49d9f47f0b297ad47",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.11/draw101-0.20.11-setup.exe",
+      "archivo": "draw101-0.20.12-setup.exe",
+      "bytes": 124698490,
+      "sha256": "e83538199339fef44257819a803e6da6dfdd03a768fb67daa90b56fc4bfd1f5c",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.12/draw101-0.20.12-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
