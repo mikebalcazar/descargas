@@ -1,20 +1,20 @@
 {
   "shape101": {
-    "version": "0.6.0",
-    "fecha": "2026-09-16",
+    "version": "0.6.1",
+    "fecha": "2026-09-17",
     "notas": [
-      "shape101 0.6.0 (2026-09-16)",
-      "Un solo espacio. El 3D ya no es un visor pegado encima del dibujo: las piezas se pintan en el mismo lienzo que las líneas, con la misma cámara, y la pieza se para sobre el contorno del que salió. La vista de planta es un ángulo de cámara, no un modo: se dibuja igual que siempre.",
-      "ORBITAR gira la vista arrastrando, alrededor de lo que estás mirando. PLANTA, FRENTE, DERECHA e ISO son las vistas fijas. El comando 3D alterna planta e isométrica. Todo en la barra y en la rueda 3D (Alt + clic derecho sostenido).",
-      "Al jalar una cara ahora ves en tiempo real a dónde va: la cara punteada en su sitio nuevo, las líneas que la unen al viejo y la medida en milímetros siguiendo al cursor. Al soltar, la pieza se rehace. Si la cara se ve exactamente de canto, el programa lo dice en vez de inventar un número.",
-      "El sugeridor de comandos es cinco veces más chico: cinco filas, letra chica, pegado a la caja."
+      "shape101 0.6.1 (2026-09-17)",
+      "La pieza ya nace pegada al dibujo. En 0.6.0 las líneas del plano se seguían pintando desde arriba aunque la cámara girara, así que la pieza giraba sola y se veía despegada.",
+      "Orbitar se ve en tiempo real y ya no brinca: la cámara pedía repintar por un nombre que no existía, y el cuadro llegaba tarde.",
+      "Un error al pintar ya no deja el programa muerto: se anota, se pinta lo que se pudo y sigue vivo. Es lo que pasó en 0.6.0 al hacer zoom con la vista girada.",
+      "Con la vista girada no se pinta la rejilla, que ahí no significa nada."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.6.0-setup.exe",
-      "bytes": 248467384,
-      "sha256": "acb19275183d6f1cc6b899e41f66c6a549cd2a265b06d38cecdae7bbefb5fa35",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.6.0/shape101-0.6.0-setup.exe",
+      "archivo": "shape101-0.6.1-setup.exe",
+      "bytes": 249389714,
+      "sha256": "e60a24227a0e416d497d05d46e7ed56cb49ce3bcfdbe329fc21abac20f185006",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.6.1/shape101-0.6.1-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
