@@ -1,18 +1,18 @@
 {
   "shape101": {
-    "version": "0.8.1",
+    "version": "0.8.2",
     "fecha": "2026-09-18",
     "notas": [
-      "shape101 0.8.1 (2026-09-18)",
-      "El motor de sólidos se carga al abrir el programa, en segundo plano, en vez de la primera vez que extruyes. En 0.8.0 esa primera extrusión tardaba medio minuto: eran 350 MB de bibliotecas leyéndose por primera vez.",
-      "Al extruir, la consola dice cuánto tardó el motor. Si algo vuelve a tardar, sabremos dónde."
+      "shape101 0.8.2 (2026-09-18)",
+      "Los dibujos nuevos arrancan en milímetros con centésimas, como se decidió el primer día. Hasta ahora arrancaban en centímetros, heredados de draw101.",
+      "Si un dibujo está en centímetros o metros, el motor lo sabe: el volumen sale bien y el STEP y el STL a tamaño real. Antes una pieza dibujada en cm se exportaba diez veces más chica, y ese error se ve ya cortado."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.8.1-setup.exe",
-      "bytes": 249395568,
-      "sha256": "71796c3e884997f295c7bf27ecbad79a81c00a9724177cc63f38eaf96fd87875",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.8.1/shape101-0.8.1-setup.exe",
+      "archivo": "shape101-0.8.2-setup.exe",
+      "bytes": 249391346,
+      "sha256": "a9165ef8d813afb2ec634641a87b4725a8f73d64bd9b13d9037c3fcd76a3fa75",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.8.2/shape101-0.8.2-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
