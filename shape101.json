@@ -1,18 +1,19 @@
 {
   "shape101": {
-    "version": "0.8.2",
+    "version": "0.9.0",
     "fecha": "2026-09-18",
     "notas": [
-      "shape101 0.8.2 (2026-09-18)",
-      "Los dibujos nuevos arrancan en milímetros con centésimas, como se decidió el primer día. Hasta ahora arrancaban en centímetros, heredados de draw101.",
-      "Si un dibujo está en centímetros o metros, el motor lo sabe: el volumen sale bien y el STEP y el STL a tamaño real. Antes una pieza dibujada en cm se exportaba diez veces más chica, y ese error se ve ya cortado."
+      "shape101 0.9.0 (2026-09-18)",
+      "Cuatro ventanas, como Rhino: superior, perspectiva, frontal y lateral, cada una con su cámara. Clic en una la activa; doble clic en su título la maximiza y otro doble clic la devuelve. Todo —dibujar, zoom, pan, orbitar— trabaja sobre la ventana activa, que se ve con el borde marcado.",
+      "Al abrir, la ventana superior conserva lo que estabas mirando y las otras tres se encuadran solas a lo que hay.",
+      "Todavía se dibuja sobre el suelo (XY) en las cuatro: en la frontal y la lateral el plano se ve de canto. Dibujar sobre el plano de cada ventana es el paso siguiente. La perspectiva de la cuarta ventana es aún isométrica."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.8.2-setup.exe",
-      "bytes": 249391346,
-      "sha256": "a9165ef8d813afb2ec634641a87b4725a8f73d64bd9b13d9037c3fcd76a3fa75",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.8.2/shape101-0.8.2-setup.exe",
+      "archivo": "shape101-0.9.0-setup.exe",
+      "bytes": 249402373,
+      "sha256": "aa30ddb91358b2b1a3d6c20656cf876d4e804e65844e645fd5e26cccbe6a1877",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.9.0/shape101-0.9.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
