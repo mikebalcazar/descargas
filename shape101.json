@@ -1,21 +1,19 @@
 {
   "shape101": {
-    "version": "0.7.0",
+    "version": "0.8.0",
     "fecha": "2026-09-18",
     "notas": [
-      "shape101 0.7.0 (2026-09-18)",
-      "Con la vista girada pinta un visor nuevo, pensado en 3D: las líneas del dibujo y las piezas en un mismo espacio, sin los atajos de planta que hacían que las líneas se quedaran en 2D y que girar fuera lento. En planta todo sigue igual.",
-      "Orbitar ya no se pelea con el pan: mientras giras, el ratón es de la cámara.",
-      "El zoom con la rueda girado ya no se descentra: lo que está bajo el cursor se queda bajo el cursor, desde cualquier ángulo.",
-      "Después de jalar una cara, la pieza se redibuja de inmediato.",
-      "Girado se ve el plano de trabajo, apenas insinuado, para saber dónde está el suelo. Textos y cotas todavía no se pintan girados; en planta sí."
+      "shape101 0.8.0 (2026-09-18)",
+      "Ya no hay un plano 2D aparte: el dibujo vive sobre el suelo del 3D y el visor nuevo pinta siempre, también en planta. Dos pintores para el mismo espacio era lo que hacía lento girar. Las hojas de impresión siguen como estaban.",
+      "Orbitar es Alt + botón central del ratón, arrastrando. ORBITAR sigue existiendo para quien no tenga botón central.",
+      "La rejilla se ve también girada, en perspectiva, con los ejes marcados para saber dónde está el cero. Los textos vuelven a verse girados, de frente a quien mira."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.7.0-setup.exe",
-      "bytes": 249393733,
-      "sha256": "fa7747a563fcff4be8dccc5546dc79f5d0326258ed547ccd7728555a5c79809c",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.7.0/shape101-0.7.0-setup.exe",
+      "archivo": "shape101-0.8.0-setup.exe",
+      "bytes": 249392368,
+      "sha256": "e9f89e8d9e46a51f0baa913cbd99eea7ee86ec1828fa10c3059dfaddf6600702",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.8.0/shape101-0.8.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
