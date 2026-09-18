@@ -1,20 +1,21 @@
 {
   "shape101": {
-    "version": "0.6.1",
-    "fecha": "2026-09-17",
+    "version": "0.7.0",
+    "fecha": "2026-09-18",
     "notas": [
-      "shape101 0.6.1 (2026-09-17)",
-      "La pieza ya nace pegada al dibujo. En 0.6.0 las líneas del plano se seguían pintando desde arriba aunque la cámara girara, así que la pieza giraba sola y se veía despegada.",
-      "Orbitar se ve en tiempo real y ya no brinca: la cámara pedía repintar por un nombre que no existía, y el cuadro llegaba tarde.",
-      "Un error al pintar ya no deja el programa muerto: se anota, se pinta lo que se pudo y sigue vivo. Es lo que pasó en 0.6.0 al hacer zoom con la vista girada.",
-      "Con la vista girada no se pinta la rejilla, que ahí no significa nada."
+      "shape101 0.7.0 (2026-09-18)",
+      "Con la vista girada pinta un visor nuevo, pensado en 3D: las líneas del dibujo y las piezas en un mismo espacio, sin los atajos de planta que hacían que las líneas se quedaran en 2D y que girar fuera lento. En planta todo sigue igual.",
+      "Orbitar ya no se pelea con el pan: mientras giras, el ratón es de la cámara.",
+      "El zoom con la rueda girado ya no se descentra: lo que está bajo el cursor se queda bajo el cursor, desde cualquier ángulo.",
+      "Después de jalar una cara, la pieza se redibuja de inmediato.",
+      "Girado se ve el plano de trabajo, apenas insinuado, para saber dónde está el suelo. Textos y cotas todavía no se pintan girados; en planta sí."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.6.1-setup.exe",
-      "bytes": 249389714,
-      "sha256": "e60a24227a0e416d497d05d46e7ed56cb49ce3bcfdbe329fc21abac20f185006",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.6.1/shape101-0.6.1-setup.exe",
+      "archivo": "shape101-0.7.0-setup.exe",
+      "bytes": 249393733,
+      "sha256": "fa7747a563fcff4be8dccc5546dc79f5d0326258ed547ccd7728555a5c79809c",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.7.0/shape101-0.7.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
