@@ -1,21 +1,19 @@
 {
   "draw101": {
-    "version": "0.20.14",
-    "fecha": "2026-09-16",
+    "version": "0.20.18",
+    "fecha": "2026-09-18",
     "notas": [
-      "draw101 0.20.14 (2026-09-16)",
-      "ARREGLADO: un DWG podía abrir en blanco. El convertidor que va dentro escribe el color de las capas en negativo, y en DXF eso significa «capa apagada»: en el plano de Mike llegaban apagadas 134 de 136 capas y se veían 54 entidades de 15 972. Cuando llegan apagadas casi todas se encienden y se avisa en el informe de apertura; un plano donde apagar capas fue una decisión de verdad no se toca.",
-      "Planos grandes, más ligeros: las coordenadas viajan con la precisión del taller (una centésima de milímetro) en vez de con dieciséis dígitos, y lo que es igual a lo de siempre (grosor 0.25, sin punteado, escala 1) ya no viaja. En el plano de 24 MB de Mike, lo que se manda al lienzo pasa de 50 a 30 MB.",
-      "«Guardar como…» ofrece DXF y DWG además del formato propio. Elegir DXF o DWG exporta: escribe el archivo y avisa de lo que no cupo, y el dibujo sigue siendo el .t101d de siempre.",
-      "Las pestañas de dibujos se ven siempre, aunque haya uno solo: se ve cómo se llama, si tiene cambios sin guardar y el botón para abrir otro, y el lienzo ya no brinca al abrir el segundo.",
-      "Pruebas t027 (guardar como), t028 (pestañas) y t029 (capas apagadas)."
+      "draw101 0.20.18 (2026-09-18)",
+      "Adentro, la maquinaria de las licencias: draw101 ya sabe leer un permiso firmado por Taller 101, atarlo a esta computadora y decir en qué situación está la suscripción. Todavía NO estorba a nadie: no pide clave ni impide guardar; eso entra cuando Mike diga y con su pantalla de activación.",
+      "La firma se comprueba con Ed25519 escrito en el propio programa, sin instalar nada: un permiso al que le cambien la fecha, uno de otra computadora o uno de otro programa de la suite no pasan.",
+      "Prueba t033 (licencias, 27 comprobaciones)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.14-setup.exe",
-      "bytes": 124701325,
-      "sha256": "28bfb37357197b3221cc56d24b19393b20164b1ddbacb296fc7245ef23d37024",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.14/draw101-0.20.14-setup.exe",
+      "archivo": "draw101-0.20.18-setup.exe",
+      "bytes": 120042346,
+      "sha256": "23ae32b3c222765e03341c3fdb5de97db9261e7dac56adaa53175089d8289549",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.18/draw101-0.20.18-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
