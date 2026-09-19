@@ -1,20 +1,21 @@
 {
   "shape101": {
-    "version": "0.11.0",
-    "fecha": "2026-09-18",
+    "version": "0.12.0",
+    "fecha": "2026-09-19",
     "notas": [
-      "shape101 0.11.0 (2026-09-18)",
-      "Cada ventana dibuja sobre su plano: la Superior sobre el suelo, la Frontal sobre XZ y la Lateral sobre YZ. Cada línea recuerda en qué plano vive y se ve en las cuatro ventanas desde su ángulo, con su selección y su hule.",
-      "Extruir empuja en la dirección del plano: un contorno de la Frontal se levanta hacia quien mira; uno de la Lateral, hacia el lado. STEP y STL salen ya rotados.",
-      "La ventana activa se elige con clic y se queda para los comandos. Pan, zoom y órbita van a la ventana bajo el cursor sin cambiarla: es lo que quita el brinco de la Perspectiva y el hule mal pintado de la 0.10.0.",
-      "Orbitar sólo existe en la Perspectiva, con el botón central. Shift + central hace pan ahí. En las ortogonales el central es pan."
+      "shape101 0.12.0 (2026-09-19)",
+      "La selección se ve bien en las cuatro ventanas, cada una desde su ángulo y en el plano de cada línea. En 0.11.0 se proyectaba siempre en planta y salía mal.",
+      "Pan, zoom y órbita se ven en tiempo real en la ventana bajo el cursor.",
+      "Las tres ventanas ortogonales están clavadas en su vista: ORBITAR, ISO y las demás giran siempre la Perspectiva, esté activa o no.",
+      "La perspectiva ya no se estira al alejar: su fuerza va en píxeles, no en milímetros, y es la misma a cualquier zoom.",
+      "La rueda 3D sale con Shift + clic derecho sostenido (antes era Alt)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.11.0-setup.exe",
-      "bytes": 249409445,
-      "sha256": "71b8b0fd91796f5d36b6f7ff25393b55c8ae5ea3e260ad11084dd4b13b55e178",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.11.0/shape101-0.11.0-setup.exe",
+      "archivo": "shape101-0.12.0-setup.exe",
+      "bytes": 340723368,
+      "sha256": "78c78f3ef4190d483ef828fe0c913f006ff3e7166fa8a1d22cab3012892a988a",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.12.0/shape101-0.12.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
