@@ -1,19 +1,21 @@
 {
   "draw101": {
-    "version": "0.20.18",
-    "fecha": "2026-09-18",
+    "version": "0.20.20",
+    "fecha": "2026-09-19",
     "notas": [
-      "draw101 0.20.18 (2026-09-18)",
-      "Adentro, la maquinaria de las licencias: draw101 ya sabe leer un permiso firmado por Taller 101, atarlo a esta computadora y decir en qué situación está la suscripción. Todavía NO estorba a nadie: no pide clave ni impide guardar; eso entra cuando Mike diga y con su pantalla de activación.",
-      "La firma se comprueba con Ed25519 escrito en el propio programa, sin instalar nada: un permiso al que le cambien la fecha, uno de otra computadora o uno de otro programa de la suite no pasan.",
-      "Prueba t033 (licencias, 27 comprobaciones)."
+      "draw101 0.20.20 (2026-09-19)",
+      "draw101 ya sabe de suscripciones. Al arrancar sin clave sale la pantalla de activación; con una clave T101-XXXX-XXXX-XXXX se activa contra el servidor de Taller 101, que contesta un permiso firmado ligado a esta computadora.",
+      "Comando LICENCIA (o Ayuda ▾ → «Suscripción de draw101…»): en qué está la suscripción, de quién es, hasta cuándo, y soltar esta computadora para poder activar otra.",
+      "Un latido al día le pregunta al servidor si el pago sigue al corriente y corre la fecha de corte. Sin internet no pasa nada: el permiso trae hasta 30 días de margen. Desde 7 días antes de vencer, avisa.",
+      "El corte todavía NO muerde: guardar y exportar siguen libres aunque no haya licencia. Es a propósito (Mike, 19-sep-2026), para ver que activar funcione antes de que nadie se quede sin guardar. Se enciende en la 0.20.21.",
+      "Pruebas t033 (28 comprobaciones) y t035 (44): activar, panel, latido, soltar la máquina, y con el corte encendido que guardar y exportar contesten 402 sin escribir nada a medias."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.20.18-setup.exe",
-      "bytes": 120042346,
-      "sha256": "23ae32b3c222765e03341c3fdb5de97db9261e7dac56adaa53175089d8289549",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.18/draw101-0.20.18-setup.exe",
+      "archivo": "draw101-0.20.20-setup.exe",
+      "bytes": 125465180,
+      "sha256": "54b146893f0566850018213bfe9c11f8f92d2e9da5042703c5fe04dff52081df",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.20.20/draw101-0.20.20-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
