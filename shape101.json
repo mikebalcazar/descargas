@@ -1,18 +1,23 @@
 {
   "shape101": {
-    "version": "0.12.1",
+    "version": "0.13.0",
     "fecha": "2026-09-19",
     "notas": [
-      "shape101 0.12.1 (2026-09-19)",
-      "Pan, zoom y órbita en una ventana que no es la activa ya no cambian de ventana activa ni devuelven las cuatro al centro. Movías una y se movía otra: el repintado de a mitad del gesto lo secuestraba.",
-      "Shift + clic central en una ventana que no es la activa mueve esa, la de abajo del cursor, que es donde están las manos."
+      "shape101 0.13.0 (2026-09-19)",
+      "Las piezas traen tiradores: un cuadrito en cada esquina —abajo, a media altura y arriba— y un círculo en el medio de cada arista. Se arrastran y la pieza se rehace desde el contorno nuevo, sin perder lo que hayas hecho después.",
+      "Arrastrar el medio de una arista corre la arista entera: se mueve, no se dobla.",
+      "Con el ortho encendido, el tirador se va por un solo eje.",
+      "Al abrir un archivo con piezas, las piezas ya se ven. Antes había que teclear 3D para que aparecieran, y un dibujo guardado se veía vacío de piezas.",
+      "Deshacer una extrusión ya borra la pieza de la pantalla.",
+      "Los grips del medio de una línea se ven en su sitio en las cuatro ventanas. Seguían proyectándose en planta, como la selección antes de la 0.12.0.",
+      "El instalador es de shape101: icono propio —una pieza en isometría— y sus pantallas. Hasta ahora llevaba el icono de draw101."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.12.1-setup.exe",
-      "bytes": 340724856,
-      "sha256": "c83e8a48595d248e1e8c9cb9c3faabe99a7df19825c8152fe794482622ea10ea",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.12.1/shape101-0.12.1-setup.exe",
+      "archivo": "shape101-0.13.0-setup.exe",
+      "bytes": 340395923,
+      "sha256": "2ebc153a354153482ce98a29c0014a0acefeeb3dc0498b9ffdff92e8951c35ce",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.13.0/shape101-0.13.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
