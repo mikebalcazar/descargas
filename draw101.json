@@ -1,20 +1,22 @@
 {
   "draw101": {
-    "version": "0.21.0",
+    "version": "0.21.1",
     "fecha": "2026-09-19",
     "notas": [
-      "draw101 0.21.0 (2026-09-19)",
-      "draw101 se abre entrando con tu cuenta de la suite 101: tu correo y contraseña, o tu cuenta de Google. Ya no hace falta teclear una clave, porque la licencia va ligada a tu correo.",
-      "La clave T101-… sigue funcionando, abajo en la misma pantalla, para una máquina de taller sin internet estable o para una licencia que ya te habían entregado.",
-      "Sin internet la app abre igual mientras tu licencia no haya vencido. Cuando vence y no hay forma de preguntarle a la suite, no abre y te lo dice con esas palabras: nunca se queda a medias.",
-      "Cada equipo cuenta como un lugar de tu licencia. Los lugares se ven y se liberan desde master101."
+      "draw101 0.21.1 (2026-09-19)",
+      "draw101 se abre entrando con la cuenta de la suite: correo y contraseña, o Google. La pantalla la sirve suite101, y abajo trae «Tengo una clave T101-…» para quien ya la tenga. Sin licencia, no abre.",
+      "IMPORTANTE, si venías de la 0.21.0: aquélla se armó desde una rama vieja y se llevó por delante todo lo de la 0.20.7 a la 0.20.20 —paleta de color, sugeridor, Guardar como DXF/DWG, barra de descarga, el panel de licencia—. Esta versión los trae de vuelta, con la puerta de cuenta encima.",
+      "La puerta y el motor comparten carpeta y huella del equipo. En la 0.21.0 la puerta guardaba el permiso en un lado y el motor lo buscaba en otro, con huellas distintas: el programa abría y adentro seguía diciendo «sin activar».",
+      "La huella del equipo ya no sale de tu nombre de usuario ni del nombre de la máquina: es un azar que se guarda la primera vez. No identifica a nadie. Reinstalar Windows cuenta como equipo nuevo, y el lugar viejo se libera desde master101.",
+      "Sin internet se abre igual mientras el permiso no venza —trae su propia fecha firmada—. Un servidor caído no borra tu licencia: «la suite dice que no» y «no se pudo llegar» son cosas distintas.",
+      "Pruebas t036 (14) y licencia.mjs (20) además de t033 y t035: en total 710 comprobaciones en 36 pruebas."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.21.0-setup.exe",
-      "bytes": 125416438,
-      "sha256": "7fcd17e239e4a603fffd51d22819674324c5ae2dae3947edf1a7e2fc18fc965e",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.21.0/draw101-0.21.0-setup.exe",
+      "archivo": "draw101-0.21.1-setup.exe",
+      "bytes": 125471160,
+      "sha256": "4e07bc31c6aa9dfc10e3bb25b5ceac715ebc00e939a5eb80e69e23c5e8bcff87",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.21.1/draw101-0.21.1-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
