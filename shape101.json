@@ -1,21 +1,18 @@
 {
   "shape101": {
-    "version": "0.12.0",
+    "version": "0.12.1",
     "fecha": "2026-09-19",
     "notas": [
-      "shape101 0.12.0 (2026-09-19)",
-      "La selección se ve bien en las cuatro ventanas, cada una desde su ángulo y en el plano de cada línea. En 0.11.0 se proyectaba siempre en planta y salía mal.",
-      "Pan, zoom y órbita se ven en tiempo real en la ventana bajo el cursor.",
-      "Las tres ventanas ortogonales están clavadas en su vista: ORBITAR, ISO y las demás giran siempre la Perspectiva, esté activa o no.",
-      "La perspectiva ya no se estira al alejar: su fuerza va en píxeles, no en milímetros, y es la misma a cualquier zoom.",
-      "La rueda 3D sale con Shift + clic derecho sostenido (antes era Alt)."
+      "shape101 0.12.1 (2026-09-19)",
+      "Pan, zoom y órbita en una ventana que no es la activa ya no cambian de ventana activa ni devuelven las cuatro al centro. Movías una y se movía otra: el repintado de a mitad del gesto lo secuestraba.",
+      "Shift + clic central en una ventana que no es la activa mueve esa, la de abajo del cursor, que es donde están las manos."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.12.0-setup.exe",
-      "bytes": 340723368,
-      "sha256": "78c78f3ef4190d483ef828fe0c913f006ff3e7166fa8a1d22cab3012892a988a",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.12.0/shape101-0.12.0-setup.exe",
+      "archivo": "shape101-0.12.1-setup.exe",
+      "bytes": 340724856,
+      "sha256": "c83e8a48595d248e1e8c9cb9c3faabe99a7df19825c8152fe794482622ea10ea",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.12.1/shape101-0.12.1-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
