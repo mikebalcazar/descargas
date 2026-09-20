@@ -1,23 +1,22 @@
 {
   "shape101": {
-    "version": "0.14.0",
+    "version": "0.15.0",
     "fecha": "2026-09-19",
     "notas": [
-      "shape101 0.14.0 (2026-09-19)",
-      "Cada punto y cada arista de una pieza se mueven solos. Los tiradores ya no salen del contorno sino del sólido: la esquina de arriba y la de abajo son dos puntos distintos, y mover una ya no mueve la otra.",
-      "Arrastrar el medio de una arista la corre entera, sin doblarla.",
-      "El arrastre va en el plano de la ventana donde estás: en la Superior sobre XY, en la Frontal sobre XZ, en la Lateral sobre YZ.",
-      "Una pieza puede dejar de ser un prisma: si una cara se alabea, se pone la superficie que pasa por sus cuatro puntos, sin inflarse.",
-      "Lo que se hizo después —un barreno, una cara jalada— se sigue volviendo a aplicar solo: la pieza se guarda como cómo se hizo, no como geometría.",
-      "Si un movimiento deja una pieza imposible, el programa lo dice y no cambia nada.",
-      "Ctrl+Z ya redibuja al instante. Antes había que dar otro comando para ver el resultado de deshacer."
+      "shape101 0.15.0 (2026-09-19)",
+      "Las piezas traen su historial a la vista: al señalar una cara, el panel de la derecha dice con qué se hizo la pieza —contorno, extrusión, barrenos, redondeos— en palabras y no en código.",
+      "Y sus números se tocan. Un barreno se agranda cambiando su diámetro en la cajita: no hay que volver a trazar el círculo ni repetir la resta.",
+      "Lo que se hizo después sobrevive al cambio. Si redondeaste unas aristas encima de un barreno, siguen redondeadas cuando el barreno cambia de tamaño, y siguen redondeadas si borras el barreno del historial.",
+      "Cada paso se puede quitar con su ×, menos el contorno y la extrusión: sin esos dos no hay pieza.",
+      "Si un cambio deja la pieza imposible, se niega y la pieza queda como estaba. Tocar un número no puede romper nada.",
+      "Dos comandos nuevos: BARRENO —se pica el centro y se da el diámetro— y REDONDEAR, que redondea las aristas verticales de la pieza señalada."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.14.0-setup.exe",
-      "bytes": 340403800,
-      "sha256": "e2859072e52908f100654b90ba914bb7cfbbbe14e6685fb7b6bbdb5c8650a6d4",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.14.0/shape101-0.14.0-setup.exe",
+      "archivo": "shape101-0.15.0-setup.exe",
+      "bytes": 340413461,
+      "sha256": "472b05b7ab65418e52c8a7db40ef556d4888b1f7219fba2c72ead052793ff30e",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.15.0/shape101-0.15.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
