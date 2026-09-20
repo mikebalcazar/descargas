@@ -1,22 +1,22 @@
 {
   "shape101": {
-    "version": "0.15.0",
+    "version": "0.16.0",
     "fecha": "2026-09-19",
     "notas": [
-      "shape101 0.15.0 (2026-09-19)",
-      "Las piezas traen su historial a la vista: al señalar una cara, el panel de la derecha dice con qué se hizo la pieza —contorno, extrusión, barrenos, redondeos— en palabras y no en código.",
-      "Y sus números se tocan. Un barreno se agranda cambiando su diámetro en la cajita: no hay que volver a trazar el círculo ni repetir la resta.",
-      "Lo que se hizo después sobrevive al cambio. Si redondeaste unas aristas encima de un barreno, siguen redondeadas cuando el barreno cambia de tamaño, y siguen redondeadas si borras el barreno del historial.",
-      "Cada paso se puede quitar con su ×, menos el contorno y la extrusión: sin esos dos no hay pieza.",
-      "Si un cambio deja la pieza imposible, se niega y la pieza queda como estaba. Tocar un número no puede romper nada.",
-      "Dos comandos nuevos: BARRENO —se pica el centro y se da el diámetro— y REDONDEAR, que redondea las aristas verticales de la pieza señalada."
+      "shape101 0.16.0 (2026-09-19)",
+      "El contorno de una pieza ya tiene cotas que se teclean. El paso del historial se lee «Rectángulo 600 × 400» y trae Ancho, Fondo y la esquina donde empieza: cambiar el ancho a 900 es teclear 900, no arrastrar cuatro puntos.",
+      "Estirar una medida no se lleva lo que hiciste después, y el barreno sigue redondo: en madera no hay barrenos ovalados.",
+      "Sirve con cualquier contorno, no sólo rectángulos: una L se estira entera.",
+      "La pieza señalada enseña sus tres medidas encima —ancho, fondo y espesor—. Se dibujan en píxeles, así que se leen igual con cualquier zoom. COTAPIEZA las apaga y las enciende.",
+      "Y esas cotas se pican: le das clic al número, tecleas la medida y la pieza se rehace. Sin abrir el panel y sin comandos.",
+      "El panel del historial ya no se salta una recarga cuando hay otra en vuelo. Antes, señalar una pieza y cambiarle un número en seguida podía dejarlo enseñando los pasos de antes."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.15.0-setup.exe",
-      "bytes": 340413461,
-      "sha256": "472b05b7ab65418e52c8a7db40ef556d4888b1f7219fba2c72ead052793ff30e",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.15.0/shape101-0.15.0-setup.exe",
+      "archivo": "shape101-0.16.0-setup.exe",
+      "bytes": 340413193,
+      "sha256": "6f3481f2bab6972b8658e6dadb05018ef8607f1f1dadeabc6be73e38f34d6f0c",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.16.0/shape101-0.16.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
