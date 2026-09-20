@@ -51,6 +51,15 @@ original: Sansation Bold en trazos, apretón de -0.05 em, la palabra alineada a
 la derecha por su avance y el aro y el «101» en coordenadas fijas. El guion
 reproduce `roster` con 0.01 de diferencia.
 
+Están los **nueve**: los siete del sitio, `shape101` —que todavía no sale en el
+sitio pero ya se descarga y ya necesita su logotipo— y `suite101`, el de la
+suite, que es el mismo dibujo con el aro relleno y el «101» calado. El 19-sep se
+volvieron a generar los nueve de un tiro y los ocho que ya existían salieron
+**idénticos byte a byte**: la prueba de que el guion no se ha movido.
+
+Copia de los nueve en Drive, en `suite101/marca/`, para las otras apps y para
+quien no clona el repositorio. El manual de imagen los documenta hoja por hoja.
+
 El recorte va **pegado al aro**, sin aire: el aro es lo más alto del dibujo, así
 que puesto en la página con una altura fija sale del mismo tamaño en los siete
 —entre 52 y 72 px en la tapa de cada programa y entre 44 y 58 px en los
