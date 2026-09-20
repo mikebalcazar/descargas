@@ -1,22 +1,20 @@
 {
   "shape101": {
-    "version": "0.16.0",
+    "version": "0.18.0",
     "fecha": "2026-09-19",
     "notas": [
-      "shape101 0.16.0 (2026-09-19)",
-      "El contorno de una pieza ya tiene cotas que se teclean. El paso del historial se lee «Rectángulo 600 × 400» y trae Ancho, Fondo y la esquina donde empieza: cambiar el ancho a 900 es teclear 900, no arrastrar cuatro puntos.",
-      "Estirar una medida no se lleva lo que hiciste después, y el barreno sigue redondo: en madera no hay barrenos ovalados.",
-      "Sirve con cualquier contorno, no sólo rectángulos: una L se estira entera.",
-      "La pieza señalada enseña sus tres medidas encima —ancho, fondo y espesor—. Se dibujan en píxeles, así que se leen igual con cualquier zoom. COTAPIEZA las apaga y las enciende.",
-      "Y esas cotas se pican: le das clic al número, tecleas la medida y la pieza se rehace. Sin abrir el panel y sin comandos.",
-      "El panel del historial ya no se salta una recarga cuando hay otra en vuelo. Antes, señalar una pieza y cambiarle un número en seguida podía dejarlo enseñando los pasos de antes."
+      "shape101 0.18.0 (2026-09-19)",
+      "Ya se eligen a mano las aristas que se van a redondear: Ctrl+clic sobre el círculo de en medio de una arista la elige, y se pinta en amarillo. Volver a picarla la quita.",
+      "REDONDEAR usa las elegidas. Si no elegiste ninguna sigue tomando las verticales, como antes, así que nada de lo que ya hacías cambia.",
+      "Ctrl y no un clic pelón porque el clic pelón ya significa «jalar esta arista», que es el gesto que más se usa: no se le quita el sitio.",
+      "Ojo con la ventana: en la Superior una arista vertical se dibuja justo encima de su esquina, y ahí gana la esquina. Para elegir esas aristas, gira la vista o usa la Frontal o la Lateral."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.16.0-setup.exe",
-      "bytes": 340413193,
-      "sha256": "6f3481f2bab6972b8658e6dadb05018ef8607f1f1dadeabc6be73e38f34d6f0c",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.16.0/shape101-0.16.0-setup.exe",
+      "archivo": "shape101-0.18.0-setup.exe",
+      "bytes": 340421077,
+      "sha256": "2deff5ab7ffc97e61ab4537404373c30fa5db94785662f763e1d0041a4f0e870",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.18.0/shape101-0.18.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
