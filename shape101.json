@@ -1,19 +1,19 @@
 {
   "shape101": {
-    "version": "0.21.1",
+    "version": "0.21.2",
     "fecha": "2026-09-24",
     "notas": [
-      "shape101 0.21.1 (2026-09-24)",
-      "Dibujar en la Perspectiva ya cae donde apuntas. Antes el programa leía el punto con la cámara de la ventana que estuviera activa, no con la de la ventana donde tenías el ratón: apuntando al centro de la Perspectiva con la Superior activa, el punto se iba 558 mm de donde señalaste. Ahora manda la ventana donde está el ratón, como en Rhino.",
-      "Y el trazo en curso se ve en su sitio en las cuatro ventanas. La línea de hule no se acordaba de sobre qué plano se estaba trazando, así que cada ventana la pintaba con el suyo y lo trazado sobre el suelo se veía parado en la Frontal y en la Lateral — «como si fuera vista frontal».",
-      "Empezada la línea, una ventana de otro plano ya no se la lleva: una línea no puede tener un extremo en el suelo y el otro en la pared. El hule se queda quieto mientras el cursor ande por ahí."
+      "shape101 0.21.2 (2026-09-24)",
+      "El rectángulo que vas trazando se ve acostado en el suelo también en la Perspectiva: un paralelogramo, como va a quedar, y no un cuadro derecho flotando. Y de canto —en la Frontal y la Lateral— se ve como la raya que es. Lo pidió Mike con una foto de Rhino al lado.",
+      "Lo mismo el círculo y el arco en curso: sobre el suelo, visto en perspectiva, un círculo es una elipse. Antes se pintaba redondo, con un radio de pantalla.",
+      "Y el fantasma de previa (bloques, texto) también pasa por el plano en el que estás trazando."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.21.1-setup.exe",
-      "bytes": 340937077,
-      "sha256": "1fcf8695d11e01e669faf049c6d6cc80086572544b98b92d9a3a97d55a6a2fe8",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.1/shape101-0.21.1-setup.exe",
+      "archivo": "shape101-0.21.2-setup.exe",
+      "bytes": 340931637,
+      "sha256": "9dab98b2292f617d06ebde25e42d6129d60855a0505754a14ece710dfdf8eed5",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.2/shape101-0.21.2-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
