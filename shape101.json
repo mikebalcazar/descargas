@@ -1,18 +1,17 @@
 {
   "shape101": {
-    "version": "0.21.5",
+    "version": "0.21.6",
     "fecha": "2026-09-24",
     "notas": [
-      "shape101 0.21.5 (2026-09-24)",
-      "Se puede seleccionar desde cualquier ventana. Un dibujo del suelo visto desde la Lateral o la Frontal está de canto, y hasta ahora no se podía picar ni encajonar ahí: la selección buscaba en las coordenadas del plano de la ventana y el dibujo vive en las del suyo. Ahora lo de otro plano se busca pasando por el mundo. Con eso, seleccionar desde la Lateral y ROTAR 90° para el dibujo en la pared.",
-      "El recuadro de selección es de pantalla. En la Perspectiva salía acostado en el suelo; es un área de selección, no un dibujo, y se decide en pantalla: lo que el recuadro abarca en la pantalla es lo que entra."
+      "shape101 0.21.6 (2026-09-24)",
+      "ROTAR entre planos con el centro de giro donde lo piques. Con el centro fuera del origen, el dibujo girado caía en una pared paralela (a y = 350, por ejemplo), y como aquí sólo existen los tres planos por el origen el programa se negaba: «ese giro no deja el dibujo en ningún plano». Ahora hace el giro alrededor del eje que pasa por tu punto, lo deja en el plano por el origen —que es de donde salen las extrusiones— y te lo dice."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.21.5-setup.exe",
-      "bytes": 340935663,
-      "sha256": "61b35bff3fcb661e32f26fbc893211b4899a0a8b70414cbd6c6399ad2e390a16",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.5/shape101-0.21.5-setup.exe",
+      "archivo": "shape101-0.21.6-setup.exe",
+      "bytes": 340941251,
+      "sha256": "7ac9acf16fabd8841d487ed07e10afb8db4906e0f64982a548383e734ae97d6e",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.6/shape101-0.21.6-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
