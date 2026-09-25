@@ -1,19 +1,19 @@
 {
   "shape101": {
-    "version": "0.21.2",
+    "version": "0.21.3",
     "fecha": "2026-09-24",
     "notas": [
-      "shape101 0.21.2 (2026-09-24)",
-      "El rectángulo que vas trazando se ve acostado en el suelo también en la Perspectiva: un paralelogramo, como va a quedar, y no un cuadro derecho flotando. Y de canto —en la Frontal y la Lateral— se ve como la raya que es. Lo pidió Mike con una foto de Rhino al lado.",
-      "Lo mismo el círculo y el arco en curso: sobre el suelo, visto en perspectiva, un círculo es una elipse. Antes se pintaba redondo, con un radio de pantalla.",
-      "Y el fantasma de previa (bloques, texto) también pasa por el plano en el que estás trazando."
+      "shape101 0.21.3 (2026-09-24)",
+      "Supr borra la pieza señalada. Señalar una cara no la metía en la selección, y Supr sólo miraba la selección: la pieza se quedaba. BORRAR igual.",
+      "EXTRUIR, el espesor, Enter: y ya. Antes lo tecleado se perdía —ese Enter abría la cajita con el valor por omisión— y hacía falta un segundo Enter, que además levantaba el valor por omisión y no el tuyo.",
+      "ROTAR desde otra ventana pasa el dibujo de plano. Un dibujo importado cae en el suelo; para pararlo en la pared, selecciónalo, vete a la Lateral y ROTAR 90°: gira alrededor del eje de esa ventana y queda en la Frontal. Entre planos se gira de 90 en 90, y el fantasma lo enseña ya parado. Dentro de la ventana de su plano, ROTAR sigue siendo el de siempre (y ahora acepta los grados tecleados)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.21.2-setup.exe",
-      "bytes": 340931637,
-      "sha256": "9dab98b2292f617d06ebde25e42d6129d60855a0505754a14ece710dfdf8eed5",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.2/shape101-0.21.2-setup.exe",
+      "archivo": "shape101-0.21.3-setup.exe",
+      "bytes": 340939868,
+      "sha256": "65642b37a9a1f3bcc931409c787fb165e6db0c52c6dc8690f75480e7898cb0ff",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.3/shape101-0.21.3-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
