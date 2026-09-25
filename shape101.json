@@ -1,17 +1,20 @@
 {
   "shape101": {
-    "version": "0.21.6",
-    "fecha": "2026-09-24",
+    "version": "0.21.8",
+    "fecha": "2026-09-25",
     "notas": [
-      "shape101 0.21.6 (2026-09-24)",
-      "ROTAR entre planos con el centro de giro donde lo piques. Con el centro fuera del origen, el dibujo girado caía en una pared paralela (a y = 350, por ejemplo), y como aquí sólo existen los tres planos por el origen el programa se negaba: «ese giro no deja el dibujo en ningún plano». Ahora hace el giro alrededor del eje que pasa por tu punto, lo deja en el plano por el origen —que es de donde salen las extrusiones— y te lo dice."
+      "shape101 0.21.8 (2026-09-25)",
+      "Sólidos directos: PRISMA (o CAJA), CILINDRO, CONO, ESFERA y PIRAMIDE. Dos puntos de la base en la ventana donde estás —con hule, osnap y coordenadas tecleadas, como un rectángulo o un círculo— y el alto tecleado. Nacen apoyados en el plano de esa ventana y sus medidas se cambian en el historial de la pieza.",
+      "ROTAR con puntos de referencia, como ESCALAR y como AutoCAD: centro, punto de referencia sobre la pieza y punto nuevo adonde debe ir. Tecleando grados en el segundo paso gira a secas; en el tercero, la referencia queda a ese ángulo.",
+      "Tres estilos de vista para las piezas: básico, alámbrico fantasma (caras veladas, se ven las aristas de atrás) y renderizado (dos luces, brillo, sin costuras entre triángulos ni aristas a través de la pieza; el color de la capa es el material). Con el comando ESTILO o los botones B · A · R del título de la Perspectiva; se guarda.",
+      "Arreglo: con ROTAR, ESCALAR y ESTIRAR, teclear un punto «400,100» se leía como el número 400.1. La coma separa coordenadas; el decimal va con punto."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.21.6-setup.exe",
-      "bytes": 340941251,
-      "sha256": "7ac9acf16fabd8841d487ed07e10afb8db4906e0f64982a548383e734ae97d6e",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.6/shape101-0.21.6-setup.exe",
+      "archivo": "shape101-0.21.8-setup.exe",
+      "bytes": 340965685,
+      "sha256": "5ac0d826b0fd89144692820ac371532ad17f35e605452d320510d601c8e7e3fe",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.8/shape101-0.21.8-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
