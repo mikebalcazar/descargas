@@ -1,20 +1,18 @@
 {
   "draw101": {
-    "version": "0.21.2",
-    "fecha": "2026-09-22",
+    "version": "0.21.3",
+    "fecha": "2026-09-24",
     "notas": [
-      "draw101 0.21.2 (2026-09-22)",
-      "El botón «Nueva capa» ya sirve. Pedía el nombre con la ventanita del navegador, que dentro de la aplicación no existe: no salía nada, ni capa ni aviso. Ahora abre el cuadro de siempre y de paso deja escoger color, grosor y tipo de línea al crearla, en vez de hacerla azul y corregirla después.",
-      "Comando CAPA (atajos CA y LA; LAYER en inglés): crea la capa y la deja puesta a trabajar.",
-      "Un texto seleccionado ya se puede arrastrar de su cuadrito para moverlo, sin teclear MOVER. Antes no enseñaba ninguno: los cuadritos salían de las rayas de la entidad, y un texto no tiene rayas.",
-      "Las rayas del tipo de línea (OCULTA, EJES, TRAZOS) se ven en la hoja igual que en el modelo. Antes el patrón se copiaba a la hoja sin escalar, así que a 1:20 una línea oculta salía impresa casi continua. Ahora sigue a la escala de la ventana, en pantalla, en PDF y en SVG."
+      "draw101 0.21.3 (2026-09-24)",
+      "La letra de fábrica del comando TEXTO sube de 0.75 a 3 cm. Era demasiado chica y había que cambiarla cada vez. Como siempre, en cuanto escribes otra altura el programa se queda con ésa.",
+      "La previa del texto —la que se ve pegada al cursor antes de escribirlo— salía diez veces más grande que la letra de verdad en un dibujo en centímetros. Ya coinciden."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.21.2-setup.exe",
-      "bytes": 125473426,
-      "sha256": "c90d515363d1d2ffb2ef0a85bcf56ba58219d0a1163103af7b90575b735486c7",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.21.2/draw101-0.21.2-setup.exe",
+      "archivo": "draw101-0.21.3-setup.exe",
+      "bytes": 125474226,
+      "sha256": "ecf4b1558cb35ecf552bbb0d596453c0838f2ee02f45c52d93da96ccba9d19c7",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.21.3/draw101-0.21.3-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
