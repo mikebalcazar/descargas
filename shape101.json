@@ -1,19 +1,20 @@
 {
   "shape101": {
-    "version": "0.21.3",
+    "version": "0.21.4",
     "fecha": "2026-09-24",
     "notas": [
-      "shape101 0.21.3 (2026-09-24)",
-      "Supr borra la pieza señalada. Señalar una cara no la metía en la selección, y Supr sólo miraba la selección: la pieza se quedaba. BORRAR igual.",
-      "EXTRUIR, el espesor, Enter: y ya. Antes lo tecleado se perdía —ese Enter abría la cajita con el valor por omisión— y hacía falta un segundo Enter, que además levantaba el valor por omisión y no el tuyo.",
-      "ROTAR desde otra ventana pasa el dibujo de plano. Un dibujo importado cae en el suelo; para pararlo en la pared, selecciónalo, vete a la Lateral y ROTAR 90°: gira alrededor del eje de esa ventana y queda en la Frontal. Entre planos se gira de 90 en 90, y el fantasma lo enseña ya parado. Dentro de la ventana de su plano, ROTAR sigue siendo el de siempre (y ahora acepta los grados tecleados)."
+      "shape101 0.21.4 (2026-09-24)",
+      "La Perspectiva gira alrededor de un punto fijo: su mira. Antes el pivote era lo que hubiera bajo el cursor sobre el suelo —lejos de la pieza si el ratón no estaba encima— y el punto de fuga era el centro de la ventana, así que girar hacía que la pieza se fuera de sitio y cambiara de tamaño, como un zoom que nadie pidió (Mike, 24-sep). Medido: el centro de la pieza se iba 200 px en un giro; ahora no se mueve ni un píxel.",
+      "Extents con algo seleccionado —o una pieza señalada— encuadra eso en las cuatro ventanas y deja ahí la mira: es la forma de anclar en un punto nuevo el eje de giro. Sin selección, encuadra todo, como siempre.",
+      "Panear (Shift + botón central) corre la imagen entera sin deformarla y sin mover la mira: el pivote se queda donde estaba aunque la pieza salga un poco de la pantalla.",
+      "Extents ya cuenta los dibujos parados en la pared por donde están: antes encuadraba todo como si estuviera acostado en el suelo."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.21.3-setup.exe",
-      "bytes": 340939868,
-      "sha256": "65642b37a9a1f3bcc931409c787fb165e6db0c52c6dc8690f75480e7898cb0ff",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.3/shape101-0.21.3-setup.exe",
+      "archivo": "shape101-0.21.4-setup.exe",
+      "bytes": 340934463,
+      "sha256": "2650e9978543f26148feb922889370088a878e2c2f990e9e7370ada56014bcc3",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.4/shape101-0.21.4-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
