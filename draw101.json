@@ -1,18 +1,23 @@
 {
   "draw101": {
-    "version": "0.21.4",
+    "version": "0.21.5",
     "fecha": "2026-09-28",
     "notas": [
-      "draw101 0.21.4 (2026-09-28)",
+      "draw101 0.21.5 (2026-09-28)",
+      "RECORTAR ya corta TODO lo que el programa sabe qué es: además de líneas, arcos y polilíneas, ahora también círculos, elipses y splines. Se va el trozo donde picas, y con varios cruces se quita sólo ese trozo y no de más.",
+      "Un círculo recortado queda como arco, y una elipse recortada sigue siendo elipse. Lo cerrado —círculo, elipse— necesita cruzarse en dos puntos para poder abrirse: si algo apenas lo toca de lado, se dice en vez de no hacer nada.",
+      "Una spline recortada sigue siendo spline, y sigue pasando por los puntos que le pusiste. El corte cae exacto sobre la línea que cortó.",
+      "Arreglado de paso: los cruces y el osnap de una spline caían donde la curva no está. La spline se dibujaba curva pero por dentro se medía como las rectas entre sus puntos —en una spline de cuatro puntos, quince unidades de error—. Ahora se mide la curva misma.",
+      "Arreglado también: al recortar un arco por en medio se borraba todo lo que seguía al clic. Ahora queda partido en dos, como una línea.",
       "Cuando la licencia ya no tiene lugar libre, la pantalla de activación enseña la lista de tus equipos —con su nombre, su ícono y cuándo se usó cada uno— y puedes dar de baja el que ya no uses. Al darlo de baja, esta computadora entra sola: no hay que volver a empezar. Antes, desde una computadora nueva no había forma de liberar la vieja.",
       "Para que esa lista se pueda leer, draw101 manda el nombre de tu computadora (el de Windows) y el sistema. Va aparte de la huella del equipo, que sigue siendo un azar y sigue sin identificar a nadie. Sólo lo ve el dueño de la licencia, en su propia lista."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.21.4-setup.exe",
-      "bytes": 125475267,
-      "sha256": "95cb11016fbed94cda9f11709fc653c832dde3cfebef1785047de6d27223a716",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.21.4/draw101-0.21.4-setup.exe",
+      "archivo": "draw101-0.21.5-setup.exe",
+      "bytes": 125480042,
+      "sha256": "e423bda8b4c63465ac70f7d0edca540d96d856949701ddf2b0659eb7f94e51b1",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.21.5/draw101-0.21.5-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
