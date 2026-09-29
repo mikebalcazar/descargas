@@ -1,18 +1,18 @@
 {
   "draw101": {
-    "version": "0.21.3",
-    "fecha": "2026-09-24",
+    "version": "0.21.4",
+    "fecha": "2026-09-28",
     "notas": [
-      "draw101 0.21.3 (2026-09-24)",
-      "La letra de fábrica del comando TEXTO sube de 0.75 a 3 cm. Era demasiado chica y había que cambiarla cada vez. Como siempre, en cuanto escribes otra altura el programa se queda con ésa.",
-      "La previa del texto —la que se ve pegada al cursor antes de escribirlo— salía diez veces más grande que la letra de verdad en un dibujo en centímetros. Ya coinciden."
+      "draw101 0.21.4 (2026-09-28)",
+      "Cuando la licencia ya no tiene lugar libre, la pantalla de activación enseña la lista de tus equipos —con su nombre, su ícono y cuándo se usó cada uno— y puedes dar de baja el que ya no uses. Al darlo de baja, esta computadora entra sola: no hay que volver a empezar. Antes, desde una computadora nueva no había forma de liberar la vieja.",
+      "Para que esa lista se pueda leer, draw101 manda el nombre de tu computadora (el de Windows) y el sistema. Va aparte de la huella del equipo, que sigue siendo un azar y sigue sin identificar a nadie. Sólo lo ve el dueño de la licencia, en su propia lista."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.21.3-setup.exe",
-      "bytes": 125474226,
-      "sha256": "ecf4b1558cb35ecf552bbb0d596453c0838f2ee02f45c52d93da96ccba9d19c7",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.21.3/draw101-0.21.3-setup.exe",
+      "archivo": "draw101-0.21.4-setup.exe",
+      "bytes": 125475267,
+      "sha256": "95cb11016fbed94cda9f11709fc653c832dde3cfebef1785047de6d27223a716",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.21.4/draw101-0.21.4-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
