@@ -1,24 +1,22 @@
 {
   "draw101": {
-    "version": "0.21.6",
+    "version": "0.22.0",
     "fecha": "2026-09-29",
     "notas": [
-      "draw101 0.21.6 (2026-09-29)",
-      "Apagar o prender una capa ya se nota en la HOJA, no sólo en el modelo. Antes lo que se veía por las ventanas de la hoja se pedía una sola vez al entrar, así que apagar una capa no cambiaba nada —salvo lo que estuviera dibujado sobre la hoja misma, que sí respondía, y por eso parecía que «sólo las cotas» hacían caso—. Vale igual para el color, el grosor y para borrar una capa.",
-      "La capa COTAS ahora se llama ANOTACIONES, y el TEXTO también nace en ella, como ya nacían las cotas y las directrices. El nombre viejo dejó de describir lo que hay dentro.",
-      "Las cotas ya no escriben los ceros que no dicen nada: 120 en vez de 120.00, y 120.5 en vez de 120.50. Importa trabajando en centímetros, donde hay que pedir un decimal para no perder los milímetros y toda medida redonda arrastraba un punto cero. Se puede devolver con una casilla en el estilo de cota, y el DXF sale igual en AutoCAD.",
-      "Al abrir un dibujo tuyo de antes, su capa COTAS se renombra sola y todo lo que vivía en ella se va con ella. Un DXF de alguien más que traiga su propia COTAS no se toca: es suya, no nuestra.",
-      "En la hoja, una ventana puede ir SIN ESCALA: ahí la rueda la acerca y la aleja como uno quiera, con EDITARVENTANA encendido. El pie de plano escribe S/E en vez de un número que sería mentira. Las ventanas con escala siguen intocables, que es lo que hace que el plano se pueda medir.",
-      "El ESPACIO acepta la respuesta de una pregunta S/N o R/P, igual que el Enter. Antes la borraba: en ESPEJO se tecleaba N, se daba espacio y no pasaba nada. Un rótulo o el nombre de un bloque siguen llevando espacios de verdad; el cambio es sólo donde se contesta con una letra.",
-      "Y en inglés esa misma pregunta sale «Y/N»: ahora la Y vale igual que la S. Antes sólo se miraba la S y en inglés no había manera de contestar que sí.",
-      "CAPTURA (atajo SS) copia al portapapeles una imagen de lo que se ve del dibujo, lista para pegar en un correo o en una cotización. Va el plano solo: sin la mira, sin los agarres de la selección y con el fondo puesto, para que no salga negra al pegarla."
+      "draw101 0.22.0 (2026-09-29)",
+      "TUS PLANOS EN LA NUBE. Todo lo que guardes se copia a tu cuenta, cifrado, sin que tengas que hacer nada. En cualquier otra computadora con tu misma licencia abres NUBE y ahí están, para buscarlos por nombre y abrirlos. No hay carpetas: están todos juntos, y se ordenan por lo último que tocaste, por cuándo los creaste, por nombre, o por los que más usas.",
+      "Nadie más los puede leer. Lo que viaja y lo que se guarda allá va cifrado, y hasta el NOMBRE del archivo: el servidor mueve los planos sin poder abrirlos, y ninguna otra cuenta ve los tuyos. Si le pasas un plano a alguien de otra cuenta, al abrirlo se vuelve un documento suyo y no toca el tuyo.",
+      "Si abres un plano y en la nube hay una copia MÁS NUEVA —porque lo guardaste en otra computadora—, se te pregunta qué quieres: usar la de la nube, quedarte con la de aquí, o abrir ésta como un documento aparte. Nunca se escribe encima de tu archivo sin que lo digas, y cancelar deja todo como estaba.",
+      "Se guardan las últimas diez versiones de cada plano, por si alguna vez guardas encima de algo bueno.",
+      "Sin internet draw101 trabaja igual: guarda en tu computadora, te dice que la copia en la nube tendrá que esperar, y la lista sigue enseñando lo que había la última vez en lugar de salir vacía.",
+      "La nube se puede apagar en Configuración, y es todo o nada. Si la apagas y la vuelves a prender, no se pone a subir años de planos: sube los que vayas abriendo de ahí en adelante."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.21.6-setup.exe",
-      "bytes": 125486416,
-      "sha256": "26d0c34be266e23c76cc3399d0a36b09479857e0707b87f377ed43b188945631",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.21.6/draw101-0.21.6-setup.exe",
+      "archivo": "draw101-0.22.0-setup.exe",
+      "bytes": 125507384,
+      "sha256": "0ae753262e11edae39f9ad078a520131199dd926d0ac30c4cf205013bc4b697c",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.22.0/draw101-0.22.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
