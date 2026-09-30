@@ -1,22 +1,19 @@
 {
   "draw101": {
-    "version": "0.22.0",
-    "fecha": "2026-09-29",
+    "version": "0.22.1",
+    "fecha": "2026-09-30",
     "notas": [
-      "draw101 0.22.0 (2026-09-29)",
-      "TUS PLANOS EN LA NUBE. Todo lo que guardes se copia a tu cuenta, cifrado, sin que tengas que hacer nada. En cualquier otra computadora con tu misma licencia abres NUBE y ahí están, para buscarlos por nombre y abrirlos. No hay carpetas: están todos juntos, y se ordenan por lo último que tocaste, por cuándo los creaste, por nombre, o por los que más usas.",
-      "Nadie más los puede leer. Lo que viaja y lo que se guarda allá va cifrado, y hasta el NOMBRE del archivo: el servidor mueve los planos sin poder abrirlos, y ninguna otra cuenta ve los tuyos. Si le pasas un plano a alguien de otra cuenta, al abrirlo se vuelve un documento suyo y no toca el tuyo.",
-      "Si abres un plano y en la nube hay una copia MÁS NUEVA —porque lo guardaste en otra computadora—, se te pregunta qué quieres: usar la de la nube, quedarte con la de aquí, o abrir ésta como un documento aparte. Nunca se escribe encima de tu archivo sin que lo digas, y cancelar deja todo como estaba.",
-      "Se guardan las últimas diez versiones de cada plano, por si alguna vez guardas encima de algo bueno.",
-      "Sin internet draw101 trabaja igual: guarda en tu computadora, te dice que la copia en la nube tendrá que esperar, y la lista sigue enseñando lo que había la última vez en lugar de salir vacía.",
-      "La nube se puede apagar en Configuración, y es todo o nada. Si la apagas y la vuelves a prender, no se pone a subir años de planos: sube los que vayas abriendo de ahí en adelante."
+      "draw101 0.22.1 (2026-09-30)",
+      "ARREGLADO, y es lo único que trae esta entrega: al guardar, la copia que subía a la nube iba fechada con el día en que ABRISTE el plano, no con el día en que lo guardaste. El archivo subía bien y la pantalla NUBE lo enseñaba bien; lo que se rompía estaba en la otra computadora, que compara esa fecha con la suya para saber cuál copia es más nueva. Con la fecha vieja las veía iguales y NUNCA ofrecía la copia nueva: la nube parecía sincronizar y no lo estaba haciendo.",
+      "Se cazó con el primer plano de verdad que subió a la nube, que llegó al servidor fechado seis días antes de cuando se guardó.",
+      "Prueba t053 (10 comprobaciones, tres de ellas de control). Sigue el camino completo —guardar, el archivo en el disco, y lo que la interfaz le entrega a la nube— porque medir sólo el dato en memoria habría dejado pasar el error si la entrega fallara aparte."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.22.0-setup.exe",
-      "bytes": 125507384,
-      "sha256": "0ae753262e11edae39f9ad078a520131199dd926d0ac30c4cf205013bc4b697c",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.22.0/draw101-0.22.0-setup.exe",
+      "archivo": "draw101-0.22.1-setup.exe",
+      "bytes": 125508269,
+      "sha256": "d4227dad648c0a5288001288d8e063b6aa0cb144a94bd27eafa97404109462e1",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.22.1/draw101-0.22.1-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
