@@ -1,19 +1,21 @@
 {
   "draw101": {
-    "version": "0.22.1",
-    "fecha": "2026-09-30",
+    "version": "0.22.2",
+    "fecha": "2026-10-01",
     "notas": [
-      "draw101 0.22.1 (2026-09-30)",
-      "ARREGLADO, y es lo único que trae esta entrega: al guardar, la copia que subía a la nube iba fechada con el día en que ABRISTE el plano, no con el día en que lo guardaste. El archivo subía bien y la pantalla NUBE lo enseñaba bien; lo que se rompía estaba en la otra computadora, que compara esa fecha con la suya para saber cuál copia es más nueva. Con la fecha vieja las veía iguales y NUNCA ofrecía la copia nueva: la nube parecía sincronizar y no lo estaba haciendo.",
-      "Se cazó con el primer plano de verdad que subió a la nube, que llegó al servidor fechado seis días antes de cuando se guardó.",
-      "Prueba t053 (10 comprobaciones, tres de ellas de control). Sigue el camino completo —guardar, el archivo en el disco, y lo que la interfaz le entrega a la nube— porque medir sólo el dato en memoria habría dejado pasar el error si la entrega fallara aparte."
+      "draw101 0.22.2 (2026-10-01)",
+      "LA NUBE, EN LA PANTALLA DE INICIO. Al abrir draw101 ahora hay tres columnas: los botones de siempre, tus planos recientes de esta computadora, y tus archivos en la nube — con su buscador y sus cuatro órdenes. Ya no hay que entrar a un dibujo en blanco y escribir NUBE para ver qué hay: se escoge desde el arranque.",
+      "Es la MISMA lista del cuadro NUBE, no una copia: busca sin acentos («ramirez» encuentra «Ramírez»), acepta las palabras en cualquier orden, y no le pide nada al servidor por cada letra que tecleas.",
+      "Cada lista se busca y se ordena por su cuenta: teclear en una no mueve la otra.",
+      "Si la nube está apagada, sin licencia o sin internet, la columna lo dice con sus palabras en vez de quedarse en blanco. Y en una pantalla angosta las tres columnas se acomodan una debajo de otra.",
+      "Prueba t054 (29 comprobaciones, con el programa de verdad en un navegador). De paso se acotó t050 a su propia pantalla: con dos listas iguales en el documento, estaba a un paso de medir la equivocada sin fallar."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.22.1-setup.exe",
-      "bytes": 125508269,
-      "sha256": "d4227dad648c0a5288001288d8e063b6aa0cb144a94bd27eafa97404109462e1",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.22.1/draw101-0.22.1-setup.exe",
+      "archivo": "draw101-0.22.2-setup.exe",
+      "bytes": 125510676,
+      "sha256": "2b0bdf65af3f24d8b456392a8aa00718a3e361e1f5e6eea97084a6fc8c85af06",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.22.2/draw101-0.22.2-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
