@@ -1,16 +1,18 @@
 {
   "nest101": {
-    "version": "0.19.0",
+    "version": "0.19.1",
     "fecha": "2026-10-01",
     "notas": [
-      "Compilada y verificada por el chat."
+      "Un mal rato del servidor ya no le quita la licencia al taller: sólo la suite puede decir que no.",
+      "Ayuda → «Licencia de este equipo…» dice con qué cuenta quedó y hasta cuándo, y permite cambiar de cuenta.",
+      "Las notas de cada versión ya salen del repositorio, no de una frase genérica."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.19.0-setup.exe",
-      "bytes": 159917312,
-      "sha256": "f8c3dd348dcb72955c115ec32ca469fd563a8f60ae03c6f3ca394a2616f44b40",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.0/nest101-0.19.0-setup.exe",
+      "archivo": "nest101-0.19.1-setup.exe",
+      "bytes": 159919772,
+      "sha256": "8c7021cf5b108f000ee132f11f539883227a97411fd2aa9f2d3d44be0167137a",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.1/nest101-0.19.1-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
