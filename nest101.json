@@ -1,19 +1,16 @@
 {
   "nest101": {
-    "version": "10.1.0",
-    "fecha": "2026-09-19",
+    "version": "0.19.0",
+    "fecha": "2026-10-01",
     "notas": [
-      "nest101 se abre entrando con tu cuenta de la suite 101: tu correo y contraseña, o tu cuenta de Google. Ya no hace falta teclear una clave, porque la licencia va ligada a tu correo.",
-      "La clave T101-… sigue funcionando, abajo en la misma pantalla, para una máquina de taller sin internet estable o para una licencia que ya te habían entregado.",
-      "Sin internet la app abre igual mientras tu licencia no haya vencido. Cuando vence y no hay forma de preguntarle a la suite, no abre y te lo dice con esas palabras.",
-      "Cada equipo cuenta como un lugar de tu licencia. Los lugares se ven y se liberan desde master101."
+      "Compilada y verificada por el chat."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-10.1.0-setup.exe",
-      "bytes": 159404519,
-      "sha256": "8a33e563a065fc2b00c3729b01d20d5b0dbdc8ae6d35a737b73f591f32b0d531",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-10.1.0/nest101-10.1.0-setup.exe",
+      "archivo": "nest101-0.19.0-setup.exe",
+      "bytes": 159917312,
+      "sha256": "f8c3dd348dcb72955c115ec32ca469fd563a8f60ae03c6f3ca394a2616f44b40",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.0/nest101-0.19.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
