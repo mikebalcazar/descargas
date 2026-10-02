@@ -44,11 +44,9 @@ jobs:
       # 2-oct-2026 (recado de draw101): el botón de descarga de cada app se
       # compara contra su <app>.json publicado. La liga lleva la versión, así que
       # un sitio sin rearmar sigue bajando la versión anterior sin que se note.
-      # Va con continue-on-error mientras nest101 siga apuntando a la página del
-      # portal (lo decide Mike); en cuanto se arregle, se le quita y el flujo
-      # se pone rojo de verdad.
+      # Estricto desde que nest101 también lee su JSON (Mike, 2-oct): si una
+      # liga se queda vieja, la publicación sale roja.
       - name: El botón de descarga apunta a lo publicado
-        continue-on-error: true
         run: python3 sitio/herramientas/revisar-descargas.py
 
       # Mide lo publicado contra lo que trae el commit. El run 4 (10-sep)

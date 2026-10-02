@@ -216,9 +216,9 @@ APPS = {
         ('maqueta-herrajes.png','Los herrajes del proyecto, con lo que hay y lo que falta pedir'),
         ('maqueta-ficha-mueble.png','La ficha del mueble, la que se lleva quien lo arma'),
         ('maqueta-proyectos.png','Los proyectos del taller y en qué va el despiece de cada uno')],
-   enlace=('Descargar para Windows','https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima'),
-   datos=[('Versión','0.15.6 · 8-sep-2026'),('Plataforma','Windows'),
-          ('Estado','En producción'),('Entrega','Instalador con actualizador')]),
+   baja='nest101',          # la liga y la versión salen de nest101.json (Mike, 2-oct: igual que draw101)
+   datos=[('Plataforma','Windows'),
+          ('Estado','En producción')]),
 
  'dash101': dict(
    lema='El dinero del taller, en una sola pantalla.',
