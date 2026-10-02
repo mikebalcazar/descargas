@@ -1,0 +1,102 @@
+diff --git a/sitio/herramientas/armar-sitio.py b/sitio/herramientas/armar-sitio.py
+index ded5a65..7b4047a 100644
+--- a/sitio/herramientas/armar-sitio.py
++++ b/sitio/herramientas/armar-sitio.py
+@@ -13,8 +13,42 @@
+ import pathlib, re, html
+ 
+ S = pathlib.Path(__file__).resolve().parent.parent
++RAIZ = S.parent                       # la raiz del repo: ahi viven los <app>.json
+ CORREO = "info@forespot.com"
+ 
++MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun',
++         'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
++
++
++def descarga(app):
++    """La liga de descarga y la version, leidas de `<app>.json`.
++
++    POR QUE SE LEE DE AHI Y NO SE ESCRIBE A MANO, que es como estaba:
++
++      · LA LIGA. El boton apuntaba a la PAGINA del tag en GitHub, no al
++        archivo, asi que al picarlo se abria el portal y habia que buscar el
++        instalador entre los renglones. Mike, 1-oct-2026: «que cuando le den
++        click al link de la pagina web de suite101, se comience a descargar la
++        ultima version». La liga del archivo lleva la version en el nombre, asi
++        que escrita a mano envejece cada entrega; leida de aqui, no.
++
++      · LA VERSION. La ficha decia «0.20.3 · 12-sep-2026» cuando ya iba la
++        0.22.2 del 1-oct. Tres semanas de atraso en la cara del cliente, y
++        nadie lo noto porque nada lo comparaba contra nada.
++
++    `<app>.json` es lo que el corredor que publica el instalador deja en main
++    en cada entrega: es la unica fuente que no puede quedarse atras.
++
++    REVIENTA SI NO ESTA, a proposito. Una liga de descarga que calla y apunta a
++    cualquier cosa es peor que un sitio que no se arma.
++    """
++    import json
++    d = json.loads((RAIZ / f'{app}.json').read_text(encoding='utf-8'))[app]
++    w = d['windows']
++    a, m, dia = d['fecha'].split('-')
++    mb = round(w['bytes'] / 1024 / 1024)
++    return w['url'], f"{d['version']} · {int(dia)}-{MESES[int(m) - 1]}-{a}", f"{mb} MB"
++
+ def logo(app, viewbox=None, color=None):
+     s = (S / 'marca' / f'{app}.svg').read_text()
+     if viewbox:
+@@ -126,9 +160,9 @@ APPS = {
+         ('03-galeria-rayado.png','La galería de achurados, con vista previa al momento'),
+         ('02-propiedades-en-vivo.png','Las propiedades del objeto, al momento'),
+         ('06-vista-previa.png','La vista previa antes de mandar a imprimir')],
+-   enlace=('Descargar para Windows','https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima'),
+-   datos=[('Versión','0.20.3 · 12-sep-2026'),('Plataforma','Windows · macOS en preparación'),
+-          ('Estado','En uso interno, v1 comercial en curso'),('Entrega','Instalador con actualizador')]),
++   baja='draw101',          # la liga y la versión salen de draw101.json
++   datos=[('Plataforma','Windows · macOS en preparación'),
++          ('Estado','En uso interno, v1 comercial en curso')]),
+ 
+  'quote101': dict(
+    lema='Del levantamiento de medidas a la propuesta firmada.',
+@@ -410,7 +444,25 @@ Escríbenos y te enseñamos el que necesites, con datos de una obra de verdad.</
+ for app, d in APPS.items():
+     ven = ''.join(f'<div><b>{html.escape(t)}</b><p>{html.escape(x)}</p></div>' for t, x in d['ben'])
+     fn = ''.join(f'<div><b>{html.escape(t)}</b>{html.escape(x)}</div>' for t, x in d['fn'])
+-    ficha = ''.join(f'<div><span>{html.escape(k)}</span><b>{html.escape(v)}</b></div>' for k, v in d['datos'])
++    ira = ''
++    datos = list(d['datos'])
++    if d.get('baja'):
++        # UNA DESCARGA NO ABRE PESTAÑA NUEVA. La liga contesta con
++        # `Content-Disposition: attachment`, asi que el navegador se queda donde
++        # esta y empieza a bajar; con target="_blank" se abriria una pestaña que
++        # queda en blanco para siempre y parece que algo salio mal.
++        url, version, peso = descarga(d['baja'])
++        ira = f'<a class="btn" href="{url}" download>Descargar para Windows</a>'
++        # La version y el peso, al lado, para que se sepa que se esta bajando
++        # antes de picar. Van al PRINCIPIO de la ficha: es lo primero que
++        # pregunta quien viene a descargar.
++        datos = [('Versión', version), *datos, ('Entrega', f'Instalador con actualizador · {peso}')]
++    elif d.get('enlace'):
++        # Las apps web sí abren en pestaña nueva, y por eso llevan rel="noopener":
++        # sin él, la página que se abre puede tocar la nuestra por window.opener.
++        txt, url = d['enlace']
++        ira = (f'<a class="btn" href="{url}" target="_blank" rel="noopener">{html.escape(txt)}</a>')
++    ficha = ''.join(f'<div><span>{html.escape(k)}</span><b>{html.escape(v)}</b></div>' for k, v in datos)
+     principal, galeria = '', ''
+     if d['img']:
+         f0, c0 = d['img'][0]
+@@ -421,14 +473,6 @@ for app, d in APPS.items():
+         galeria = ''.join(f'<section class="vista{" nube" if i % 2 else ""}"><h2>{html.escape(c)}</h2>'
+                           f'{equipo(app, f, "", "../")}</section>'
+                           for i, (f, c) in enumerate(d['img'][1:]))
+-    # El enlace a la app o a su descarga. Las que se instalan apuntan a la
+-    # página fija de su última versión, que no caduca al sacar una nueva; las de
+-    # web, a su dirección de producción. rel="noopener" porque abren en pestaña
+-    # nueva: sin él, la página abierta puede tocar la nuestra por window.opener.
+-    ira = ''
+-    if d.get('enlace'):
+-        txt, url = d['enlace']
+-        ira = (f'<a class="btn" href="{url}" target="_blank" rel="noopener">{html.escape(txt)}</a>')
+     n_vistas = max(len(d['img']) - 1, 0)
+     trae_nube = n_vistas % 2 == 1          # si la última vista quedó en blanco, «Qué trae» va en nube
+     cierre_nube = not trae_nube
