@@ -1,23 +1,22 @@
 {
   "draw101": {
-    "version": "0.23.1",
+    "version": "0.24.0",
     "fecha": "2026-10-06",
     "notas": [
-      "draw101 0.23.1 (2026-10-06)",
-      "AUTOGUARDADO CADA 5 MINUTOS, Y AHORA TAMBIÉN A LA NUBE. Antes guardaba una copia cada 2 minutos y sólo en esta computadora. Ahora son 5 minutos, se conservan las últimas 10 copias, y la copia sube: si se muere la máquina, el trabajo está en la nube y lo abres en la otra.",
-      "Si nada cambió desde el autoguardado anterior, no se escribe ni se sube nada. Dejar draw101 abierto sin tocarlo ya no llena el anillo de copias iguales ni manda subidas de a gratis.",
-      "AL ABRIRLO, DRAW101 TE DICE DE DÓNDE VIENE. Un archivo que escribió el autosave lleva una marca por dentro, así que al abrirlo —aquí o en la otra computadora, bajado de la nube— aparece el aviso de que son los cambios de la última sesión y que nadie los guardó a mano. En cuanto guardas con Ctrl+S, el aviso deja de salir.",
-      "Si sales con «Salir sin guardar», la nube vuelve al último guardado: lo que tiraste a propósito no se queda allá como si fuera el archivo. Y salir nunca se queda esperando a la nube.",
-      "Un dibujo que nunca se guardó NO se mete a la nube. Se autoguarda en esta computadora, como siempre, pero no aparece en «Mis archivos en la nube»: un garabato que alguien empieza y abandona no es un archivo que haya que respaldar en todas sus máquinas.",
-      "DOS ERRORES VIEJOS, DE PASO. El intervalo estaba escrito a mano en la interfaz mientras la configuración decía otra cosa: cambiar la configuración no cambiaba nada. Y el nombre del autoguardado sólo llevaba segundos, así que dos del mismo segundo se pisaban y el anillo perdía una copia sin decir nada.",
-      "Prueba t057 (29 comprobaciones), con el programa de verdad en un navegador y verificada rompiendo el código. Una de las roturas salió verde la primera vez —la prueba no medía lo que creía— y por eso se volvió a escribir."
+      "draw101 0.24.0 (2026-10-06)",
+      "IMPRIMIR UN PEDAZO DEL DIBUJO, SIN HACER UNA HOJA. En el modelo, Ctrl+P te pregunta en qué hoja, luego trazas con el ratón el área que quieres imprimir, y con Enter sale la vista previa con el botón de imprimir. Antes Ctrl+P en el modelo contestaba «no hay ninguna hoja que imprimir, crea una con PLANO»: para sacar un alzado había que hacer una hoja, ponerle una ventana, acomodarla, imprimir y luego decidir si la hoja se queda estorbando o se borra.",
+      "La hoja de esa impresión NO se guarda en ninguna parte: se arma, se imprime y se tira. Imprimir no te deja una hoja de más en las pestañas, ni un paso en el historial, ni el dibujo marcado como «sin guardar».",
+      "LLENA LA HOJA: lo que trazaste se agranda hasta ocupar todo el espacio dentro del marco, sin invadir el pie de plano. Y la hoja se voltea sola: si lo que trazaste es más alto que ancho, sale parada.",
+      "Como llenar la hoja da la escala que dé —1:11.5, 1:37.4—, el rótulo dice S/E en vez de inventar un 1:20 que no se puede medir con escalímetro. Pero la escala de verdad SÍ se enseña en el pie de la vista previa y en la consola, para que sepas qué estás mandando.",
+      "En una HOJA, Ctrl+P sigue haciendo lo de siempre: imprimir esa hoja. Y el comando nuevo también se llama por su nombre: IMPRIMIRVENTANA (o IV).",
+      "Prueba t058 (28 comprobaciones), con el programa de verdad en un navegador y verificada rompiendo el código. Dos de sus comprobaciones no medían nada la primera vez y se cazaron viendo una rotura salir verde; quedaron escritas en la prueba."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.23.1-setup.exe",
-      "bytes": 125532449,
-      "sha256": "d85cb88d2a0d329fefc8abe9ac0742c9864e7594ae8cf87119e13b2721e45243",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.23.1/draw101-0.23.1-setup.exe",
+      "archivo": "draw101-0.24.0-setup.exe",
+      "bytes": 125537517,
+      "sha256": "783d0f104655e2986f6fc793032ba850bbd490f4fddaca06228bbaf54824dd42",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.24.0/draw101-0.24.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
