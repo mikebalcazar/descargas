@@ -1,23 +1,23 @@
 {
   "draw101": {
-    "version": "0.23.0",
+    "version": "0.23.1",
     "fecha": "2026-10-06",
     "notas": [
-      "draw101 0.23.0 (2026-10-06)",
-      "ARRASTRAR UN ARCHIVO A LA VENTANA. Jalas un plano de tu carpeta, lo sueltas encima de draw101 y entra. Si estás en un dibujo en blanco se abre sin preguntarte nada; si ya estabas trabajando, draw101 pregunta qué quieres: abrirlo aparte, traerlo al dibujo de ahora como un bloque, o traerlo suelto para editarlo. Si sueltas varios de golpe, se abren en pestañas y no pregunta nada.",
-      "Acepta .t101x, PDF de fondo y los planos de siempre (DXF, DWG, t101d): cada uno se va por donde ya se iba, sólo cambia la manera de pedirlo.",
-      "LAS UNIDADES DEL PLANO QUE LLEGA, RESPETADAS. Un plano en metros importado a un dibujo en centímetros ya no se multiplica por mil. draw101 lee en qué unidades viene el archivo ($INSUNITS) y lo trae a la escala que le toca: un muro de 7 m sigue midiendo 7 m.",
-      "Si el archivo miente sobre sus unidades —pasa, y seguido—, draw101 mira el tamaño de lo que hay dentro antes de creerle.",
-      "COPIAR Y PEGAR VECTORES. Ctrl+C se lleva lo seleccionado al portapapeles y Ctrl+V lo pega: en otro dibujo de draw101 vuelve entero, con sus capas, sus bloques y sus cotas; en Illustrator, Inkscape, Figma o Word se pega como vectores y a tamaño real — una pieza de 1 m llega midiendo 1 m, no 100 unidades de nada.",
-      "Viaja un solo texto que los dos lados entienden, y sólo los bloques que de verdad se usan: copiar una línea no se lleva las 176 definiciones del plano. El comando COPIAR no cambió: sigue duplicando dentro del dibujo, como en AutoCAD.",
-      "Pruebas t055 (29 comprobaciones) y t056 (26), las dos con el programa de verdad en un navegador, y las dos verificadas rompiendo el código a propósito para comprobar que sí avisan."
+      "draw101 0.23.1 (2026-10-06)",
+      "AUTOGUARDADO CADA 5 MINUTOS, Y AHORA TAMBIÉN A LA NUBE. Antes guardaba una copia cada 2 minutos y sólo en esta computadora. Ahora son 5 minutos, se conservan las últimas 10 copias, y la copia sube: si se muere la máquina, el trabajo está en la nube y lo abres en la otra.",
+      "Si nada cambió desde el autoguardado anterior, no se escribe ni se sube nada. Dejar draw101 abierto sin tocarlo ya no llena el anillo de copias iguales ni manda subidas de a gratis.",
+      "AL ABRIRLO, DRAW101 TE DICE DE DÓNDE VIENE. Un archivo que escribió el autosave lleva una marca por dentro, así que al abrirlo —aquí o en la otra computadora, bajado de la nube— aparece el aviso de que son los cambios de la última sesión y que nadie los guardó a mano. En cuanto guardas con Ctrl+S, el aviso deja de salir.",
+      "Si sales con «Salir sin guardar», la nube vuelve al último guardado: lo que tiraste a propósito no se queda allá como si fuera el archivo. Y salir nunca se queda esperando a la nube.",
+      "Un dibujo que nunca se guardó NO se mete a la nube. Se autoguarda en esta computadora, como siempre, pero no aparece en «Mis archivos en la nube»: un garabato que alguien empieza y abandona no es un archivo que haya que respaldar en todas sus máquinas.",
+      "DOS ERRORES VIEJOS, DE PASO. El intervalo estaba escrito a mano en la interfaz mientras la configuración decía otra cosa: cambiar la configuración no cambiaba nada. Y el nombre del autoguardado sólo llevaba segundos, así que dos del mismo segundo se pisaban y el anillo perdía una copia sin decir nada.",
+      "Prueba t057 (29 comprobaciones), con el programa de verdad en un navegador y verificada rompiendo el código. Una de las roturas salió verde la primera vez —la prueba no medía lo que creía— y por eso se volvió a escribir."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.23.0-setup.exe",
-      "bytes": 125526029,
-      "sha256": "d3e2129a4904a93454d1275704da02b8e21c90d672c92c1028780848dfada06f",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.23.0/draw101-0.23.0-setup.exe",
+      "archivo": "draw101-0.23.1-setup.exe",
+      "bytes": 125532449,
+      "sha256": "d85cb88d2a0d329fefc8abe9ac0742c9864e7594ae8cf87119e13b2721e45243",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.23.1/draw101-0.23.1-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
