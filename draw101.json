@@ -1,21 +1,23 @@
 {
   "draw101": {
-    "version": "0.22.2",
-    "fecha": "2026-10-01",
+    "version": "0.23.0",
+    "fecha": "2026-10-06",
     "notas": [
-      "draw101 0.22.2 (2026-10-01)",
-      "LA NUBE, EN LA PANTALLA DE INICIO. Al abrir draw101 ahora hay tres columnas: los botones de siempre, tus planos recientes de esta computadora, y tus archivos en la nube — con su buscador y sus cuatro órdenes. Ya no hay que entrar a un dibujo en blanco y escribir NUBE para ver qué hay: se escoge desde el arranque.",
-      "Es la MISMA lista del cuadro NUBE, no una copia: busca sin acentos («ramirez» encuentra «Ramírez»), acepta las palabras en cualquier orden, y no le pide nada al servidor por cada letra que tecleas.",
-      "Cada lista se busca y se ordena por su cuenta: teclear en una no mueve la otra.",
-      "Si la nube está apagada, sin licencia o sin internet, la columna lo dice con sus palabras en vez de quedarse en blanco. Y en una pantalla angosta las tres columnas se acomodan una debajo de otra.",
-      "Prueba t054 (29 comprobaciones, con el programa de verdad en un navegador). De paso se acotó t050 a su propia pantalla: con dos listas iguales en el documento, estaba a un paso de medir la equivocada sin fallar."
+      "draw101 0.23.0 (2026-10-06)",
+      "ARRASTRAR UN ARCHIVO A LA VENTANA. Jalas un plano de tu carpeta, lo sueltas encima de draw101 y entra. Si estás en un dibujo en blanco se abre sin preguntarte nada; si ya estabas trabajando, draw101 pregunta qué quieres: abrirlo aparte, traerlo al dibujo de ahora como un bloque, o traerlo suelto para editarlo. Si sueltas varios de golpe, se abren en pestañas y no pregunta nada.",
+      "Acepta .t101x, PDF de fondo y los planos de siempre (DXF, DWG, t101d): cada uno se va por donde ya se iba, sólo cambia la manera de pedirlo.",
+      "LAS UNIDADES DEL PLANO QUE LLEGA, RESPETADAS. Un plano en metros importado a un dibujo en centímetros ya no se multiplica por mil. draw101 lee en qué unidades viene el archivo ($INSUNITS) y lo trae a la escala que le toca: un muro de 7 m sigue midiendo 7 m.",
+      "Si el archivo miente sobre sus unidades —pasa, y seguido—, draw101 mira el tamaño de lo que hay dentro antes de creerle.",
+      "COPIAR Y PEGAR VECTORES. Ctrl+C se lleva lo seleccionado al portapapeles y Ctrl+V lo pega: en otro dibujo de draw101 vuelve entero, con sus capas, sus bloques y sus cotas; en Illustrator, Inkscape, Figma o Word se pega como vectores y a tamaño real — una pieza de 1 m llega midiendo 1 m, no 100 unidades de nada.",
+      "Viaja un solo texto que los dos lados entienden, y sólo los bloques que de verdad se usan: copiar una línea no se lleva las 176 definiciones del plano. El comando COPIAR no cambió: sigue duplicando dentro del dibujo, como en AutoCAD.",
+      "Pruebas t055 (29 comprobaciones) y t056 (26), las dos con el programa de verdad en un navegador, y las dos verificadas rompiendo el código a propósito para comprobar que sí avisan."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.22.2-setup.exe",
-      "bytes": 125510676,
-      "sha256": "2b0bdf65af3f24d8b456392a8aa00718a3e361e1f5e6eea97084a6fc8c85af06",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.22.2/draw101-0.22.2-setup.exe",
+      "archivo": "draw101-0.23.0-setup.exe",
+      "bytes": 125526029,
+      "sha256": "d3e2129a4904a93454d1275704da02b8e21c90d672c92c1028780848dfada06f",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.23.0/draw101-0.23.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
