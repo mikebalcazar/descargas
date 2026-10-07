@@ -104,6 +104,42 @@ APPS = {
    datos=[('Versión','portal 0.10.0 · central 0.4.0'),('Plataforma','Web · celular y computadora'),
           ('Estado','En producción con el primer cliente'),('Modelo','Renta mensual por empresa')]),
 
+ 'cost101': dict(
+   lema='Cuánto cuesta cada partida de obra, con los precios al día.',
+   corto='Costos de obra por partida: precios base, cuadrillas y catálogo.',
+   estado='En producción', plataforma='Web · computadora y celular',
+   entrada='Se capturan una vez los precios base —materiales por su unidad de venta, mano de obra y equipo por hora— '
+           'y las cuadrillas. Con eso se arma cada partida: tanto de material con su desperdicio, tal cuadrilla con '
+           'su rendimiento por jornada, tantas horas de equipo. El programa hace la cuenta —costo directo, indirectos, '
+           'utilidad— y la partida queda en el catálogo. Cuando sube un precio, todas las partidas que lo usan se '
+           'recalculan solas y dejan escrito por qué cambiaron.',
+   ben=[('El precio sube y el catálogo se entera','Cambias el precio del cemento y cada partida que lo lleva se recalcula sola, con su historial.'),
+        ('Se sabe de qué se forma cada precio','Material, mano de obra, herramienta, equipo, indirectos y utilidad, a la vista en cada partida.'),
+        ('Una partida dentro de otra','El mortero entra en el muro y el muro en la barda: se costea una vez y se reutiliza.'),
+        ('Nada se cotiza sin revisar','Cualquiera del equipo arma un borrador; lo aprueba quien dirige la empresa.'),
+        ('Lo que se costea, se cotiza','quote101 lee el catálogo aprobado y los precios base: el renglón entra con su precio, sin volver a teclearlo.'),
+        ('La base es de la empresa','Los precios viven en la cuenta de la empresa, no en la computadora de quien los capturó.')],
+   fn=[('Precios base','materiales, mano de obra y equipo; se agregan, se corrigen y se quitan'),
+       ('Cuadrillas','grupos de oficios con su jornada y su costo por hora'),
+       ('Generador','en hoja, por pasos o en lienzo; la cuenta se ve mientras se teclea'),
+       ('Desperdicio y rendimiento','por material y por cuadrilla, en cada partida'),
+       ('Catálogo','borrador y aprobado, con buscador y categorías propias'),
+       ('Historial de precio','cada cambio con su fecha y su motivo'),
+       ('Lo usado no se borra','un insumo que una partida lleva no se puede quitar, y dice quién lo usa'),
+       ('Cuenta de la suite','se entra con el mismo correo que en los demás programas')],
+   img=[('02-catalogo.png','El catálogo de partidas, con el precio unitario y de qué se forma cada una'),
+        ('03-generador.png','El generador: materiales, mano de obra y equipo, y el precio que se va formando'),
+        ('04-precios-base.png','Los precios base: se corrige uno y las partidas se recalculan'),
+        ('05-cuadrillas.png','Las cuadrillas, con su costo por jornada'),
+        ('01-resumen.png','El resumen: qué falta aprobar y qué precios cambiaron'),
+        ('06-celular.png','El mismo catálogo, desde el celular')],
+   enlace=('Entrar a la app','https://cost101.taller101.com'),
+   datos=[('Versión','0.2.0'),('Plataforma','Web · computadora y celular'),
+          ('Estado','En producción'),('Modelo','Licencia por empresa')],
+   no=['No trae precios de mercado: los precios base los captura cada empresa.',
+       'No hace el presupuesto de una obra completa: arma partidas; el presupuesto se arma en quote101.',
+       'No importa catálogos de Excel todavía.']),
+
  'quell101': dict(
    lema='La obra, mueble por mueble, sobre el plano.',
    corto='El avance de la obra, pin por pin, sobre el plano.',
@@ -293,9 +329,9 @@ APPS = {
 }
 
 # Orden en que se enseñan, el mismo que sigue el mueble por el taller.
-ORDEN = ['quote101','nest101','draw101','quell101','roster101','dash101','peek101']
+ORDEN = ['quote101','cost101','nest101','draw101','quell101','roster101','dash101','peek101']
 
-# Los siete logotipos van en un solo archivo, marca/logos.svg, y cada página los
+# Los logotipos de los programas van en un solo archivo, marca/logos.svg, y cada página los
 # llama con <use>. Antes cada página traía el dibujo completo de cada logotipo
 # (la portada, catorce veces): 45 KB de trazos repetidos. El color lo pone el CSS
 # (fill), así que el mismo logotipo sale azul sobre claro y claro sobre oscuro.
@@ -393,12 +429,14 @@ def mosaico(app, fondo):
             f'<p class="estado">{html.escape(d["estado"])}</p>{img}</section>')
 
 # ------------------------------------------------------------------ portada
-# Tres a todo lo ancho —los que tocan el mueble antes de fabricarlo— y los
+# Cuatro a todo lo ancho —lo que pasa antes de fabricar— y los
 # otros cuatro de a dos, en damero claro y oscuro, como la portada de Apple.
-anchos = [('quote101', ''), ('nest101', 'nube'), ('draw101', 'oscuro')]
+# cost101 entró el 7-oct-2026: va junto a quote101, que es a quien alimenta.
+anchos = [('quote101', ''), ('cost101', 'oscuro'), ('nest101', 'nube'), ('draw101', 'oscuro')]
 de_a_dos = [('quell101', 'nube'), ('roster101', 'oscuro'), ('dash101', 'oscuro'), ('peek101', 'nube')]
 
-pasos = [('quote101','Se cotiza el mueble, componente por componente.'),
+pasos = [('cost101','Se costea: materiales, mano de obra y equipo, con precios al día.'),
+         ('quote101','Se cotiza, componente por componente y partida por partida.'),
          ('nest101','Se despieza: lista de corte y herrajes.'),
          ('draw101','Salen los planos de fabricación.'),
          ('quell101','La obra se sigue sobre el plano, mueble por mueble.'),
@@ -409,13 +447,13 @@ eslabones = [f'<div class="eslabon">{marca(a, nombre_visible=True)}{html.escape(
 cadena = ''.join(eslabones)
 
 portada = cabeza('Suite 101 — programas para taller de muebles',
-                 'Siete programas para el taller que ya trabaja: cotización, despiece, planos, obra, personal, cuentas y cliente.') + f"""
+                 'Ocho programas para el taller que ya trabaja: costos, cotización, despiece, planos, obra, personal, cuentas y cliente.') + f"""
 {barra()}
 <main>
 <section class="hero">
 <div class="env">
 <h1>El taller entero, de la cotización a la entrega.</h1>
-<p class="baja">Siete programas que se hablan entre ellos. Cada uno funciona por su cuenta; juntos, el dato se captura una vez.</p>
+<p class="baja">Ocho programas que se hablan entre ellos. Cada uno funciona por su cuenta; juntos, el dato se captura una vez.</p>
 <div class="acciones oscuro"><a class="btn" href="#programas">Ver los programas</a>
 <a class="btn contorno" href="mailto:{CORREO}?subject=Demostración">Pedir demostración</a></div>
 </div>
@@ -426,7 +464,7 @@ portada = cabeza('Suite 101 — programas para taller de muebles',
 <div class="pares">{''.join(mosaico(a, f) for a, f in de_a_dos)}</div>
 </div>
 <section id="encajan" class="encajan"><div class="env">
-<h2 class="grande">El mismo mueble recorre los siete programas.</h2>
+<h2 class="grande">El mismo trabajo recorre los ocho programas.</h2>
 <p class="baja">Sin volver a capturarse.</p>
 <div class="cadena">{cadena}</div>
 </div></section>
@@ -510,7 +548,7 @@ for app, d in APPS.items():
 <h2 class="grande">¿Le sirve a tu taller?</h2>
 <p class="baja">Te enseñamos {app} con datos de una obra de verdad.</p>
 <div class="acciones"><a class="btn" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a>
-<a class="btn contorno" href="../index.html#programas">Ver los siete programas</a></div>
+<a class="btn contorno" href="../index.html#programas">Ver los ocho programas</a></div>
 </div></section>
 </main>
 {pie('../')}</body></html>"""
