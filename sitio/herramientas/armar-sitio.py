@@ -292,6 +292,45 @@ APPS = {
    datos=[('Versión','0.1.0'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción, uso interno'),('Alcance','Varios negocios en una cuenta')]),
 
+ 'patron101': dict(
+   lema='Cuando falta flujo, tu gente te presta.',
+   corto='Préstamos de tus inversionistas, por rondas, con su estado de cuenta.',
+   estado='En producción', plataforma='Web · computadora y celular',
+   entrada='Para la empresa que de vez en cuando necesita un puente: tres semanas de nómina y materiales mientras '
+           'se cobra una obra. Se abre una ronda —cuánto hace falta, para cuándo, qué rendimiento se ofrece y cómo se '
+           'paga—, se le avisa a la gente de confianza que ya está en el directorio y cada quien dice con cuánto le '
+           'entra. Quien dirige acepta, ajusta o rechaza cada oferta. De ahí en adelante cada préstamo lleva su tabla '
+           'de pagos, su pagaré y sus comprobantes, y quien prestó entra con su correo a ver cuánto tiene invertido '
+           'y qué día le pagan.',
+   ben=[('El hueco se ve venir','dash101 enseña en qué semana el saldo cruza el cero; desde ahí nace la ronda, con el monto y las fechas ya puestos.'),
+        ('Cada quien ve lo suyo','Quien prestó ve su dinero, su tabla y su próximo pago. De la ronda ve cuánto falta, no quién más entró ni con cuánto.'),
+        ('Nada entra sin que lo aceptes','Cada oferta queda pendiente: se acepta tal cual, se le cambian monto o condiciones, o se rechaza.'),
+        ('El interés corre desde que llega el dinero','El préstamo arranca el día que se confirma el depósito, no el día que se prometió.'),
+        ('Un solo pago o parcialidades','Capital e interés al final, o en pagos semanales, quincenales o mensuales con interés sobre el saldo.'),
+        ('El pago se registra una vez','Se paga desde dash101, con su comprobante, y el estado de cuenta de quien prestó se actualiza solo.')],
+   fn=[('Rondas','meta, mínimo para entrar, fecha límite, rendimiento y forma de pago; borrador, abierta y cerrada'),
+       ('Directorio','inversionistas y prospectos con nombre, correo y teléfono; se puede pegar una lista entera'),
+       ('Aviso de ronda','correo automático a quien se marque, y un botón de WhatsApp con el mensaje ya escrito'),
+       ('Tasa por préstamo','mensual, anual o fija por todo el plazo, distinta en cada préstamo si hace falta'),
+       ('Tabla de pagos','capital, interés y saldo por renglón; se corrige a mano y queda el historial'),
+       ('Pagaré en PDF','sale con los datos del préstamo; se firma por fuera y se sube firmado'),
+       ('Comprobantes','el del depósito de quien presta y el de cada pago de la empresa'),
+       ('En el flujo de dash101','los depósitos por llegar y los pagos por salir entran a la proyección de 52 semanas'),
+       ('Cuenta de la suite','se entra con correo y contraseña, igual que en los demás programas')],
+   img=[('01-inicio.png','El inicio de quien dirige: cuánto se debe, qué toca revisar y los próximos pagos'),
+        ('02-ronda.png','Una ronda abierta: el avance, lo que se ofrece y las ofertas por revisar'),
+        ('04-ronda-nueva.png','Una ronda nueva: cuánto se quiere juntar, a qué tasa y cómo se paga, con la cuenta a la vista'),
+        ('03-prestamo.png','Un préstamo en diez pagos: capital, interés y saldo, renglón por renglón'),
+        ('05-directorio.png','El directorio: quien ya prestó y quien podría'),
+        ('06-celular.png','Lo que ve quien presta, desde su celular: cuánto tiene invertido y qué día le pagan')],
+   enlace=('Entrar a la app','https://patron101.taller101.com'),
+   datos=[('Versión','0.1.1'),('Plataforma','Web · computadora y celular'),
+          ('Estado','En producción'),('Modelo','Licencia por empresa')],
+   no=['No es fondeo colectivo ni capta dinero del público: lleva los préstamos de gente que la empresa ya conoce.',
+       'No mueve dinero: los depósitos y los pagos se hacen por fuera y aquí se registran.',
+       'El pagaré que genera es una base: lo revisa el abogado de cada empresa.',
+       'No cobra penalizaciones solo: si se paga antes o después, la tabla se ajusta a mano.']),
+
  'peek101': dict(
    lema='Lo que el cliente pregunta por teléfono, contestado sin llamada.',
    corto='El portal del cliente: su proyecto y su estado de cuenta.',
@@ -329,7 +368,7 @@ APPS = {
 }
 
 # Orden en que se enseñan, el mismo que sigue el mueble por el taller.
-ORDEN = ['quote101','cost101','nest101','draw101','quell101','roster101','dash101','peek101']
+ORDEN = ['quote101','cost101','nest101','draw101','quell101','roster101','dash101','patron101','peek101']
 
 # Los logotipos de los programas van en un solo archivo, marca/logos.svg, y cada página los
 # llama con <use>. Antes cada página traía el dibujo completo de cada logotipo
@@ -434,6 +473,10 @@ def mosaico(app, fondo):
 # cost101 entró el 7-oct-2026: va junto a quote101, que es a quien alimenta.
 anchos = [('quote101', ''), ('cost101', 'oscuro'), ('nest101', 'nube'), ('draw101', 'oscuro')]
 de_a_dos = [('quell101', 'nube'), ('roster101', 'oscuro'), ('dash101', 'oscuro'), ('peek101', 'nube')]
+# patron101 entró el 8-oct-2026 (Mike: «ya publica el sitio»). Es el noveno y
+# no es un paso del mueble: es el dinero que lo hace posible. Cierra la lista
+# a todo lo ancho, para no dejar un par cojo.
+cierre = [('patron101', '')]
 
 pasos = [('cost101','Se costea: materiales, mano de obra y equipo, con precios al día.'),
          ('quote101','Se cotiza, componente por componente y partida por partida.'),
@@ -442,18 +485,19 @@ pasos = [('cost101','Se costea: materiales, mano de obra y equipo, con precios a
          ('quell101','La obra se sigue sobre el plano, mueble por mueble.'),
          ('roster101','La gente que la hace, con su expediente en regla.'),
          ('dash101','Las cuentas cierran solas.'),
+         ('patron101','Si falta flujo, se cubre con una ronda entre tu gente.'),
          ('peek101','Y el cliente ve su proyecto y su estado de cuenta.')]
 eslabones = [f'<div class="eslabon">{marca(a, nombre_visible=True)}{html.escape(t)}</div>' for a, t in pasos]
 cadena = ''.join(eslabones)
 
 portada = cabeza('Suite 101 — programas para taller de muebles',
-                 'Ocho programas para el taller que ya trabaja: costos, cotización, despiece, planos, obra, personal, cuentas y cliente.') + f"""
+                 'Nueve programas para el taller que ya trabaja: costos, cotización, despiece, planos, obra, personal, cuentas, financiamiento y cliente.') + f"""
 {barra()}
 <main>
 <section class="hero">
 <div class="env">
 <h1>El taller entero, de la cotización a la entrega.</h1>
-<p class="baja">Ocho programas que se hablan entre ellos. Cada uno funciona por su cuenta; juntos, el dato se captura una vez.</p>
+<p class="baja">Nueve programas que se hablan entre ellos. Cada uno funciona por su cuenta; juntos, el dato se captura una vez.</p>
 <div class="acciones oscuro"><a class="btn" href="#programas">Ver los programas</a>
 <a class="btn contorno" href="mailto:{CORREO}?subject=Demostración">Pedir demostración</a></div>
 </div>
@@ -462,9 +506,10 @@ portada = cabeza('Suite 101 — programas para taller de muebles',
 <div id="programas">
 {''.join(mosaico(a, f) for a, f in anchos)}
 <div class="pares">{''.join(mosaico(a, f) for a, f in de_a_dos)}</div>
+{''.join(mosaico(a, f) for a, f in cierre)}
 </div>
 <section id="encajan" class="encajan"><div class="env">
-<h2 class="grande">El mismo trabajo recorre los ocho programas.</h2>
+<h2 class="grande">El mismo trabajo recorre los nueve programas.</h2>
 <p class="baja">Sin volver a capturarse.</p>
 <div class="cadena">{cadena}</div>
 </div></section>
@@ -548,7 +593,7 @@ for app, d in APPS.items():
 <h2 class="grande">¿Le sirve a tu taller?</h2>
 <p class="baja">Te enseñamos {app} con datos de una obra de verdad.</p>
 <div class="acciones"><a class="btn" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a>
-<a class="btn contorno" href="../index.html#programas">Ver los ocho programas</a></div>
+<a class="btn contorno" href="../index.html#programas">Ver los nueve programas</a></div>
 </div></section>
 </main>
 {pie('../')}</body></html>"""
