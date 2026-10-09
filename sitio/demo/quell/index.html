@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de quell101 — Suite 101</title>
+<meta name="description" content="Pruebe quell101 con una obra de ejemplo: el plano, los pines, la bitácora y el punchlist.">
+<meta name="robots" content="noindex">
+<style>
+@font-face{font-family:Cifras;src:url(../../fuentes/fira-cifras-400.woff2);font-weight:400;unicode-range:U+0030-0039,U+0025,U+00D7,U+002E,U+002C,U+002F}
+@font-face{font-family:Cifras;src:url(../../fuentes/fira-cifras-600.woff2);font-weight:600 700;unicode-range:U+0030-0039,U+0025,U+00D7,U+002E,U+002C,U+002F}
+@font-face{font-family:Raleway;src:url(../../fuentes/raleway-400.woff2);font-weight:400}
+@font-face{font-family:Raleway;src:url(../../fuentes/raleway-600.woff2);font-weight:600}
+@font-face{font-family:Raleway;src:url(../../fuentes/raleway-700.woff2);font-weight:700}
+:root{
+  --azul:#0080C1;--azul-texto:#0074ad;--tinta:#122733;--gris:#5b6b76;
+  --nube:#f7f9fa;--linea:#e2e8ec;--blanco:#fff;
+  --mueble:#3b6ea5;--puerta:#b85a1e;--acabado:#6b9e78;--rojo:#d0342c;
+  --barra:56px;--demo:44px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:Cifras,Raleway,system-ui,sans-serif;color:var(--tinta);background:var(--blanco);
+  -webkit-font-smoothing:antialiased;font-size:14px;overflow:hidden}
+
+/* ---- cinta de demostración: que nunca se confunda con la app ---- */
+.cinta{height:var(--demo);background:var(--tinta);color:#fff;display:flex;align-items:center;
+  gap:14px;padding:0 18px;font-size:13px}
+.cinta b{background:var(--azul);color:#fff;font-size:11px;font-weight:700;letter-spacing:.09em;
+  padding:4px 9px;border-radius:3px}
+.cinta span{color:#a9c0ce}
+.cinta a{margin-left:auto;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.35);
+  padding:7px 15px;border-radius:3px;font-weight:600;font-size:12px;white-space:nowrap}
+.cinta a:hover{background:#fff;color:var(--tinta)}
+
+/* ---- barra de la app ---- */
+.barra{height:var(--barra);border-bottom:1px solid var(--linea);display:flex;align-items:center;
+  gap:14px;padding:0 16px;background:#fff}
+.casita{width:34px;height:34px;border:1px solid var(--linea);border-radius:7px;display:grid;
+  place-items:center;color:var(--gris)}
+.barra .logo{height:19px;width:auto;fill:var(--azul);display:block}
+.obra{border:1px solid var(--linea);border-radius:7px;padding:8px 13px;font-weight:600;
+  display:flex;align-items:center;gap:26px;color:var(--tinta)}
+.obra::after{content:"";border:4px solid transparent;border-top-color:var(--gris);margin-top:3px}
+.der{margin-left:auto;display:flex;align-items:center;gap:10px}
+.btn{border:1px solid var(--linea);background:#fff;border-radius:7px;padding:9px 15px;
+  font:600 13px Raleway,sans-serif;color:var(--tinta);cursor:pointer}
+.btn:hover{border-color:var(--gris)}
+.btn.lleno{background:var(--tinta);border-color:var(--tinta);color:#fff}
+.yo{width:32px;height:32px;border-radius:50%;background:var(--azul);color:#fff;display:grid;
+  place-items:center;font:700 12px Raleway,sans-serif}
+
+/* ---- tres columnas ---- */
+.cuerpo{display:grid;grid-template-columns:240px 1fr 400px;
+  height:calc(100% - var(--barra) - var(--demo))}
+.lado{border-right:1px solid var(--linea);padding:16px 14px;overflow:auto}
+.rotulo{font-size:11px;color:var(--gris);letter-spacing:.04em;margin-bottom:9px}
+.plano-sel{background:#eef5fa;border:1px solid #d4e6f2;border-radius:8px;padding:11px 13px;
+  display:flex;justify-content:space-between;font-weight:600;color:var(--azul-texto)}
+.plano-sel small{color:var(--gris);font-weight:400}
+.lado .btn{width:100%;text-align:left;margin-top:8px;font-weight:400;color:var(--gris)}
+.cifras{display:grid;grid-template-columns:1fr 1fr;gap:14px 10px;margin:14px 0 18px}
+.cifras div b{display:block;font:700 21px Cifras,Raleway,sans-serif;line-height:1}
+.cifras div span{font-size:11px;color:var(--gris)}
+.leyenda{font-size:12px;color:var(--gris);line-height:1.9;margin-bottom:16px}
+.leyenda i{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:7px;
+  vertical-align:-1px}
+.cat{border:1px solid var(--linea);border-radius:8px;padding:9px 12px;display:flex;
+  align-items:center;gap:9px;margin-bottom:7px;font-weight:600;cursor:pointer}
+.cat:hover{border-color:var(--gris)}
+.cat b{margin-left:auto;font-weight:400;color:var(--gris)}
+.cat i{width:10px;height:10px;border-radius:50%}
+.liga{display:flex;justify-content:space-between;padding:10px 2px;border-top:1px solid var(--linea);
+  color:var(--tinta);cursor:pointer}
+.liga:hover{color:var(--azul-texto)}
+.liga b{font-weight:400;color:var(--gris)}
+
+/* ---- centro: plano ---- */
+.centro{display:flex;flex-direction:column;background:var(--nube);overflow:hidden}
+.pestanas{display:flex;align-items:center;gap:10px;padding:12px 16px}
+.tabs{display:flex;background:#fff;border:1px solid var(--linea);border-radius:8px;padding:3px}
+.tab{padding:7px 15px;border-radius:6px;font:600 13px Raleway,sans-serif;color:var(--gris);
+  cursor:pointer;border:0;background:none;display:flex;align-items:center;gap:7px}
+.tab[aria-selected=true]{background:var(--tinta);color:#fff}
+.globo{background:var(--rojo);color:#fff;font:700 10px Cifras,sans-serif;border-radius:9px;
+  padding:1px 6px}
+.lienzo{flex:1;padding:0 16px 16px;overflow:auto;position:relative}
+.hoja{background:#fff;border:1px solid var(--linea);border-radius:10px;height:100%;
+  display:grid;place-items:center}
+.pin{cursor:pointer}
+.pin circle{stroke-width:2.5}
+.pin text{font:600 9px Cifras,Raleway,sans-serif;fill:var(--tinta);text-anchor:middle}
+.pin:focus{outline:none}
+.pin .sel{opacity:0;transition:opacity .12s}
+.pin:hover .sel{opacity:.45}
+.pin.vivo .sel,.pin:focus-visible .sel{opacity:1}
+.zoom{position:absolute;right:28px;bottom:28px;display:grid;gap:6px}
+.zoom button{width:30px;height:30px;border:1px solid var(--linea);background:#fff;border-radius:7px;
+  cursor:pointer;color:var(--gris);font-size:15px}
+
+/* ---- derecha: el ítem ---- */
+.panel{display:flex;flex-direction:column;overflow:hidden;background:#fff}
+.vacio{display:grid;place-content:center;text-align:center;height:100%;padding:28px;gap:7px}
+.vacio b{font:700 17px Raleway,sans-serif}
+.vacio span{color:var(--gris);font-size:13px}
+.cabe{display:flex;align-items:center;gap:11px;padding:14px 16px;border-bottom:1px solid var(--linea)}
+.cabe .mig{color:var(--gris);font-size:13px}
+.cabe .mig b{color:var(--tinta)}
+.volver{width:28px;height:28px;border:1px solid var(--linea);border-radius:7px;background:#fff;
+  cursor:pointer;color:var(--gris)}
+.ficha{padding:14px 16px 0}
+.ficha h2{font:700 20px Raleway,sans-serif;margin-bottom:7px}
+.metas{display:flex;flex-wrap:wrap;gap:9px;align-items:center;font-size:12px;color:var(--gris)}
+.chip{background:#eaf3e9;color:#3f6b45;border-radius:4px;padding:3px 8px;font-weight:600;font-size:11px}
+.chip.pend{background:#fdeeea;color:#9c3a28}
+.subtabs{display:flex;gap:18px;padding:14px 16px 0;border-bottom:1px solid var(--linea)}
+.subtab{padding-bottom:10px;font:600 13px Raleway,sans-serif;color:var(--gris);cursor:pointer;
+  border:0;background:none;border-bottom:2px solid transparent}
+.subtab[aria-selected=true]{color:var(--tinta);border-bottom-color:var(--tinta)}
+.subtab b{color:var(--gris);font-weight:400;margin-left:4px}
+.hilo{flex:1;overflow:auto;padding:16px}
+.dia{text-align:center;font-size:11px;color:var(--gris);margin:4px 0 14px}
+.nota{display:flex;gap:10px;margin-bottom:16px}
+.ini{width:28px;height:28px;border-radius:50%;background:var(--nube);border:1px solid var(--linea);
+  display:grid;place-items:center;font:700 10px Raleway,sans-serif;color:var(--gris);flex:none}
+.nota .cont{flex:1;min-width:0}
+.nota .quien{display:flex;align-items:baseline;gap:7px;font-size:12px;margin-bottom:5px}
+.nota .quien b{font-weight:700;font-size:13px}
+.nota .quien span{color:var(--gris)}
+.nota .quien .hora{margin-left:auto}
+.burbuja{background:var(--nube);border:1px solid var(--linea);border-radius:9px;padding:10px 12px;
+  line-height:1.5}
+.pl{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--linea);cursor:pointer}
+.pl:hover{background:var(--nube)}
+.caja{width:18px;height:18px;border:1.5px solid #c4cfd6;border-radius:4px;flex:none;margin-top:1px;
+  display:grid;place-items:center;color:#fff;font-size:11px}
+.pl.ok .caja{background:var(--acabado);border-color:var(--acabado)}
+.pl.ok .txt{color:var(--gris)}
+.pl.ok .txt>span{text-decoration:line-through}
+.pl .txt{line-height:1.45}
+.pl small{display:block;color:var(--gris);font-size:11.5px;margin-top:2px;text-decoration:none}
+.escribir{border-top:1px solid var(--linea);padding:13px 16px}
+.escribir textarea{width:100%;min-height:62px;border:1px solid var(--linea);border-radius:9px;
+  padding:10px 12px;font:400 13.5px Raleway,sans-serif;resize:none;color:var(--tinta)}
+.escribir textarea:focus{outline:2px solid #cfe6f5;border-color:var(--azul)}
+.acciones{display:flex;gap:8px;margin-top:9px;align-items:center}
+.acciones .btn.lleno[disabled]{background:#b9c5cc;border-color:#b9c5cc;cursor:default}
+.avance{border-top:1px solid var(--linea);padding:11px 16px;display:flex;align-items:center;gap:11px}
+.pasos{display:flex;gap:4px}
+.pasos i{width:17px;height:8px;border-radius:2px;background:var(--azul)}
+.pasos i.ult{background:var(--acabado)}
+.avance b{font:600 13px Raleway,sans-serif}
+.avance span{margin-left:auto;color:var(--gris);font-size:12px}
+
+.aviso{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(14px);
+  background:var(--tinta);color:#fff;padding:11px 18px;border-radius:7px;font-size:13px;
+  opacity:0;pointer-events:none;transition:.22s}
+.aviso.ver{opacity:1;transform:translateX(-50%)}
+
+@media(max-width:700px){
+  /* en el celular la cinta sólo alcanza para el sello y la salida */
+  .cinta span{display:none}
+  .cinta{gap:10px;padding:0 12px}
+}
+@media(max-width:1100px){
+  .cuerpo{grid-template-columns:1fr}
+  .lado{display:none}
+  .panel{position:fixed;inset:var(--demo) 0 0;z-index:5;display:none}
+  .panel.abierto{display:flex}
+  .centro{height:calc(100vh - var(--barra) - var(--demo))}
+  .obra{display:none}
+}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Obra de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/quell101.html">Conocer quell101</a>
+</div>
+
+<div class="barra">
+  <div class="casita" aria-hidden="true">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+  </div>
+  <img class="logo" src="../../marca/quell101.svg" alt="quell101" height="19">
+  <div class="obra">Casa Poniente · Familia Rivas</div>
+  <div class="der">
+    <button class="btn">Generar reporte</button>
+    <button class="btn lleno">+ Ítem</button>
+    <div class="yo">MR</div>
+  </div>
+</div>
+
+<div class="cuerpo">
+  <aside class="lado">
+    <div class="rotulo">Planos</div>
+    <div class="plano-sel">Planta baja <small>8 ítems</small></div>
+    <button class="btn">+ Subir plano (PDF / imagen)</button>
+    <button class="btn">Renombrar / borrar plano</button>
+
+    <div class="rotulo" style="margin-top:20px">Resumen del plano</div>
+    <div class="cifras">
+      <div><b>8</b><span>ítems</span></div>
+      <div><b>6</b><span>en producción</span></div>
+      <div><b id="n-pend">2</b><span>pendientes</span></div>
+      <div><b>8</b><span>en la obra</span></div>
+    </div>
+
+    <div class="rotulo">Cómo leer un pin</div>
+    <div class="leyenda">
+      <i style="background:var(--mueble)"></i>El relleno es el tipo<br>
+      <i style="border:2px solid var(--rojo)"></i>Aro rojo: punchlist sin cerrar<br>
+      <i style="background:#9db8cf"></i>Aguado: en producción
+    </div>
+
+    <div class="cat"><i style="background:var(--mueble)"></i>Mueble <b>4</b></div>
+    <div class="cat"><i style="background:var(--puerta)"></i>Puerta <b>2</b></div>
+    <div class="cat"><i style="background:var(--acabado)"></i>Acabado <b>2</b></div>
+
+    <div style="margin-top:14px">
+      <div class="liga">En producción <b>6</b></div>
+      <div class="liga">Punchlist <b id="n-pl">2</b></div>
+      <div class="liga">Ver la obra en lista <b>8</b></div>
+      <div class="liga">Dudas por contestar <b>1</b></div>
+      <div class="liga">Ver lista de pendientes <b>2</b></div>
+      <div class="liga">Usuarios y accesos <b></b></div>
+    </div>
+  </aside>
+
+  <main class="centro">
+    <div class="pestanas">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true">Plano</button>
+        <button class="tab" role="tab" aria-selected="false">Lista</button>
+        <button class="tab" role="tab" aria-selected="false">Dudas <span class="globo">1</span></button>
+      </div>
+      <button class="btn">Planta baja ▾</button>
+    </div>
+    <div class="lienzo">
+      <div class="hoja">
+        <svg id="plano" viewBox="0 0 860 560" style="width:100%;height:100%;max-height:560px">
+          <g stroke="#3d4b55" stroke-width="2.5" fill="none">
+            <rect x="60" y="48" width="740" height="430"/>
+            <path d="M350 48V320M350 360v118"/>
+            <path d="M60 300h290"/>
+            <path d="M620 48v248M620 336v142"/>
+            <path d="M700 296h100"/>
+          </g>
+          <g stroke="#9aa7b0" stroke-width="1.4" fill="none">
+            <path d="M350 320a40 40 0 0 1 40 40"/>
+            <path d="M350 360a40 40 0 0 0-40-40" transform="translate(-60 -60)"/>
+            <path d="M620 296a40 40 0 0 1 40 40"/>
+            <path d="M620 336a40 40 0 0 0 40-40" transform="translate(0 140)"/>
+          </g>
+          <g fill="#aeb9c1" font-size="8" font-family="Raleway,sans-serif">
+            <text x="120" y="112">COCINA</text>
+            <text x="404" y="116">COCINA 2</text>
+            <text x="672" y="112">RECÁMARA 1</text>
+            <text x="120" y="356">COMEDOR</text>
+            <text x="404" y="420">BAÑO</text>
+            <text x="672" y="382">RECÁMARA 2</text>
+          </g>
+          <g stroke="#cdd6dc" stroke-width="1">
+            <path d="M60 510h740"/>
+          </g>
+          <g fill="#aeb9c1" font-size="7.5" font-family="Cifras,sans-serif" text-anchor="middle">
+            <text x="205" y="505">6.40</text><text x="600" y="505">11.20</text>
+          </g>
+          <g id="pines"></g>
+        </svg>
+      </div>
+      <div class="zoom">
+        <button type="button" aria-label="Acercar">+</button>
+        <button type="button" aria-label="Alejar">−</button>
+        <button type="button" aria-label="Ajustar">⊡</button>
+      </div>
+    </div>
+  </main>
+
+  <aside class="panel" id="panel">
+    <div class="vacio" id="vacio">
+      <b>Selecciona un ítem</b>
+      <span>Toca un pin del plano para abrirlo</span>
+    </div>
+  </aside>
+</div>
+
+<div class="aviso" id="aviso"></div>
+
+<script>
+const COLOR = {Mueble:'#3b6ea5', Puerta:'#b85a1e', Acabado:'#6b9e78'};
+
+const ITEMS = [
+  {id:'M01', tipo:'Mueble', x:200, y:140, nombre:'Alacena de cocina', resp:'Taller 101',
+   creado:'28 ago 2026', prod:false, avance:5,
+   bitacora:[
+     {dia:'sábado, 29 de agosto', quien:'Mike Rivas', rol:'Dueño', hora:'06:27 p.m.',
+      txt:'Se confirma cubierta en cuarzo, no en granito. Lo autorizó el cliente por teléfono.'},
+     {dia:'lunes, 7 de septiembre', quien:'Mike Rivas', rol:'Dueño', hora:'02:27 a.m.',
+      txt:'Instalada. Falta ajustar una bisagra y colocar jaladeras.'}],
+   punch:[{t:'Ajustar bisagra de puerta derecha', d:'Levantado el 7 de septiembre', ok:false},
+          {t:'Colocar jaladeras', d:'Levantado el 7 de septiembre', ok:false},
+          {t:'Limpiar cubierta', d:'Cerrado el 8 de septiembre', ok:true}]},
+  {id:'M02', tipo:'Mueble', x:300, y:250, nombre:'Barra desayunador', resp:'Taller 101',
+   creado:'28 ago 2026', prod:true, avance:3,
+   bitacora:[{dia:'martes, 1 de septiembre', quien:'Lucía Fonseca', rol:'Producción', hora:'10:12 a.m.',
+      txt:'Entró a corte. Melamina roble claro, canto 2 mm.'}],
+   punch:[]},
+  {id:'A01', tipo:'Acabado', x:430, y:195, nombre:'Pintura muro cocina', resp:'Contratista',
+   creado:'30 ago 2026', prod:true, avance:2,
+   bitacora:[{dia:'jueves, 3 de septiembre', quien:'Beto Narváez', rol:'Contratista', hora:'08:40 a.m.',
+      txt:'Primera mano aplicada. Falta la segunda cuando sequen los plafones.'}],
+   punch:[]},
+  {id:'M03', tipo:'Mueble', x:690, y:165, nombre:'Clóset recámara 1', resp:'Taller 101',
+   creado:'28 ago 2026', prod:true, avance:4,
+   bitacora:[{dia:'viernes, 4 de septiembre', quien:'Lucía Fonseca', rol:'Producción', hora:'04:05 p.m.',
+      txt:'Armado en taller. Se entrega el lunes.'}],
+   punch:[]},
+  {id:'P01', tipo:'Puerta', x:360, y:340, nombre:'Puerta de baño', resp:'Taller 101',
+   creado:'29 ago 2026', prod:false, avance:5,
+   bitacora:[{dia:'miércoles, 2 de septiembre', quien:'Mike Rivas', rol:'Dueño', hora:'01:15 p.m.',
+      txt:'Instalada y ajustada. Queda bien.'}],
+   punch:[]},
+  {id:'A02', tipo:'Acabado', x:240, y:390, nombre:'Piso comedor', resp:'Contratista',
+   creado:'30 ago 2026', prod:true, avance:3,
+   bitacora:[{dia:'lunes, 7 de septiembre', quien:'Beto Narváez', rol:'Contratista', hora:'09:30 a.m.',
+      txt:'Colocado el 70 %. Falta el remate contra la cocina.'}],
+   punch:[]},
+  {id:'P02', tipo:'Puerta', x:560, y:430, nombre:'Puerta recámara 2', resp:'Taller 101',
+   creado:'29 ago 2026', prod:true, avance:2,
+   bitacora:[{dia:'martes, 8 de septiembre', quien:'Lucía Fonseca', rol:'Producción', hora:'11:48 a.m.',
+      txt:'En barniz. Dos manos más.'}],
+   punch:[]},
+  {id:'M04', tipo:'Mueble', x:690, y:400, nombre:'Mueble de TV', resp:'Taller 101',
+   creado:'28 ago 2026', prod:true, avance:3,
+   bitacora:[{dia:'sábado, 5 de septiembre', quien:'Lucía Fonseca', rol:'Producción', hora:'05:20 p.m.',
+      txt:'Cortado y cantoneado. Entra a armado.'}],
+   punch:[]}
+];
+
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $ = s => document.querySelector(s);
+
+/* ---------------- el plano ---------------- */
+const gp = $('#pines');
+ITEMS.forEach(it => {
+  const col = COLOR[it.tipo];
+  const abiertos = it.punch.filter(p => !p.ok).length;
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','pin'); g.dataset.id = it.id;
+  g.setAttribute('tabindex','0'); g.setAttribute('role','button');
+  g.setAttribute('aria-label', it.id + ' ' + it.nombre);
+  g.innerHTML =
+    '<circle class="sel" cx="'+it.x+'" cy="'+it.y+'" r="19" fill="none"'+
+      ' stroke="#122733" stroke-width="1.5" stroke-dasharray="3 3"/>'+
+    '<circle cx="'+it.x+'" cy="'+it.y+'" r="13" fill="'+col+'" fill-opacity="'+(it.prod?.45:1)+
+      '" stroke="'+(abiertos?'#d0342c':'#fff')+'"/>'+
+    '<text x="'+it.x+'" y="'+(it.y+26)+'">'+it.id+'</text>';
+  gp.appendChild(g);
+  const abrir = () => mostrar(it.id);
+  g.addEventListener('click', abrir);
+  g.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); abrir(); }});
+});
+
+/* ---------------- el panel del ítem ---------------- */
+let actual = null, subtab = 'bitacora';
+
+function mostrar(id){
+  actual = ITEMS.find(i => i.id === id);
+  subtab = 'bitacora';
+  document.querySelectorAll('.pin').forEach(p =>
+    p.classList.toggle('vivo', p.dataset.id === id));
+  pintar();
+  $('#panel').classList.add('abierto');
+}
+
+function pintar(){
+  const it = actual;
+  if(!it){ $('#panel').innerHTML = '<div class="vacio"><b>Selecciona un ítem</b>'+
+    '<span>Toca un pin del plano para abrirlo</span></div>'; return; }
+  const abiertos = it.punch.filter(p => !p.ok).length;
+  const hechos = it.punch.length - abiertos;
+
+  const hilo = subtab === 'bitacora'
+    ? it.bitacora.map((n,i) => {
+        const cab = (i===0 || it.bitacora[i-1].dia!==n.dia)
+          ? '<div class="dia">'+esc(n.dia)+'</div>' : '';
+        const ini = n.quien.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+        return cab+'<div class="nota"><div class="ini">'+ini+'</div><div class="cont">'+
+          '<div class="quien"><b>'+esc(n.quien)+'</b><span>'+esc(n.rol)+'</span>'+
+          '<span class="hora">'+esc(n.hora)+'</span></div>'+
+          '<div class="burbuja">'+esc(n.txt)+'</div></div></div>';
+      }).join('')
+    : (it.punch.length
+        ? it.punch.map((p,i) =>
+            '<div class="pl'+(p.ok?' ok':'')+'" data-i="'+i+'" role="button" tabindex="0">'+
+            '<div class="caja">'+(p.ok?'✓':'')+'</div>'+
+            '<div class="txt"><span>'+esc(p.t)+'</span><small>'+esc(p.d)+'</small></div></div>').join('')
+        : '<p style="color:var(--gris);padding:8px 0">Este ítem no tiene punchlist.</p>');
+
+  $('#panel').innerHTML =
+   '<div class="cabe"><button class="volver" aria-label="Regresar">←</button>'+
+     '<div class="mig">'+esc(it.tipo)+' · <b>'+esc(it.id)+'</b></div>'+
+     '<button class="btn" style="margin-left:auto">Editar</button></div>'+
+   '<div class="ficha"><h2>'+esc(it.nombre)+'</h2><div class="metas">'+
+     (abiertos ? '<span class="chip pend">Punchlist</span>' : '<span class="chip">Al día</span>')+
+     '<span>Resp. <b style="color:var(--tinta)">'+esc(it.resp)+'</b></span>'+
+     '<span>Planta baja</span><span>Creado '+esc(it.creado)+'</span></div></div>'+
+   '<div class="subtabs">'+
+     '<button class="subtab" data-t="bitacora" aria-selected="'+(subtab==='bitacora')+'">'+
+       'Bitácora <b>'+it.bitacora.length+'</b></button>'+
+     '<button class="subtab" data-t="punch" aria-selected="'+(subtab==='punch')+'">'+
+       'Punchlist <b>'+hechos+'/'+it.punch.length+'</b></button></div>'+
+   '<div class="hilo" id="hilo">'+hilo+'</div>'+
+   '<div class="escribir">'+
+     '<textarea id="caja" placeholder="Escribe lo que pasó en este ítem…"></textarea>'+
+     '<div class="acciones"><button class="btn">Cámara</button><button class="btn">Fotos</button>'+
+     '<button class="btn lleno" id="registrar" style="margin-left:auto" disabled>Registrar</button>'+
+     '</div></div>'+
+   '<div class="avance"><div class="pasos">'+
+     Array.from({length:5}, (_,i) =>
+       '<i'+(i<it.avance ? (i===it.avance-1?' class="ult"':'') : ' style="background:#dde5ea"')+'></i>'
+     ).join('')+
+     '</div><b>'+['Por hacer','En corte','En armado','En obra','Entregado'][it.avance-1]+'</b>'+
+     '<span>'+it.avance+'/5</span></div>';
+
+  $('#panel .volver').onclick = () => {
+    actual = null;
+    document.querySelectorAll('.pin').forEach(p => p.classList.remove('vivo'));
+    $('#panel').classList.remove('abierto');
+    pintar();
+  };
+  $('#panel').querySelectorAll('.subtab').forEach(b =>
+    b.onclick = () => { subtab = b.dataset.t; pintar(); });
+
+  const caja = $('#caja'), reg = $('#registrar');
+  if(caja){
+    caja.oninput = () => reg.disabled = !caja.value.trim();
+    reg.onclick = () => {
+      const txt = caja.value.trim(); if(!txt) return;
+      const ahora = new Date();
+      const h = ahora.getHours(), m = String(ahora.getMinutes()).padStart(2,'0');
+      it.bitacora.push({
+        dia: 'hoy', quien: 'Mike Rivas', rol: 'Dueño',
+        hora: (h%12||12)+':'+m+' '+(h<12?'a.m.':'p.m.'), txt});
+      subtab = 'bitacora'; pintar();
+      $('#hilo').scrollTop = $('#hilo').scrollHeight;
+      avisar('Nota registrada. En la demostración no se guarda.');
+    };
+  }
+  $('#panel').querySelectorAll('.pl').forEach(f => {
+    const voltear = () => {
+      const p = it.punch[+f.dataset.i];
+      p.ok = !p.ok;
+      p.d = p.ok ? 'Cerrado ahora' : 'Levantado el 7 de septiembre';
+      pintar(); repintarPin(it); contar();
+      avisar(p.ok ? 'Pendiente cerrado.' : 'Pendiente reabierto.');
+    };
+    f.onclick = voltear;
+    f.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); voltear(); }};
+  });
+}
+
+function repintarPin(it){
+  const g = document.querySelector('.pin[data-id="'+it.id+'"]');
+  if(!g) return;
+  const abiertos = it.punch.filter(p => !p.ok).length;
+  g.querySelectorAll('circle')[1].setAttribute('stroke', abiertos ? '#d0342c' : '#fff');
+}
+
+function contar(){
+  const n = ITEMS.reduce((a,i) => a + (i.punch.some(p => !p.ok) ? 1 : 0), 0);
+  $('#n-pend').textContent = n;
+  $('#n-pl').textContent = n;
+}
+
+let reloj;
+function avisar(t){
+  const a = $('#aviso'); a.textContent = t; a.classList.add('ver');
+  clearTimeout(reloj); reloj = setTimeout(() => a.classList.remove('ver'), 2600);
+}
+
+/* arranca con el ítem que tiene punchlist, que es lo que vale la pena enseñar */
+mostrar('M01');
+$('#panel').classList.remove('abierto');
+</script>
