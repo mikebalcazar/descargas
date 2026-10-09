@@ -1,18 +1,16 @@
 {
   "nest101": {
-    "version": "0.19.1",
-    "fecha": "2026-10-01",
+    "version": "0.19.2",
+    "fecha": "2026-10-09",
     "notas": [
-      "Un mal rato del servidor ya no le quita la licencia al taller: sólo la suite puede decir que no.",
-      "Ayuda → «Licencia de este equipo…» dice con qué cuenta quedó y hasta cuándo, y permite cambiar de cuenta.",
-      "Las notas de cada versión ya salen del repositorio, no de una frase genérica."
+      "Ícono nuevo: nest101 estrena el ícono que se eligió para la app, en el escritorio, la barra de tareas, el menú Inicio y el instalador."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.19.1-setup.exe",
-      "bytes": 159919772,
-      "sha256": "8c7021cf5b108f000ee132f11f539883227a97411fd2aa9f2d3d44be0167137a",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.1/nest101-0.19.1-setup.exe",
+      "archivo": "nest101-0.19.2-setup.exe",
+      "bytes": 160437158,
+      "sha256": "1dac4557ff2beb73d2234dca987e636fc4c96a6ae348d15ed87ca50d06a44409",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.2/nest101-0.19.2-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
