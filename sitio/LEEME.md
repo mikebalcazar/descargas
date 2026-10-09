@@ -7,7 +7,7 @@ quién lo visitó.
 
 | Ruta | Qué es |
 |---|---|
-| `index.html` | portada: los nueve programas y cómo encajan (cost101 entró el 7-oct-2026; patron101, el 8-oct) |
+| `index.html` | portada: los diez programas y cómo encajan (cost101 entró el 7-oct-2026; patron101, el 8-oct; bill101, el 9-oct) |
 | `app/<app>.html` | una página por programa |
 | `estilo.css` · `fuentes/` · `img/` · `marca/` | lo demás |
 | `herramientas/armar-sitio.py` | el guion que arma todo |

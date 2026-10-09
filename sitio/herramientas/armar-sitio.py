@@ -292,6 +292,45 @@ APPS = {
    datos=[('Versión','0.1.0'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción, uso interno'),('Alcance','Varios negocios en una cuenta')]),
 
+ 'bill101': dict(
+   lema='Las facturas de la empresa, leídas solas, y los impuestos del mes, estimados.',
+   corto='Facturas emitidas y recibidas, su liga con el dinero de dash101 y el IVA e ISR del mes, estimados.',
+   estado='En producción', plataforma='Web · computadora y celular',
+   entrada='Se suben los XML de las facturas —sueltos o en un .zip— y bill101 los lee solo: quién la hizo, a quién, '
+           'cuánto, qué IVA y si la empresa la emitió o la recibió. A cada factura le propone el movimiento de dash101 '
+           'que se le parece, y alguien de la empresa confirma. Le pregunta al SAT si siguen vigentes. Con lo '
+           'facturado arma el estado de cuenta fiscal y estima el IVA y el ISR provisional de cada mes y el ISR del '
+           'año. Es una estimación para llegar preparado con el contador: no es la declaración.',
+   ben=[('Nada se teclea','El XML ya trae el RFC, los importes, el IVA y las retenciones: se sube y queda leído. La misma factura subida dos veces no se duplica.'),
+        ('La factura encuentra su pago','Para cada factura propone el movimiento de dash101 con el mismo monto y fecha cercana, y dice por qué se parece. Nada se liga solo.'),
+        ('Se sabe qué toca este mes','El inicio dice cuánto IVA e ISR provisional se estima, cuándo vence y de dónde sale cada número.'),
+        ('Sólo lo facturado','El estado de cuenta fiscal lleva lo emitido y lo recibido, vigente, con su saldo corrido, aparte de las cuentas del día a día.'),
+        ('Cada factura cuenta como debe','Gasto del año, inversión o no deducible: se escoge en la factura y la estimación lo toma en cuenta.'),
+        ('Uno lo consulta, otro lo cambia','Quien ve el dinero de la empresa puede consultar; los datos fiscales y los pagos de impuestos sólo los cambia quien dirige o quien lleva la contabilidad.')],
+   fn=[('Subir facturas','XML sueltos o un .zip; lo que no es factura o no es de la empresa se aparta y se dice por qué'),
+       ('Emitidas y recibidas','mes por mes, con su total, su IVA y si ya está ligada a un movimiento'),
+       ('Una factura','sus datos, conceptos, complementos de pago, con qué se pagó y su XML para bajar'),
+       ('Por ligar','cada factura con el movimiento de dash101 que se le parece; se confirma o se deshace a mano'),
+       ('Revisar en el SAT','pregunta si cada factura sigue vigente; si el SAT no la reconoce, avisa y no la cancela'),
+       ('Impuestos','IVA e ISR provisional mes por mes, ISR anual estimado y los pagos que se registran'),
+       ('Estado de cuenta fiscal','sólo lo facturado, con saldo corrido, por año o por mes'),
+       ('Ajustes','RFC, régimen y lo que da el contador para cada año'),
+       ('Cuenta de la suite','se entra con el mismo correo que en los demás programas')],
+   img=[('01-inicio.png','El inicio: lo que toca declarar este mes, estimado, y lo pendiente por arreglar'),
+        ('02-facturas.png','Las facturas recibidas del mes, con su IVA y si ya se ligaron a un pago'),
+        ('03-factura.png','Una factura: con qué se pagó, cómo cuenta para los impuestos y sus datos'),
+        ('04-por-ligar.png','Por ligar: cada factura con el pago de dash101 que se le parece'),
+        ('05-impuestos.png','Un mes abierto: de dónde salen el IVA y el ISR provisional estimados'),
+        ('06-estado-de-cuenta.png','El estado de cuenta fiscal: sólo lo facturado, con su saldo corrido'),
+        ('07-celular.png','El inicio, desde el celular')],
+   enlace=('Entrar a la app','https://bill101.taller101.com'),
+   datos=[('Versión','0.1.0'),('Plataforma','Web · computadora y celular'),
+          ('Estado','En producción'),('Modelo','Licencia por empresa')],
+   no=['No emite ni timbra facturas: se hacen donde se hacen hoy, y aquí se suben.',
+       'No las baja solo del SAT: los XML se suben a mano, sueltos o en un .zip.',
+       'Los impuestos son una estimación con lo facturado: no es la declaración ni sustituye al contador.',
+       'No trae lo que no está en una factura: depreciación, nómina sin timbrar o PTU los da el contador.']),
+
  'patron101': dict(
    lema='Cuando falta flujo, tu gente te presta.',
    corto='Préstamos de tus inversionistas, por rondas, con su estado de cuenta.',
@@ -368,7 +407,7 @@ APPS = {
 }
 
 # Orden en que se enseñan, el mismo que sigue el mueble por el taller.
-ORDEN = ['quote101','cost101','nest101','draw101','quell101','roster101','dash101','patron101','peek101']
+ORDEN = ['quote101','cost101','nest101','draw101','quell101','roster101','dash101','bill101','patron101','peek101']
 
 # Los logotipos de los programas van en un solo archivo, marca/logos.svg, y cada página los
 # llama con <use>. Antes cada página traía el dibujo completo de cada logotipo
@@ -476,7 +515,10 @@ de_a_dos = [('quell101', 'nube'), ('roster101', 'oscuro'), ('dash101', 'oscuro')
 # patron101 entró el 8-oct-2026 (Mike: «ya publica el sitio»). Es el noveno y
 # no es un paso del mueble: es el dinero que lo hace posible. Cierra la lista
 # a todo lo ancho, para no dejar un par cojo.
-cierre = [('patron101', '')]
+# bill101 entró el 9-oct-2026: las facturas y los impuestos del mes. Con ella
+# el cierre vuelve a ser un par, en damero como los de arriba: las dos son el
+# dinero alrededor del mueble, no un paso de él.
+cierre = [('bill101', 'nube'), ('patron101', 'oscuro')]
 
 pasos = [('cost101','Se costea: materiales, mano de obra y equipo, con precios al día.'),
          ('quote101','Se cotiza, componente por componente y partida por partida.'),
@@ -485,19 +527,20 @@ pasos = [('cost101','Se costea: materiales, mano de obra y equipo, con precios a
          ('quell101','La obra se sigue sobre el plano, mueble por mueble.'),
          ('roster101','La gente que la hace, con su expediente en regla.'),
          ('dash101','Las cuentas cierran solas.'),
+         ('bill101','Las facturas se suben, encuentran su pago y el impuesto del mes se estima.'),
          ('patron101','Si falta flujo, se cubre con una ronda entre tu gente.'),
          ('peek101','Y el cliente ve su proyecto y su estado de cuenta.')]
 eslabones = [f'<div class="eslabon">{marca(a, nombre_visible=True)}{html.escape(t)}</div>' for a, t in pasos]
 cadena = ''.join(eslabones)
 
 portada = cabeza('Suite 101 — programas para taller de muebles',
-                 'Nueve programas para el taller que ya trabaja: costos, cotización, despiece, planos, obra, personal, cuentas, financiamiento y cliente.') + f"""
+                 'Diez programas para el taller que ya trabaja: costos, cotización, despiece, planos, obra, personal, cuentas, facturas, financiamiento y cliente.') + f"""
 {barra()}
 <main>
 <section class="hero">
 <div class="env">
 <h1>El taller entero, de la cotización a la entrega.</h1>
-<p class="baja">Nueve programas que se hablan entre ellos. Cada uno funciona por su cuenta; juntos, el dato se captura una vez.</p>
+<p class="baja">Diez programas que se hablan entre ellos. Cada uno funciona por su cuenta; juntos, el dato se captura una vez.</p>
 <div class="acciones oscuro"><a class="btn" href="#programas">Ver los programas</a>
 <a class="btn contorno" href="mailto:{CORREO}?subject=Demostración">Pedir demostración</a></div>
 </div>
@@ -506,10 +549,10 @@ portada = cabeza('Suite 101 — programas para taller de muebles',
 <div id="programas">
 {''.join(mosaico(a, f) for a, f in anchos)}
 <div class="pares">{''.join(mosaico(a, f) for a, f in de_a_dos)}</div>
-{''.join(mosaico(a, f) for a, f in cierre)}
+<div class="pares">{''.join(mosaico(a, f) for a, f in cierre)}</div>
 </div>
 <section id="encajan" class="encajan"><div class="env">
-<h2 class="grande">El mismo trabajo recorre los nueve programas.</h2>
+<h2 class="grande">El mismo trabajo recorre los diez programas.</h2>
 <p class="baja">Sin volver a capturarse.</p>
 <div class="cadena">{cadena}</div>
 </div></section>
@@ -593,7 +636,7 @@ for app, d in APPS.items():
 <h2 class="grande">¿Le sirve a tu taller?</h2>
 <p class="baja">Te enseñamos {app} con datos de una obra de verdad.</p>
 <div class="acciones"><a class="btn" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a>
-<a class="btn contorno" href="../index.html#programas">Ver los nueve programas</a></div>
+<a class="btn contorno" href="../index.html#programas">Ver los diez programas</a></div>
 </div></section>
 </main>
 {pie('../')}</body></html>"""
