@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de roster101 — Suite 101</title>
+<meta name="description" content="Pruebe roster101 con una plantilla de ejemplo: el panel de la empresa, el expediente del trabajador y la ficha en PDF.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../demo.css">
+<style>
+body{background:#eef2f5}
+.todo{height:calc(100% - var(--demo));display:flex;flex-direction:column}
+.barra{background:var(--azul);color:#fff;display:flex;align-items:center;gap:14px;
+  padding:13px 22px;flex:none}
+.marca{display:flex;align-items:center;gap:9px;font:700 18px Raleway,sans-serif}
+.aro{width:23px;height:23px;border:2.5px solid #fff;border-radius:50%;display:grid;
+  place-items:center;font:700 9px Cifras,sans-serif}
+.barra h1{font:400 15px Raleway,sans-serif;opacity:.92}
+.barra .salir{margin-left:auto;border:1px solid rgba(255,255,255,.5);border-radius:7px;
+  padding:7px 15px;font:400 13px Raleway,sans-serif;background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+
+.lienzo{flex:1;overflow:auto;padding:18px}
+.env{max-width:1210px;margin:0 auto;display:grid;gap:16px}
+.tarjeta{background:#fff;border-radius:12px;padding:19px 21px;box-shadow:0 1px 2px rgba(18,39,51,.07)}
+.tarjeta h2{font:700 17px Raleway,sans-serif;margin-bottom:5px}
+.tarjeta .bajo{color:var(--gris);font-size:13px;margin-bottom:15px}
+.tarjeta .bajo b{color:var(--tinta)}
+.fila{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.btn{border:1px solid var(--linea);background:#fff;border-radius:8px;padding:10px 16px;
+  font:600 13px Raleway,sans-serif;color:var(--tinta);cursor:pointer}
+.btn:hover{border-color:var(--gris)}
+.btn.lleno{background:var(--azul);border-color:var(--azul);color:#fff}
+.btn.lleno:hover{background:#0092dc}
+.btn[disabled]{background:#a9c9dd;border-color:#a9c9dd;color:#fff;cursor:default}
+.buscar{flex:1;min-width:150px;border:1px solid var(--linea);border-radius:8px;padding:10px 13px;
+  font:400 13px Raleway,sans-serif;color:var(--gris)}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font:600 12px Raleway,sans-serif;color:var(--gris);padding:12px 10px;
+  border-bottom:1px solid var(--linea);white-space:nowrap}
+td{padding:13px 10px;border-bottom:1px solid #eef2f5;vertical-align:top}
+tr:last-child td{border-bottom:0}
+tbody tr.pica{cursor:pointer}
+tbody tr.pica:hover{background:#f6fafc}
+.quien b{display:block;font:700 13.5px Raleway,sans-serif}
+.quien small{color:var(--gris)}
+.mono{font:400 12px ui-monospace,Menlo,Consolas,monospace;color:var(--tinta);line-height:1.6}
+.mono span{color:var(--gris)}
+.docs{display:flex;flex-wrap:wrap;gap:5px;max-width:260px}
+.doc{border:1px solid var(--linea);border-radius:6px;padding:4px 9px;font-size:11.5px;
+  text-decoration:underline;color:var(--azul-texto);white-space:nowrap}
+.faltan{color:#b4451f;font-size:11.5px;font-weight:600;margin-top:5px}
+.sem{display:inline-block;border-radius:20px;padding:4px 12px;font:600 11.5px Raleway,sans-serif;
+  white-space:nowrap}
+.sem.ok{background:#e6f3e9;color:#39683f}
+.sem.pend{background:#fdf0e3;color:#96561c}
+.palo{width:17px;height:17px;accent-color:var(--azul);cursor:pointer}
+
+.chulos{display:flex;flex-wrap:wrap;gap:9px 22px;margin:11px 0 4px}
+.chulo{display:flex;align-items:center;gap:7px;font-size:13.5px;cursor:pointer}
+
+/* el expediente */
+.exp{display:grid;grid-template-columns:1fr 330px;gap:16px;align-items:start}
+.regresa{background:none;border:0;color:var(--azul-texto);font:600 13px Raleway,sans-serif;
+  cursor:pointer;padding:0;margin-bottom:11px;text-decoration:underline}
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:13px 18px;margin-top:4px}
+.campo span{display:block;font-size:11.5px;color:var(--gris);margin-bottom:3px}
+.campo b{font-weight:400;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+.docgrid{display:grid;gap:9px;margin-top:4px}
+.docreng{display:flex;align-items:center;gap:11px;border:1px solid var(--linea);
+  border-radius:9px;padding:11px 13px}
+.docreng.falta{border-style:dashed;border-color:#e3b9a4;background:#fffaf6;cursor:pointer}
+.docreng.falta:hover{background:#fff3ea}
+.docreng .ic{width:26px;height:26px;border-radius:6px;display:grid;place-items:center;
+  background:#e6f3e9;color:#39683f;font-size:13px;flex:none}
+.docreng.falta .ic{background:#fdf0e3;color:#96561c}
+.docreng b{font-weight:600;font-size:13px;display:block}
+.docreng small{color:var(--gris);font-size:11.5px}
+.docreng .tomar{margin-left:auto;font:600 12px Raleway,sans-serif;color:var(--azul-texto);
+  white-space:nowrap}
+.medidor{height:9px;background:#e9eef2;border-radius:5px;overflow:hidden;margin:9px 0 7px}
+.medidor i{display:block;height:100%;background:var(--azul);transition:width .35s}
+
+@media(max-width:900px){
+  .exp{grid-template-columns:1fr}
+  .campos{grid-template-columns:1fr}
+  .lienzo{padding:12px}
+  .tarjeta{padding:15px 15px}
+  .barra{padding:11px 13px}
+  .barra h1{display:none}
+  .ocultar{display:none}
+  .docs{max-width:none}
+}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Plantilla de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/roster101.html">Conocer roster101</a>
+</div>
+
+<div class="todo">
+  <header class="barra">
+    <div class="marca">roster<span class="aro">101</span></div>
+    <h1 id="donde">Panel de la empresa</h1>
+    <button class="salir">Salir</button>
+  </header>
+  <div class="lienzo"><div class="env" id="env"></div></div>
+</div>
+
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* Los ocho documentos que pide el expediente, en el orden que los pide el IMSS. */
+const PAPELES = ['Fotografía','INE frente','INE reverso','CURP','Constancia de situación fiscal',
+                 'Comprobante de domicilio','Firma bancaria','Acta de nacimiento'];
+
+/* Gente inventada. Los NSS, CURP y RFC tienen la forma correcta y son falsos. */
+const GENTE = [
+  {id:'T01', ap:'Salas Mendoza', nom:'Diana', puesto:'Ayudante general',
+   tel:'55 5678 9012', correo:'diana.sa@ejemplo.mx',
+   nss:'56789012345', curp:'SAMD990228MDFLNN01', rfc:'SAMD990228K40',
+   banco:'', clabe:'', emerg:'Tomás Salas (padre) · 55 5432 1098',
+   tiene:['Fotografía','INE frente']},
+  {id:'T02', ap:'González Pérez', nom:'Lucía', puesto:'Laqueadora',
+   tel:'55 3456 7890', correo:'lucia.gz@ejemplo.mx',
+   nss:'34567890123', curp:'GOPL920105MDFNRC08', rfc:'GOPL920105RT2',
+   banco:'Santander', clabe:'014180003456789011', emerg:'Pedro González (padre) · 55 7654 3210',
+   tiene:['Fotografía','INE frente','INE reverso','CURP']},
+  {id:'T03', ap:'López Herrera', nom:'Carlos', puesto:'Ebanista',
+   tel:'55 1234 5678', correo:'carlos.lh@ejemplo.mx',
+   nss:'12345678901', curp:'LOHC880714HDFPRR05', rfc:'LOHC880714QX8',
+   banco:'BBVA', clabe:'012180001234567890', emerg:'Marta Herrera (esposa) · 55 2345 6789',
+   tiene:PAPELES.slice()},
+  {id:'T04', ap:'Ramírez Ortiz', nom:'Beto', puesto:'Instalador',
+   tel:'55 8765 4321', correo:'beto.ro@ejemplo.mx',
+   nss:'87654321098', curp:'RAOB850930HDFMRT03', rfc:'RAOB850930LM1',
+   banco:'Banorte', clabe:'072180008765432109', emerg:'Sofía Ortiz (hermana) · 55 9876 5432',
+   tiene:PAPELES.slice()},
+  {id:'T05', ap:'Núñez Vargas', nom:'Rosa', puesto:'Pintora',
+   tel:'55 4321 0987', correo:'rosa.nv@ejemplo.mx',
+   nss:'43210987654', curp:'NUVR940612MDFXRS07', rfc:'NUVR940612PC5',
+   banco:'HSBC', clabe:'021180004321098765', emerg:'Juan Núñez (hermano) · 55 1098 7654',
+   tiene:PAPELES.slice()}
+];
+
+const CAMPOS = [['Fotografía',1],['Puesto',1],['CURP',1],['NSS',1],['RFC',1],
+                ['Celular',1],['Correo',1],['Contacto de emergencia',1]];
+let lleva = {}; CAMPOS.forEach(([c]) => lleva[c] = true);
+let conBanco = false;
+
+let vista = 'panel', abierto = null, palomeados = {};
+
+const falta = p => PAPELES.filter(d => p.tiene.indexOf(d) < 0);
+const completo = p => falta(p).length === 0;
+
+/* ---------------- el panel ---------------- */
+function panel() {
+  const listos = GENTE.filter(completo).length;
+  const pend = GENTE.length - listos;
+  const marcados = GENTE.filter(p => palomeados[p.id]);
+
+  const reng = GENTE.map(p => {
+    const f = falta(p);
+    const docs = p.tiene.slice(0, 4).map(d => '<span class="doc">' + esc(d) + '</span>').join('');
+    return '<tr class="pica" data-id="' + p.id + '">' +
+      '<td onclick="event.stopPropagation()"><input class="palo" type="checkbox" data-palo="' + p.id +
+        '"' + (palomeados[p.id] ? ' checked' : '') + ' aria-label="Escoger a ' + esc(p.nom) + '"></td>' +
+      '<td class="quien"><b>' + esc(p.ap) + '</b><small>' + esc(p.nom) + ' · ' + esc(p.puesto) + '</small></td>' +
+      '<td class="mono ocultar">' + esc(p.tel) + '<br><span>' + esc(p.correo) + '</span></td>' +
+      '<td class="mono ocultar">' + esc(p.nss) + '<br><span>' + esc(p.curp) + '</span></td>' +
+      '<td><div class="docs">' + docs + '</div>' +
+        (f.length ? '<div class="faltan">Faltan ' + f.length + '</div>' : '') + '</td>' +
+      '<td><span class="sem ' + (f.length ? 'pend' : 'ok') + '">' +
+        (f.length ? 'Pendiente' : 'Completo') + '</span></td>' +
+      '</tr>';
+  }).join('');
+
+  return '<div class="tarjeta">' +
+      '<h2>Expedientes</h2>' +
+      '<p class="bajo"><b>' + GENTE.length + '</b> trabajadores registrados · <b>' + listos +
+        '</b> con expediente completo · <b id="n-pend">' + pend + '</b> con pendientes.</p>' +
+      '<div class="fila">' +
+        '<button class="btn lleno">↓ Exportar todo (ZIP con carpetas)</button>' +
+        '<button class="btn">↓ Solo la tabla (CSV)</button>' +
+        '<div class="buscar ocultar">Buscar por nombre, CURP, correo…</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="tarjeta">' +
+      '<h2>Fichas en PDF</h2>' +
+      '<p class="bajo">Palomea a quien quieras en la tabla y saca su ficha. ' +
+        'Desde el celular se manda directo por WhatsApp o correo.</p>' +
+      '<div class="fila">' +
+        '<button class="btn lleno" id="ficha"' + (marcados.length ? '' : ' disabled') + '>↓ Descargar ficha PDF</button>' +
+        '<span style="color:var(--gris);font-size:13px">' +
+          (marcados.length ? marcados.map(p => esc(p.nom + ' ' + p.ap)).join(', ')
+                           : 'Nadie seleccionado.') + '</span>' +
+      '</div>' +
+      '<p class="bajo" style="margin:15px 0 0"><b>Qué lleva la ficha.</b> ' +
+        'El nombre y el folio van siempre; apaga lo que no haga falta.</p>' +
+      '<div class="chulos">' + CAMPOS.map(([c]) =>
+        '<label class="chulo"><input class="palo" type="checkbox" data-campo="' + esc(c) + '"' +
+        (lleva[c] ? ' checked' : '') + '>' + esc(c) + '</label>').join('') + '</div>' +
+      '<label class="chulo" style="margin-top:11px"><input class="palo" type="checkbox" ' +
+        'data-banco' + (conBanco ? ' checked' : '') + '>Incluir <b>banco, CLABE y beneficiario</b></label>' +
+      '<p class="bajo" style="margin:5px 0 0 28px">Apagado, la ficha no lleva la cuenta bancaria. ' +
+        'Préndelo sólo cuando la ficha va al contador o al banco.</p>' +
+    '</div>' +
+    '<div class="tarjeta" style="padding:6px 10px"><table><thead><tr>' +
+      '<th style="width:30px"></th><th>Trabajador</th><th class="ocultar">Contacto</th>' +
+      '<th class="ocultar">NSS / CURP</th><th>Documentos</th><th>Estado</th>' +
+      '</tr></thead><tbody>' + reng + '</tbody></table></div>';
+}
+
+/* ---------------- el expediente ---------------- */
+function expediente() {
+  const p = GENTE.find(x => x.id === abierto);
+  const f = falta(p);
+  const avance = Math.round(p.tiene.length / PAPELES.length * 100);
+
+  const docs = PAPELES.map(d => {
+    const hay = p.tiene.indexOf(d) >= 0;
+    return '<div class="docreng' + (hay ? '' : ' falta') + '"' +
+      (hay ? '' : ' data-doc="' + esc(d) + '" role="button" tabindex="0"') + '>' +
+      '<div class="ic">' + (hay ? '✓' : '📷') + '</div>' +
+      '<div><b>' + esc(d) + '</b><small>' +
+        (hay ? 'Escaneado, recortado y enderezado' : 'Falta: se toma con la cámara') + '</small></div>' +
+      (hay ? '' : '<span class="tomar">Escanear →</span>') +
+      '</div>';
+  }).join('');
+
+  return '<div>' +
+    '<button class="regresa" id="regresa">← Regresar al panel</button>' +
+    '<div class="exp">' +
+      '<div class="tarjeta">' +
+        '<h2>Documentos</h2>' +
+        '<p class="bajo">El escáner recorta, endereza y quita sombras. Entrega un PDF por documento.</p>' +
+        '<div class="medidor"><i style="width:' + avance + '%"></i></div>' +
+        '<p class="bajo" style="margin-bottom:13px">' + p.tiene.length + ' de ' + PAPELES.length +
+          (f.length ? ' · faltan ' + f.length : ' · expediente completo') + '</p>' +
+        '<div class="docgrid">' + docs + '</div>' +
+      '</div>' +
+      '<div class="tarjeta">' +
+        '<h2>' + esc(p.nom + ' ' + p.ap) + '</h2>' +
+        '<p class="bajo">' + esc(p.puesto) + '</p>' +
+        '<div class="campos">' +
+          '<div class="campo"><span>NSS</span><b>' + esc(p.nss) + '</b></div>' +
+          '<div class="campo"><span>CURP</span><b>' + esc(p.curp) + '</b></div>' +
+          '<div class="campo"><span>RFC</span><b>' + esc(p.rfc) + '</b></div>' +
+          '<div class="campo"><span>Celular</span><b>' + esc(p.tel) + '</b></div>' +
+          '<div class="campo"><span>Correo</span><b>' + esc(p.correo) + '</b></div>' +
+          '<div class="campo"><span>Banco</span><b>' + esc(p.banco || '—') + '</b></div>' +
+        '</div>' +
+        '<p class="bajo" style="margin-top:15px"><b>Emergencia.</b> ' + esc(p.emerg) + '</p>' +
+        '<p class="bajo" style="margin-top:11px">CURP, RFC, NSS y CLABE se revisan mientras ' +
+          'se escriben, así que no se cuelan dos personas con el mismo NSS.</p>' +
+      '</div>' +
+    '</div></div>';
+}
+
+function pintar() {
+  $('#env').innerHTML = vista === 'panel' ? panel() : expediente();
+  $('#donde').textContent = vista === 'panel' ? 'Panel de la empresa' : 'Expediente del trabajador';
+  amarrar();
+  if (window.guia) guia.remarcar();
+}
+
+function amarrar() {
+  document.querySelectorAll('tr.pica').forEach(t => t.onclick = () => {
+    abierto = t.dataset.id; vista = 'expediente'; pintar();
+    document.dispatchEvent(new CustomEvent('demo:abrir', {detail:abierto}));
+  });
+  const vol = $('#regresa');
+  if (vol) vol.onclick = () => { vista = 'panel'; pintar();
+    document.dispatchEvent(new Event('demo:panel')); };
+
+  document.querySelectorAll('.docreng.falta').forEach(d => {
+    const tomar = () => {
+      const p = GENTE.find(x => x.id === abierto);
+      p.tiene.push(d.dataset.doc);
+      pintar();
+      avisar('«' + d.dataset.doc + '» escaneado. En la demostración no se guarda.');
+      document.dispatchEvent(new CustomEvent('demo:doc', {detail:d.dataset.doc}));
+    };
+    d.onclick = tomar;
+    d.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tomar(); } };
+  });
+
+  document.querySelectorAll('[data-palo]').forEach(c => c.onchange = () => {
+    palomeados[c.dataset.palo] = c.checked; pintar();
+  });
+  document.querySelectorAll('[data-campo]').forEach(c => c.onchange = () => {
+    lleva[c.dataset.campo] = c.checked; pintar();
+  });
+  const b = document.querySelector('[data-banco]');
+  if (b) b.onchange = () => { conBanco = b.checked; pintar(); };
+
+  const fi = $('#ficha');
+  if (fi) fi.onclick = () => {
+    const n = GENTE.filter(p => palomeados[p.id]).length;
+    if (!n) return;
+    const campos = CAMPOS.filter(([c]) => lleva[c]).length + (conBanco ? 1 : 0);
+    avisar('Ficha de ' + n + (n === 1 ? ' persona' : ' personas') + ' con ' + campos +
+           ' campos. En la demostración no se descarga nada.');
+    document.dispatchEvent(new Event('demo:ficha'));
+  };
+}
+
+/* ---------------- la guía ---------------- */
+window.DEMO_APP = '/app/roster101.html';
+window.DEMO_NOMBRE = 'roster101';
+window.GUIA = [
+  {t:'Cinco trabajadores: tres con el expediente completo y dos con pendientes. ' +
+     'Abre el renglón que <b>parpadea</b> —es a quien más le falta.',
+   marca:'tr[data-id="T01"]', espera:'demo:abrir', solo:'T01',
+   regaño:'Ése ya está completo y no hay nada que levantar. Abre el renglón que ' +
+          '<b>parpadea</b>: a Diana le faltan seis documentos.'},
+  {t:'Un semáforo dice qué falta. Los renglones punteados son los que no están. ' +
+     'Pica el que <b>parpadea</b> para escanearlo: así lo hace el trabajador, ' +
+     'con la cámara de su propio celular.',
+   marca:'.docreng.falta', espera:'demo:doc', requiere:'T01'},
+  {t:'El escáner lo recortó y lo enderezó solo. Puedes seguir escaneando, o ' +
+     '<b>regresar al panel</b> para ver que el contador ya se movió.',
+   marca:'#regresa', espera:'demo:panel'},
+  {t:'Ahora saca su ficha: <b>palomea</b> a alguien en la tabla, apaga los campos ' +
+     'que no hagan falta y dale «Descargar ficha PDF».',
+   marca:'[data-palo="T01"]', espera:'demo:ficha'},
+  {t:'Eso es roster101: el expediente lo arma la propia persona desde su celular, ' +
+     'y la empresa lo ve completo, en el orden que lo pide el IMSS.',
+   fin:true}
+];
+</script>
+<script src="../guia.js"></script>
+<script>pintar();</script>
