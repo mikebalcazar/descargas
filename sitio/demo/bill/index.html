@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de bill101 — Suite 101</title>
+<meta name="description" content="Pruebe bill101 con facturas de ejemplo: se leen solas, encuentran su pago y el IVA e ISR del mes salen estimados.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../demo.css">
+<style>
+body{background:#f4f7f9}
+.todo{height:calc(100% - var(--demo));display:flex;flex-direction:column}
+.barra{background:#0f2231;color:#fff;display:flex;align-items:center;gap:8px;
+  padding:0 20px;height:54px;flex:none}
+.marca{font:700 19px Raleway,sans-serif;margin-right:6px}
+.marca i{font-style:normal;color:var(--claro)}
+.org{color:#7e97a8;font-size:13px;padding-right:16px;border-right:1px solid rgba(255,255,255,.14);
+  margin-right:10px}
+.nav{display:flex;gap:4px}
+.nav button{background:none;border:0;color:#cfdde6;font:400 14px Raleway,sans-serif;
+  padding:8px 14px;border-radius:7px;cursor:pointer}
+.nav button:hover{color:#fff}
+.nav button[aria-selected=true]{background:rgba(255,255,255,.13);color:#fff;font-weight:600}
+.yo{margin-left:auto;background:rgba(255,255,255,.1);border-radius:20px;padding:6px 16px;font-size:13px}
+
+.lienzo{flex:1;overflow:auto;padding:26px 20px 40px}
+.env{max-width:1010px;margin:0 auto}
+h1{font:700 27px Raleway,sans-serif;margin-bottom:6px}
+.bajo{color:var(--gris);font-size:13.5px;line-height:1.55;margin-bottom:20px;max-width:760px}
+.bajo b{color:var(--tinta)}
+
+.tarjeta{background:#fff;border-radius:11px;padding:18px 20px;margin-bottom:13px;
+  box-shadow:0 1px 2px rgba(18,39,51,.07)}
+.btn{border:1px solid var(--linea);background:#fff;border-radius:8px;padding:10px 17px;
+  font:600 13px Raleway,sans-serif;color:var(--tinta);cursor:pointer}
+.btn:hover{border-color:var(--gris)}
+.btn.lleno{background:var(--azul);border-color:var(--azul);color:#fff}
+.btn.lleno:hover{background:#0092dc}
+.btn.chico{padding:7px 14px;font-size:12.5px}
+
+.emisor{font:700 15px Raleway,sans-serif;color:var(--azul-texto);text-decoration:underline;
+  letter-spacing:.02em}
+.dato{color:var(--gris);font-size:12.5px;white-space:nowrap}
+.arriba{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.arriba .dato{margin-left:auto}
+.propuesta{display:flex;align-items:center;gap:13px;margin-top:13px;flex-wrap:wrap}
+.propuesta .cuerpo{flex:1;min-width:190px}
+.propuesta b{font:600 14px Raleway,sans-serif}
+.propuesta small{display:block;color:var(--gris);font-size:12px;margin-top:2px}
+.parecido{display:inline-block;background:#e7f4ea;color:#39683f;border-radius:20px;
+  padding:3px 11px;font:600 11.5px Raleway,sans-serif;margin-left:7px}
+.lana{font:400 17px Cifras,Raleway,sans-serif;white-space:nowrap}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font:600 12px Raleway,sans-serif;color:var(--gris);padding:11px 10px;
+  border-bottom:1px solid var(--linea);white-space:nowrap}
+th.der,td.der{text-align:right}
+td{padding:12px 10px;border-bottom:1px solid #f0f4f6}
+tr:last-child td{border-bottom:0}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.sello{display:inline-block;border-radius:5px;padding:3px 9px;font:600 11.5px Raleway,sans-serif;
+  white-space:nowrap}
+.sello.rec{background:#eef3f7;color:#44606f}
+.sello.emi{background:#e8f1fb;color:#1c5b8f}
+.sello.si{background:#e7f4ea;color:#39683f}
+.sello.no{background:#fdf0e3;color:#96561c}
+select{border:1px solid var(--linea);border-radius:7px;padding:6px 9px;font:400 12.5px Raleway,sans-serif;
+  color:var(--tinta);background:#fff;cursor:pointer}
+select:focus{outline:2px solid #cfe6f5;border-color:var(--azul)}
+
+.cifras{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:13px}
+.cifra{background:#fff;border-radius:11px;padding:17px 19px;box-shadow:0 1px 2px rgba(18,39,51,.07)}
+.cifra span{display:block;font-size:12px;color:var(--gris);margin-bottom:5px}
+.cifra b{font:400 27px Cifras,Raleway,sans-serif;display:block;transition:color .3s}
+.cifra b.cambio{color:#b4451f}
+.cifra small{color:var(--gris);font-size:11.5px}
+.deriva{border-left:3px solid var(--linea);padding-left:15px;margin-top:4px}
+.deriva div{display:flex;padding:6px 0;font-size:13px;color:var(--gris)}
+.deriva div b{color:var(--tinta);font-weight:400}
+.deriva div span{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--tinta)}
+.deriva div.total{border-top:1px solid var(--linea);margin-top:5px;padding-top:9px;font-weight:600}
+.deriva div.total b,.deriva div.total span{color:var(--tinta);font-weight:600}
+.cuidado{background:#fff8ee;border:1px solid #f0dcc0;border-radius:9px;padding:12px 15px;
+  font-size:12.5px;color:#7a5a2e;line-height:1.5;margin-top:15px}
+
+@media(max-width:800px){
+  .cifras{grid-template-columns:1fr}
+  .nav{display:none}
+  .org{display:none}
+  .lienzo{padding:18px 13px 30px}
+  h1{font-size:22px}
+  .ocultar{display:none}
+}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Facturas de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/bill101.html">Conocer bill101</a>
+</div>
+
+<div class="todo">
+  <header class="barra">
+    <div class="marca">bill<i>101</i></div>
+    <div class="org">Demo · Suite 101</div>
+    <nav class="nav" id="nav">
+      <button data-v="facturas" aria-selected="true">Facturas</button>
+      <button data-v="ligar" aria-selected="false">Por ligar</button>
+      <button data-v="impuestos" aria-selected="false">Impuestos</button>
+    </nav>
+    <div class="yo">Laura</div>
+  </header>
+  <div class="lienzo"><div class="env" id="env"></div></div>
+</div>
+
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pesos = n => '$' + n.toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+/* Facturas inventadas. Los RFC tienen la forma correcta y no son de nadie. */
+const FACTURAS = [
+  {id:'F1', tipo:'recibida', quien:'Maderas del Sur', rfc:'MSU210415J73', fecha:'2 oct 2026',
+   base:24000, concepto:'Triplay de encino para la cocina', uso:'gasto', ligada:false,
+   pago:{quien:'Maderas del Sur', fecha:'4 oct 2026', monto:27840, nota:'Triplay de encino para la cocina'}},
+  {id:'F2', tipo:'recibida', quien:'Herrajes Aztecas', rfc:'HAZ180903QP1', fecha:'6 oct 2026',
+   base:8500, concepto:'Correderas para los clósets', uso:'gasto', ligada:false,
+   pago:{quien:'Herrajes Aztecas', fecha:'8 oct 2026', monto:9860, nota:'Correderas para los clósets'}},
+  {id:'F3', tipo:'recibida', quien:'Maquinaria Bajío', rfc:'MBA150722DK4', fecha:'9 oct 2026',
+   base:96000, concepto:'Sierra escuadradora', uso:'gasto', ligada:false,
+   pago:{quien:'Maquinaria Bajío', fecha:'9 oct 2026', monto:111360, nota:'Sierra escuadradora'}},
+  {id:'F4', tipo:'emitida', quien:'Familia Rivas', rfc:'RIVM880210HG2', fecha:'3 oct 2026',
+   base:185000, concepto:'Anticipo cocina Casa Poniente', uso:'ingreso', ligada:true, pago:null},
+  {id:'F5', tipo:'emitida', quien:'BASE arquitectura', rfc:'BAR191104TU8', fecha:'7 oct 2026',
+   base:62000, concepto:'Clósets recámara principal', uso:'ingreso', ligada:true, pago:null},
+  {id:'F6', tipo:'recibida', quien:'Comida Corrida Lupita', rfc:'CCL200131FR9', fecha:'5 oct 2026',
+   base:3200, concepto:'Comidas del taller', uso:'nodeducible', ligada:true, pago:null}
+];
+
+const IVA = 0.16, TASA_ISR = 0.30;
+let vista = 'facturas', subidas = false, movio = false;
+
+const total = f => f.base * (1 + IVA);
+const visibles = () => subidas ? FACTURAS : FACTURAS.filter(f => f.tipo === 'emitida');
+
+function impuestos() {
+  const v = visibles();
+  const trasladado = v.filter(f => f.tipo === 'emitida').reduce((a, f) => a + f.base * IVA, 0);
+  const acreditable = v.filter(f => f.tipo === 'recibida' && f.uso !== 'nodeducible')
+                       .reduce((a, f) => a + f.base * IVA, 0);
+  const ingresos = v.filter(f => f.tipo === 'emitida').reduce((a, f) => a + f.base, 0);
+  const deducible = v.filter(f => f.tipo === 'recibida' && f.uso === 'gasto')
+                     .reduce((a, f) => a + f.base, 0);
+  // Una inversión no se deduce de golpe: se deprecia. Aquí se toma el 10 % del año.
+  const inversion = v.filter(f => f.tipo === 'recibida' && f.uso === 'inversion')
+                     .reduce((a, f) => a + f.base, 0);
+  const depre = inversion * 0.10 / 12;
+  const utilidad = Math.max(0, ingresos - deducible - depre);
+  return {trasladado, acreditable, ivaPagar:Math.max(0, trasladado - acreditable),
+          ingresos, deducible, inversion, depre, utilidad, isr:utilidad * TASA_ISR};
+}
+
+/* ---------------- vistas ---------------- */
+function vFacturas() {
+  const v = visibles();
+  const reng = v.map(f => {
+    const opciones = f.tipo === 'emitida'
+      ? '<span class="dato">Ingreso</span>'
+      : '<select data-uso="' + f.id + '" aria-label="Cómo cuenta ' + esc(f.quien) + '">' +
+        [['gasto','Gasto del año'],['inversion','Inversión'],['nodeducible','No deducible']]
+          .map(([k, t]) => '<option value="' + k + '"' + (f.uso === k ? ' selected' : '') + '>' +
+            t + '</option>').join('') + '</select>';
+    return '<tr>' +
+      '<td><span class="sello ' + (f.tipo === 'emitida' ? 'emi' : 'rec') + '">' +
+        (f.tipo === 'emitida' ? 'Emitida' : 'Recibida') + '</span></td>' +
+      '<td><b style="font-weight:600">' + esc(f.quien) + '</b><br>' +
+        '<span class="dato">' + esc(f.rfc) + ' · ' + esc(f.concepto) + '</span></td>' +
+      '<td class="dato ocultar">' + esc(f.fecha) + '</td>' +
+      '<td class="der num">' + pesos(f.base * IVA) + '</td>' +
+      '<td class="der num">' + pesos(total(f)) + '</td>' +
+      '<td>' + opciones + '</td>' +
+      '<td><span class="sello ' + (f.ligada ? 'si' : 'no') + '">' +
+        (f.ligada ? 'Ligada' : 'Por ligar') + '</span></td>' +
+      '</tr>';
+  }).join('');
+
+  const subir = subidas ? '' :
+    '<div class="tarjeta" style="text-align:center;padding:30px 20px">' +
+      '<p class="bajo" style="margin:0 auto 15px">Arrastra aquí los XML del mes, sueltos o en ' +
+        'un .zip. bill101 los lee solos: quién la hizo, a quién, cuánto, qué IVA y si la ' +
+        'empresa la emitió o la recibió.</p>' +
+      '<button class="btn lleno" id="subir">Subir facturas del mes (.zip)</button>' +
+    '</div>';
+
+  return '<h1>Facturas</h1>' +
+    '<p class="bajo">Lo que la empresa emitió y recibió este mes, con su IVA y si ya ' +
+      'encontró el pago que le toca en dash101.</p>' + subir +
+    '<div class="tarjeta" style="padding:6px 10px"><table><thead><tr>' +
+      '<th></th><th>Quién</th><th class="ocultar">Fecha</th><th class="der">IVA</th>' +
+      '<th class="der">Total</th><th>Cómo cuenta</th><th>Pago</th>' +
+      '</tr></thead><tbody>' + reng + '</tbody></table></div>';
+}
+
+function vLigar() {
+  const sueltas = FACTURAS.filter(f => !f.ligada && f.pago);
+  if (!subidas) {
+    return '<h1>Por ligar</h1><p class="bajo">Todavía no hay facturas del mes. ' +
+      'Súbelas en <b>Facturas</b> y aquí aparecerán con el pago que se les parece.</p>';
+  }
+  if (!sueltas.length) {
+    return '<h1>Por ligar</h1><p class="bajo">Nada pendiente: todas las facturas del mes ' +
+      'ya encontraron su pago.</p>';
+  }
+  const tar = sueltas.map(f => {
+    const p = f.pago;
+    const dif = Math.round(Math.abs(new Date('2026-10-' + p.fecha.split(' ')[0]) -
+                                    new Date('2026-10-' + f.fecha.split(' ')[0])) / 864e5) || 2;
+    return '<div class="tarjeta" data-tarjeta="' + f.id + '">' +
+      '<div class="arriba"><span class="emisor">' + esc(f.quien.toUpperCase()) + '</span>' +
+        '<span class="dato">recibida · ' + esc(f.fecha) + ' · ' + pesos(total(f)) + '</span></div>' +
+      '<div class="propuesta">' +
+        '<div class="cuerpo"><b>' + esc(p.quien) + '</b><span class="parecido">Muy parecido</span>' +
+          '<small>' + esc(p.fecha) + ' · a ' + dif + ' días · coincide el nombre y el monto</small>' +
+          '<small>' + esc(p.nota) + '</small></div>' +
+        '<span class="lana">' + pesos(p.monto) + '</span>' +
+        '<button class="btn lleno chico" data-liga="' + f.id + '">Es éste</button>' +
+      '</div></div>';
+  }).join('');
+  return '<h1>Por ligar</h1>' +
+    '<p class="bajo">Facturas que todavía no están ligadas a un movimiento de dash101, con ' +
+      'los que se les parecen: mismo monto y fecha cercana. <b>Nada se liga solo:</b> ' +
+      'tú dices cuál es.</p>' + tar;
+}
+
+function vImpuestos() {
+  const q = impuestos();
+  if (!subidas) {
+    return '<h1>Impuestos de octubre</h1><p class="bajo">Con lo que hay hasta ahora sólo ' +
+      'se ven los ingresos. Sube las facturas recibidas en <b>Facturas</b> y la estimación ' +
+      'toma en cuenta lo que se puede acreditar y deducir.</p>';
+  }
+  return '<h1>Impuestos de octubre</h1>' +
+    '<p class="bajo">Estimación con lo facturado, para llegar preparado con el contador. ' +
+      '<b>No es la declaración.</b></p>' +
+    '<div class="cifras">' +
+      '<div class="cifra"><span>IVA por pagar</span><b id="c-iva"' +
+        (movio ? ' class="cambio"' : '') + '>' + pesos(q.ivaPagar) + '</b>' +
+        '<small>Vence el 17 de noviembre</small></div>' +
+      '<div class="cifra"><span>ISR provisional</span><b id="c-isr"' +
+        (movio ? ' class="cambio"' : '') + '>' + pesos(q.isr) + '</b>' +
+        '<small>Tasa ' + (TASA_ISR * 100) + ' % sobre la utilidad</small></div>' +
+      '<div class="cifra"><span>Facturado del mes</span><b>' + pesos(q.ingresos) + '</b>' +
+        '<small>' + visibles().filter(f => f.tipo === 'emitida').length + ' facturas emitidas</small></div>' +
+    '</div>' +
+    '<div class="tarjeta"><h1 style="font-size:16px;margin-bottom:12px">De dónde sale el IVA</h1>' +
+      '<div class="deriva">' +
+        '<div><b>IVA trasladado</b> <span>' + pesos(q.trasladado) + '</span></div>' +
+        '<div><b>IVA acreditable</b> <span>− ' + pesos(q.acreditable) + '</span></div>' +
+        '<div class="total"><b>IVA por pagar</b> <span>' + pesos(q.ivaPagar) + '</span></div>' +
+      '</div></div>' +
+    '<div class="tarjeta"><h1 style="font-size:16px;margin-bottom:12px">De dónde sale el ISR</h1>' +
+      '<div class="deriva">' +
+        '<div><b>Ingresos facturados</b> <span>' + pesos(q.ingresos) + '</span></div>' +
+        '<div><b>Gastos del año</b> <span>− ' + pesos(q.deducible) + '</span></div>' +
+        '<div><b>Depreciación del mes</b> <span>− ' + pesos(q.depre) + '</span></div>' +
+        '<div class="total"><b>Utilidad estimada</b> <span>' + pesos(q.utilidad) + '</span></div>' +
+        '<div style="margin-top:9px"><b>ISR provisional (' + (TASA_ISR * 100) + ' %)</b> ' +
+          '<span>' + pesos(q.isr) + '</span></div>' +
+      '</div>' +
+      (q.inversion ? '<div class="cuidado">La sierra entró como <b>inversión</b>, no como gasto ' +
+        'del año: no se resta completa, se deprecia. Por eso el ISR estimado subió cuando la ' +
+        'cambiaste.</div>' : '') +
+    '</div>';
+}
+
+function pintar() {
+  $('#env').innerHTML = vista === 'facturas' ? vFacturas()
+                      : vista === 'ligar' ? vLigar() : vImpuestos();
+  document.querySelectorAll('#nav button').forEach(b =>
+    b.setAttribute('aria-selected', String(b.dataset.v === vista)));
+  amarrar();
+  if (window.guia) guia.remarcar();
+}
+
+function amarrar() {
+  document.querySelectorAll('#nav button').forEach(b =>
+    b.onclick = () => { vista = b.dataset.v; pintar(); });
+
+  const s = $('#subir');
+  if (s) s.onclick = () => {
+    subidas = true; pintar();
+    avisar('4 XML leídos. Nada se tecleó. En la demostración no se guardan.');
+    document.dispatchEvent(new Event('demo:subir'));
+  };
+
+  document.querySelectorAll('[data-liga]').forEach(b => b.onclick = () => {
+    const f = FACTURAS.find(x => x.id === b.dataset.liga);
+    f.ligada = true; pintar();
+    avisar('Factura ligada a su pago en dash101.');
+    document.dispatchEvent(new CustomEvent('demo:ligar', {detail:f.id}));
+  });
+
+  document.querySelectorAll('[data-uso]').forEach(sel => sel.onchange = () => {
+    const f = FACTURAS.find(x => x.id === sel.dataset.uso);
+    const antes = f.uso;
+    f.uso = sel.value;
+    movio = true; pintar();
+    avisar('«' + f.quien + '» ahora cuenta como ' + sel.options[sel.selectedIndex].text.toLowerCase() +
+           '. La estimación de impuestos ya lo tomó en cuenta.');
+    if (antes !== f.uso) document.dispatchEvent(new CustomEvent('demo:uso', {detail:f.id}));
+  });
+}
+
+/* ---------------- la guía ---------------- */
+window.DEMO_APP = '/app/bill101.html';
+window.DEMO_NOMBRE = 'bill101';
+window.GUIA = [
+  {t:'Las facturas no se teclean: se suben. Pica el botón que <b>parpadea</b> y bill101 ' +
+     'lee los XML solo —RFC, importes, IVA y retenciones.',
+   marca:'#subir', espera:'demo:subir'},
+  {t:'Leídas. Ahora ve a <b>Por ligar</b>: a cada factura le propone el pago de dash101 ' +
+     'que se le parece. Dale «Es éste» a una. Nada se liga solo.',
+   marca:'#nav button[data-v="ligar"]', espera:'demo:ligar'},
+  {t:'Vuelve a <b>Facturas</b> y cambia la sierra de «Gasto del año» a <b>Inversión</b>. ' +
+     'Una máquina no se deduce completa el año que se compra.',
+   marca:'#nav button[data-v="facturas"]', espera:'demo:uso'},
+  {t:'Ahora abre <b>Impuestos</b>: el IVA y el ISR del mes ya tomaron en cuenta ese cambio, ' +
+     'y dice de dónde sale cada número.',
+   marca:'#nav button[data-v="impuestos"]', espera:'demo:ver-impuestos'},
+  {t:'Eso es bill101: las facturas se leen solas, encuentran su pago y dejan estimado lo que ' +
+     'toca declarar. Es para llegar preparado con el contador, no para sustituirlo.',
+   fin:true}
+];
+</script>
+<script src="../guia.js"></script>
+<script>
+// El último paso se cierra al abrir Impuestos, que es la pantalla del remate.
+document.querySelector('#nav [data-v="impuestos"]').addEventListener('click', () =>
+  document.dispatchEvent(new Event('demo:ver-impuestos')));
+pintar();
+</script>
