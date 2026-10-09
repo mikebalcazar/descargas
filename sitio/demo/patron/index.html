@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de patron101 — Suite 101</title>
+<meta name="description" content="Pruebe patron101 con una ronda de ejemplo: las ofertas, el préstamo y su tabla de pagos.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../demo.css">
+<style>
+.oferta{display:flex;align-items:center;gap:14px;padding:14px 0;
+  border-bottom:1px solid #f0f4f6;flex-wrap:wrap}
+.oferta:last-child{border-bottom:0}
+.oferta .cuerpo{flex:1;min-width:170px}
+.oferta b{font:600 14px Raleway,sans-serif;display:block}
+.oferta small{color:var(--gris);font-size:12px}
+.oferta .lana{font:400 19px Cifras,Raleway,sans-serif;white-space:nowrap}
+.app .titulote{font:400 31px Cifras,Raleway,sans-serif;letter-spacing:-.01em;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:3px}
+.app .titulote a{color:var(--azul-texto);text-decoration:underline}
+.pagado td{color:var(--gris)}
+.pagado .num{color:var(--gris)}
+.app tfoot td{font-weight:600;border-top:1px solid var(--linea);padding-top:13px}
+.aclara{color:var(--gris);font-size:12.5px;line-height:1.5;margin-top:13px}
+.aclara a{color:var(--azul-texto)}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Ronda de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/patron101.html">Conocer patron101</a>
+</div>
+
+<div class="app">
+  <header class="barra">
+    <div class="marca">patron<i>101</i></div>
+    <div class="org">Carpintería Roble</div>
+    <nav id="nav">
+      <button data-v="ronda" aria-selected="true">Rondas<span class="globo" id="glo">2</span></button>
+      <button data-v="prestamos" aria-selected="false">Préstamos</button>
+      <button data-v="directorio" aria-selected="false">Inversionistas</button>
+    </nav>
+    <div class="yo">Laura</div>
+  </header>
+  <div class="lienzo"><div class="env" id="env"></div></div>
+</div>
+
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pesos = (n, d) => '$' + n.toLocaleString('es-MX',
+  {minimumFractionDigits:d === undefined ? 0 : d, maximumFractionDigits:d === undefined ? 0 : d});
+
+/* La ronda: la empresa necesita un puente mientras cobra una obra. */
+const RONDA = {meta:300000, fecha:'31 de octubre', tasa:2, plazo:10,
+  razon:'Tres semanas de nómina y materiales mientras se cobra la cocina de Casa Poniente.'};
+
+const OFERTAS = [
+  {id:'O1', quien:'Ana Robles Méndez', rel:'Prima · ya prestó dos veces', monto:50000, estado:'pendiente'},
+  {id:'O2', quien:'Gerardo Lazo', rel:'Proveedor de herrajes', monto:80000, estado:'pendiente'}
+];
+
+const PRESTAMOS = [
+  {id:'PRE-000001', quien:'Raquel Tovar', monto:120000, tasa:2, plazo:6, pagados:2,
+   inicio:'8 ago 2026'}
+];
+
+let vista = 'ronda', abierto = null, movio = false;
+
+/* La tabla: capital en partes iguales e interés sobre el saldo que queda. */
+function tabla(p) {
+  const cap = p.monto / p.plazo;
+  const meses = ['sep','oct','nov','dic','ene','feb','mar','abr','may','jun','jul','ago'];
+  const r = [];
+  for (let i = 0; i < p.plazo; i++) {
+    const saldo = p.monto - cap * i;
+    const inte = saldo * p.tasa / 100;
+    r.push({n:i + 1, fecha:'8 ' + meses[(i + 2) % 12] + ' ' + (i < 4 ? 2026 : 2027),
+            cap, inte, pago:cap + inte, pagado:i < p.pagados});
+  }
+  return r;
+}
+const juntado = () => OFERTAS.filter(o => o.estado === 'aceptada').reduce((a, o) => a + o.monto, 0);
+
+/* ---------------- vistas ---------------- */
+function vRonda() {
+  const j = juntado();
+  const pct = Math.min(100, Math.round(j / RONDA.meta * 100));
+  const pend = OFERTAS.filter(o => o.estado === 'pendiente');
+  const lista = OFERTAS.map(o =>
+    '<div class="oferta">' +
+      '<div class="cuerpo"><b>' + esc(o.quien) + '</b><small>' + esc(o.rel) + '</small></div>' +
+      '<span class="lana">' + pesos(o.monto) + '</span>' +
+      (o.estado === 'pendiente'
+        ? '<button class="btn lleno chico" data-acepta="' + o.id + '">Aceptar</button>' +
+          '<button class="btn chico">Ajustar</button>'
+        : '<span class="sello ok">Aceptada</span>') +
+    '</div>').join('');
+
+  return '<h1>Puente de octubre</h1>' +
+    '<p class="bajo">' + esc(RONDA.razon) + ' Se ofrece <b>' + RONDA.tasa +
+      ' % mensual</b> a <b>' + RONDA.plazo + ' pagos</b>, y cierra el ' + RONDA.fecha + '.</p>' +
+    '<div class="cifras">' +
+      '<div class="cifra fuerte"><span>Juntado</span><b id="c-junta"' +
+        (movio ? ' class="cambio"' : '') + '>' + pesos(j) + '</b>' +
+        '<small>de ' + pesos(RONDA.meta) + '</small></div>' +
+      '<div class="cifra"><span>Falta</span><b>' + pesos(Math.max(0, RONDA.meta - j)) + '</b>' +
+        '<small>para llegar a la meta</small></div>' +
+      '<div class="cifra"><span>Ofertas por revisar</span><b id="c-pend">' + pend.length + '</b>' +
+        '<small>nada entra sin que lo aceptes</small></div>' +
+      '<div class="cifra"><span>Cierra</span><b style="font-size:19px">' + RONDA.fecha + '</b>' +
+        '<small>o cuando se llene</small></div>' +
+    '</div>' +
+    '<div class="tarjeta"><div class="medidor"><i style="width:' + pct + '%"></i></div>' +
+      '<p class="dato">' + pct + ' % de la meta. Quien presta ve cuánto falta, ' +
+        'no quién más entró ni con cuánto.</p></div>' +
+    '<div class="tarjeta"><h2>Ofertas</h2>' + lista +
+      '<p class="aclara">Cada oferta se acepta tal cual, se le cambian monto o condiciones, ' +
+      'o se rechaza. El interés corre desde que se confirma el depósito, no desde que se prometió.</p>' +
+    '</div>';
+}
+
+function vPrestamos() {
+  const reng = PRESTAMOS.map(p => {
+    const t = tabla(p);
+    const debe = p.monto - t.filter(x => x.pagado).reduce((a, x) => a + x.cap, 0);
+    const prox = t.find(x => !x.pagado);
+    return '<tr class="pica" data-p="' + p.id + '">' +
+      '<td class="dato">' + p.id + '</td>' +
+      '<td><b style="font-weight:600">' + esc(p.quien) + '</b><br>' +
+        '<span class="dato">' + p.tasa + ' % mensual · ' + p.plazo + ' pagos</span></td>' +
+      '<td class="der num">' + pesos(p.monto) + '</td>' +
+      '<td class="der num">' + pesos(debe) + '</td>' +
+      '<td class="dato ocultar">' + (prox ? prox.fecha : 'liquidado') + '</td>' +
+      '<td><span class="sello ' + (debe ? 'ok' : 'frio') + '">' +
+        (debe ? 'Activo' : 'Liquidado') + '</span></td>' +
+      '</tr>';
+  }).join('');
+  return '<h1>Préstamos</h1>' +
+    '<p class="bajo">Cada préstamo con su tabla de pagos, su pagaré y sus comprobantes. ' +
+      'Quien prestó entra con su correo y ve lo suyo.</p>' +
+    '<div class="tarjeta" style="padding:6px 10px"><table><thead><tr>' +
+      '<th>Folio</th><th>Quién prestó</th><th class="der">Prestado</th>' +
+      '<th class="der">Se debe</th><th class="ocultar">Próximo pago</th><th>Estado</th>' +
+      '</tr></thead><tbody>' + reng + '</tbody></table></div>';
+}
+
+function vPrestamo() {
+  const p = PRESTAMOS.find(x => x.id === abierto);
+  const t = tabla(p);
+  const debe = p.monto - t.filter(x => x.pagado).reduce((a, x) => a + x.cap, 0);
+  const porPagar = t.filter(x => !x.pagado).reduce((a, x) => a + x.inte, 0);
+  const yaPagado = t.filter(x => x.pagado).reduce((a, x) => a + x.pago, 0);
+  const prox = t.find(x => !x.pagado);
+
+  const reng = t.map(x =>
+    '<tr' + (x.pagado ? ' class="pagado"' : '') + '>' +
+      '<td class="dato">' + x.n + '</td>' +
+      '<td>' + x.fecha + '</td>' +
+      '<td class="der num">' + pesos(x.cap, 2) + '</td>' +
+      '<td class="der num">' + pesos(x.inte, 2) + '</td>' +
+      '<td class="der num"><b style="font-weight:600">' + pesos(x.pago, 2) + '</b></td>' +
+      '<td>' + (x.pagado
+        ? '<span class="sello ok">Pagado</span>'
+        : (x === prox
+            ? '<button class="btn chico" data-paga="' + x.n + '">Registrar pago</button>'
+            : '<span class="dato">pendiente</span>')) + '</td>' +
+    '</tr>').join('');
+
+  return '<button class="regresa" id="regresa">← Préstamos</button>' +
+    '<p class="dato">' + p.id + '</p>' +
+    '<div class="titulote">' + pesos(p.monto) + ' · <a href="#">' + esc(p.quien) + '</a>' +
+      '<span class="sello ' + (debe ? 'ok' : 'frio') + '">' + (debe ? 'Activo' : 'Liquidado') +
+      '</span></div>' +
+    '<p class="bajo">' + p.tasa + ' % mensual · ' + p.plazo + ' pagos, cada mes</p>' +
+    '<div class="cifras">' +
+      '<div class="cifra fuerte"><span>Capital que se debe</span><b id="c-debe"' +
+        (movio ? ' class="cambio"' : '') + '>' + pesos(debe) + '</b>' +
+        '<small>de ' + pesos(p.monto) + '</small></div>' +
+      '<div class="cifra"><span>Interés por pagar</span><b>' + pesos(porPagar) + '</b></div>' +
+      '<div class="cifra"><span>Ya pagado</span><b>' + pesos(yaPagado) + '</b>' +
+        '<small>' + t.filter(x => x.pagado).length + ' de ' + p.plazo + ' pagos</small></div>' +
+      '<div class="cifra"><span>Próximo pago</span><b>' +
+        (prox ? pesos(prox.pago) : '—') + '</b>' +
+        '<small>' + (prox ? prox.fecha : 'liquidado') + '</small></div>' +
+    '</div>' +
+    '<div class="tarjeta"><h2>Tabla de pagos</h2>' +
+      '<table><thead><tr><th>#</th><th>Fecha</th><th class="der">Capital</th>' +
+        '<th class="der">Interés</th><th class="der">Pago</th><th>Estado</th>' +
+        '</tr></thead><tbody>' + reng + '</tbody>' +
+        '<tfoot><tr><td colspan="2">Total</td>' +
+        '<td class="der num">' + pesos(p.monto, 2) + '</td>' +
+        '<td class="der num">' + pesos(t.reduce((a, x) => a + x.inte, 0), 2) + '</td>' +
+        '<td class="der num">' + pesos(t.reduce((a, x) => a + x.pago, 0), 2) + '</td>' +
+        '<td></td></tr></tfoot></table>' +
+      '<p class="aclara">El interés corre sobre el saldo, así que baja cada mes. ' +
+        'Los pagos salen de dash101, donde está el dinero; aquí se reflejan.</p>' +
+      '<button class="btn" id="pagare" style="margin-top:13px">Pagaré en PDF</button>' +
+    '</div>';
+}
+
+function vDirectorio() {
+  const gente = [['Ana Robles Méndez','Prima','Ya prestó dos veces'],
+                 ['Gerardo Lazo','Proveedor de herrajes','Primera ronda'],
+                 ['Raquel Tovar','Socia de la obra','Préstamo activo'],
+                 ['Hugo Villalpando','Vecino del taller','Sólo avisado']];
+  return '<h1>Inversionistas</h1>' +
+    '<p class="bajo">Gente que la empresa ya conoce. Al abrir una ronda se les avisa por ' +
+      'correo, o con un mensaje de WhatsApp ya escrito.</p>' +
+    '<div class="tarjeta" style="padding:6px 10px"><table><thead><tr>' +
+      '<th>Quién</th><th class="ocultar">Relación</th><th>Estado</th></tr></thead><tbody>' +
+      gente.map(([n, r, e]) => '<tr><td><b style="font-weight:600">' + esc(n) + '</b></td>' +
+        '<td class="dato ocultar">' + esc(r) + '</td><td class="dato">' + esc(e) + '</td></tr>').join('') +
+      '</tbody></table></div>';
+}
+
+function pintar() {
+  $('#env').innerHTML = vista === 'ronda' ? vRonda()
+                      : vista === 'prestamos' ? vPrestamos()
+                      : vista === 'prestamo' ? vPrestamo() : vDirectorio();
+  document.querySelectorAll('#nav button').forEach(b => b.setAttribute('aria-selected',
+    String(b.dataset.v === vista || (b.dataset.v === 'prestamos' && vista === 'prestamo'))));
+  const pend = OFERTAS.filter(o => o.estado === 'pendiente').length;
+  $('#glo').textContent = pend;
+  $('#glo').style.display = pend ? '' : 'none';
+  amarrar();
+  if (window.guia) guia.remarcar();
+}
+
+function amarrar() {
+  document.querySelectorAll('#nav button').forEach(b =>
+    b.onclick = () => { vista = b.dataset.v; pintar(); });
+
+  document.querySelectorAll('[data-acepta]').forEach(b => b.onclick = () => {
+    const o = OFERTAS.find(x => x.id === b.dataset.acepta);
+    o.estado = 'aceptada';
+    PRESTAMOS.push({id:'PRE-00000' + (PRESTAMOS.length + 1), quien:o.quien, monto:o.monto,
+                    tasa:RONDA.tasa, plazo:RONDA.plazo, pagados:0, inicio:'10 oct 2026'});
+    movio = true; pintar();
+    avisar('Oferta aceptada. Nació su préstamo con tabla de pagos.');
+    document.dispatchEvent(new CustomEvent('demo:aceptar', {detail:o.id}));
+  });
+
+  document.querySelectorAll('tr.pica').forEach(t => t.onclick = () => {
+    abierto = t.dataset.p; vista = 'prestamo'; pintar();
+    document.dispatchEvent(new CustomEvent('demo:abrir', {detail:abierto}));
+  });
+
+  const vol = $('#regresa');
+  if (vol) vol.onclick = () => { vista = 'prestamos'; pintar(); };
+
+  document.querySelectorAll('[data-paga]').forEach(b => b.onclick = () => {
+    const p = PRESTAMOS.find(x => x.id === abierto);
+    p.pagados++; movio = true; pintar();
+    avisar('Pago registrado. El estado de cuenta de quien prestó ya se actualizó.');
+    document.dispatchEvent(new Event('demo:pagar'));
+  });
+
+  const pg = $('#pagare');
+  if (pg) pg.onclick = () => {
+    avisar('Pagaré armado con los datos del préstamo. En la demostración no se descarga.');
+    document.dispatchEvent(new Event('demo:pagare'));
+  };
+}
+
+/* ---------------- la guía ---------------- */
+window.DEMO_APP = '/app/patron101.html';
+window.DEMO_NOMBRE = 'patron101';
+window.GUIA = [
+  {t:'La empresa abrió una ronda: necesita un puente mientras cobra una obra. ' +
+     'Dos personas ofrecieron. <b>Acepta</b> la que parpadea.',
+   marca:'[data-acepta="O1"]', espera:'demo:aceptar'},
+  {t:'Nació su préstamo, con su tabla de pagos. Ve a <b>Préstamos</b> y abre el de ' +
+     'Raquel Tovar, que lleva dos pagos hechos.',
+   marca:'#nav button[data-v="prestamos"]', espera:'demo:abrir'},
+  {t:'Capital, interés y saldo, renglón por renglón. El interés baja cada mes porque ' +
+     'corre sobre el saldo. <b>Registra</b> el pago que sigue.',
+   marca:'[data-paga]', espera:'demo:pagar'},
+  {t:'El capital que se debe bajó solo. Ahora saca el <b>pagaré</b>: sale con los datos ' +
+     'del préstamo, se firma por fuera y se sube firmado.',
+   marca:'#pagare', espera:'demo:pagare'},
+  {t:'Eso es patron101: cuando falta flujo, lo cubre gente que la empresa ya conoce, ' +
+     'con sus condiciones por escrito y cada quien viendo nada más lo suyo.',
+   fin:true}
+];
+</script>
+<script src="../guia.js"></script>
+<script>pintar();</script>
