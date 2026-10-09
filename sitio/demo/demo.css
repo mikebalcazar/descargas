@@ -1,0 +1,170 @@
+/* Armazón común de las demostraciones de Suite 101.
+   Lo que comparten las diez: la cinta que avisa que es demostración, el
+   cartelito de la guía, el aviso de abajo y la tipografía de la suite. El
+   aspecto de cada app —su barra, sus tablas, sus colores— vive en su propia
+   página, porque cost101 es oscura y quell101 es clara y así tiene que ser.
+
+   Una demostración no habla con la app real: ni API, ni base de datos, ni
+   cuenta. Es un dibujo que se puede picar. */
+
+@font-face{font-family:Cifras;src:url(../fuentes/fira-cifras-400.woff2);font-weight:400;
+  unicode-range:U+0030-0039,U+0025,U+00D7,U+002E,U+002C,U+002F,U+0024,U+002B,U+002D}
+@font-face{font-family:Cifras;src:url(../fuentes/fira-cifras-600.woff2);font-weight:600 700;
+  unicode-range:U+0030-0039,U+0025,U+00D7,U+002E,U+002C,U+002F,U+0024,U+002B,U+002D}
+@font-face{font-family:Raleway;src:url(../fuentes/raleway-400.woff2);font-weight:400}
+@font-face{font-family:Raleway;src:url(../fuentes/raleway-600.woff2);font-weight:600}
+@font-face{font-family:Raleway;src:url(../fuentes/raleway-700.woff2);font-weight:700}
+
+:root{
+  --azul:#0080C1;--azul-texto:#0074ad;--claro:#3AA3DC;--tinta:#122733;--gris:#5b6b76;
+  --nube:#f7f9fa;--linea:#e2e8ec;--blanco:#fff;--rojo:#d0342c;--verde:#6b9e78;
+  --acento:#F2603C;
+  --demo:44px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:Cifras,Raleway,system-ui,sans-serif;color:var(--tinta);background:var(--blanco);
+  -webkit-font-smoothing:antialiased;font-size:14px;overflow:hidden}
+
+/* ---- la cinta: que nunca se confunda con la app de verdad ---- */
+.cinta{height:var(--demo);background:var(--tinta);color:#fff;display:flex;align-items:center;
+  gap:14px;padding:0 18px;font-size:13px;position:relative;z-index:30}
+.cinta b{background:var(--azul);color:#fff;font-size:11px;font-weight:700;letter-spacing:.09em;
+  padding:4px 9px;border-radius:3px;white-space:nowrap}
+.cinta span{color:#a9c0ce}
+.cinta a{margin-left:auto;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.35);
+  padding:7px 15px;border-radius:3px;font-weight:600;font-size:12px;white-space:nowrap}
+.cinta a:hover{background:#fff;color:var(--tinta)}
+
+/* ---- la guía ---- */
+.guia{position:fixed;left:18px;bottom:18px;width:336px;background:var(--tinta);color:#fff;
+  border-radius:12px;padding:16px 18px;z-index:40;font-size:13.5px;line-height:1.5;
+  box-shadow:0 16px 38px rgba(18,39,51,.32)}
+.guia[hidden]{display:none}
+.guia .paso{font:600 11px Raleway,sans-serif;color:#8fb0c4;letter-spacing:.07em;margin-bottom:7px}
+.guia p{margin-bottom:13px}
+.guia .pie{display:flex;align-items:center;gap:12px}
+.guia .seguir{background:var(--azul);border:0;color:#fff;border-radius:7px;padding:9px 16px;
+  font:600 13px Raleway,sans-serif;cursor:pointer}
+.guia .seguir:hover{background:#0092dc}
+.guia .saltar{background:none;border:0;color:#8fb0c4;cursor:pointer;
+  font:400 12px Raleway,sans-serif;text-decoration:underline;padding:0}
+.guia .saltar:hover{color:#fff}
+.guia .espera{color:#8fb0c4;font-size:12px}
+
+/* El objetivo del paso parpadea. Parpadea, no se pinta de rojo: quien no
+   distingue el rojo también tiene que poder seguir la guía. */
+@keyframes late{0%,100%{opacity:.3}50%{opacity:1}}
+.late{animation:late 1.4s ease-in-out infinite;
+  outline:2px solid var(--azul);outline-offset:3px;border-radius:6px}
+/* En SVG el outline no se dibuja parejo, así que ahí late el aro de selección. */
+.late-svg{animation:late 1.4s ease-in-out infinite}
+
+/* ---- el aviso de abajo ---- */
+.aviso{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(14px);
+  background:var(--tinta);color:#fff;padding:11px 18px;border-radius:7px;font-size:13px;
+  opacity:0;pointer-events:none;transition:.22s;z-index:50;text-align:center;max-width:86vw}
+.aviso.ver{opacity:1;transform:translateX(-50%)}
+
+@media(max-width:700px){
+  /* En el celular la cinta sólo alcanza para el sello y la salida. */
+  .cinta span{display:none}
+  .cinta{gap:10px;padding:0 12px}
+  .guia{left:10px;right:10px;width:auto;bottom:10px;font-size:13px;padding:14px 15px}
+  /* El aviso se sube, para no pelearse con el cartelito de la guía. */
+  .aviso{bottom:auto;top:calc(var(--demo) + 10px)}
+  .aviso.ver{transform:translateX(-50%)}
+}
+
+/* ------------------------------------------------------------------
+   Chrome común de las apps web de la suite: barra oscura arriba, cuerpo
+   claro, tarjetas blancas. Lo comparten patron101, peek101, dash101,
+   quote101 y nest101, así que vive aquí y no repetido en cada demostración.
+   Las que no se ven así —cost101, que es oscura entera, y draw101, que es un
+   CAD— traen su propio estilo en su página.
+   ------------------------------------------------------------------ */
+.app{height:calc(100% - var(--demo));display:flex;flex-direction:column;background:#f4f7f9}
+.app .barra{background:#0f2231;color:#fff;display:flex;align-items:center;gap:8px;
+  padding:0 20px;height:54px;flex:none}
+.app .marca{font:700 19px Raleway,sans-serif;margin-right:6px;white-space:nowrap}
+.app .marca i{font-style:normal;color:var(--claro)}
+.app .org{color:#7e97a8;font-size:13px;padding-right:16px;white-space:nowrap;
+  border-right:1px solid rgba(255,255,255,.14);margin-right:10px}
+.app nav{display:flex;gap:4px}
+.app nav button{background:none;border:0;color:#cfdde6;font:400 14px Raleway,sans-serif;
+  padding:8px 14px;border-radius:7px;cursor:pointer;white-space:nowrap}
+.app nav button:hover{color:#fff}
+.app nav button[aria-selected=true]{background:rgba(255,255,255,.13);color:#fff;font-weight:600}
+.app .globo{background:var(--acento);color:#fff;font:700 10px Cifras,sans-serif;
+  border-radius:9px;padding:1px 6px;margin-left:5px}
+.app .yo{margin-left:auto;background:rgba(255,255,255,.1);border-radius:20px;
+  padding:6px 16px;font-size:13px;white-space:nowrap}
+.app .lienzo{flex:1;overflow:auto;padding:26px 20px 40px}
+.app .env{max-width:1010px;margin:0 auto}
+
+.app h1{font:700 27px Raleway,sans-serif;margin-bottom:6px}
+.app .bajo{color:var(--gris);font-size:13.5px;line-height:1.55;margin-bottom:20px;max-width:760px}
+.app .bajo b{color:var(--tinta)}
+.app .tarjeta{background:#fff;border-radius:11px;padding:18px 20px;margin-bottom:13px;
+  box-shadow:0 1px 2px rgba(18,39,51,.07)}
+.app .tarjeta h2{font:700 16px Raleway,sans-serif;margin-bottom:10px}
+
+.app .btn{border:1px solid var(--linea);background:#fff;border-radius:8px;padding:10px 17px;
+  font:600 13px Raleway,sans-serif;color:var(--tinta);cursor:pointer}
+.app .btn:hover{border-color:var(--gris)}
+.app .btn.lleno{background:var(--azul);border-color:var(--azul);color:#fff}
+.app .btn.lleno:hover{background:#0092dc}
+.app .btn.chico{padding:7px 14px;font-size:12.5px}
+.app .btn[disabled]{background:#a9c9dd;border-color:#a9c9dd;color:#fff;cursor:default}
+.app .regresa{background:none;border:0;color:var(--gris);font:400 13px Raleway,sans-serif;
+  cursor:pointer;padding:0;margin-bottom:10px}
+.app .regresa:hover{color:var(--azul-texto)}
+
+.app table{width:100%;border-collapse:collapse;font-size:13px}
+.app th{text-align:left;font:600 12px Raleway,sans-serif;color:var(--gris);padding:11px 10px;
+  border-bottom:1px solid var(--linea);white-space:nowrap}
+.app th.der,.app td.der{text-align:right}
+.app td{padding:12px 10px;border-bottom:1px solid #f0f4f6}
+.app tbody tr:last-child td{border-bottom:0}
+.app tr.pica{cursor:pointer}
+.app tr.pica:hover{background:#f6fafc}
+.app .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.app .dato{color:var(--gris);font-size:12.5px}
+
+.app .sello{display:inline-block;border-radius:20px;padding:3px 11px;
+  font:600 11.5px Raleway,sans-serif;white-space:nowrap}
+.app .sello.ok{background:#e7f4ea;color:#39683f}
+.app .sello.pend{background:#fdf0e3;color:#96561c}
+.app .sello.frio{background:#eef3f7;color:#44606f}
+.app .sello.azul{background:#e8f1fb;color:#1c5b8f}
+
+.app .cifras{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:16px}
+.app .cifra{background:#fff;border-radius:11px;padding:16px 18px;
+  box-shadow:0 1px 2px rgba(18,39,51,.07)}
+.app .cifra.fuerte{background:#0f2231;color:#fff}
+.app .cifra span{display:block;font-size:12px;color:var(--gris);margin-bottom:5px}
+.app .cifra.fuerte span{color:#9fb6c5}
+.app .cifra b{font:400 26px Cifras,Raleway,sans-serif;display:block;transition:color .3s}
+.app .cifra b.cambio{color:#b4451f}
+.app .cifra.fuerte b.cambio{color:#ffc46b}
+.app .cifra small{color:var(--gris);font-size:11.5px}
+.app .cifra.fuerte small{color:#9fb6c5}
+
+.app .medidor{height:10px;background:#e9eef2;border-radius:6px;overflow:hidden;margin:10px 0 8px}
+.app .medidor i{display:block;height:100%;background:var(--azul);transition:width .4s}
+
+@media(max-width:860px){
+  .app nav,.app .org{display:none}
+  .app .cifras{grid-template-columns:1fr 1fr}
+  .app .lienzo{padding:18px 13px 30px}
+  .app h1{font-size:22px}
+  .app .barra{padding:0 13px}
+  .app .ocultar{display:none}
+}
+@media(max-width:520px){.app .cifras{grid-template-columns:1fr}}
+
+/* Colchón al final de la página: el cartelito de la guía es fijo abajo a la
+   izquierda, así que sin esto el último renglón de cada demostración queda
+   debajo de él y no se puede leer ni picar. */
+.lienzo{padding-bottom:210px !important}
+@media(max-width:700px){.lienzo{padding-bottom:240px !important}}
