@@ -167,6 +167,7 @@ APPS = {
         ('3-lista.png','La obra entera en lista, cuando el plano ya no basta'),
         ('4-dudas.png','Las dudas de quien está en obra y no le toca decidir')],
    enlace=('Entrar a la app','https://bitacora-obra.mike-929.workers.dev'),
+   demo='demo/quell/',
    datos=[('Versión','Publicación continua'),('Plataforma','Web · Windows · Android en preparación'),
           ('Estado','En uso, primera obra'),('Sin señal','Sí, lectura y escritura')]),
 
@@ -491,8 +492,12 @@ def nombre(app, d, etiqueta='div', pref=''):
     return f'<{etiqueta} class="nombre"><span class="vh">{app}</span>{marca(app, pref)}</{etiqueta}>'
 
 def acciones(app, pref=''):
+    # El demo va en medio: el que ya se interesó pica «Más información», el que
+    # quiere ver antes de leer pica «Ver demo», y el convencido pide la cita.
+    vd = (f'<a class="btn contorno" href="{pref}{APPS[app]["demo"]}">Ver demo</a>'
+          if APPS[app].get('demo') else '')
     return (f'<div class="acciones"><a class="btn" href="{pref}app/{app}.html">Más información</a>'
-            f'<a class="btn contorno" href="mailto:{CORREO}?subject={app}">Pedir demostración</a></div>')
+            f'{vd}<a class="btn contorno" href="mailto:{CORREO}?subject={app}">Pedir demostración</a></div>')
 
 def mosaico(app, fondo):
     d = APPS[app]
@@ -588,6 +593,9 @@ for app, d in APPS.items():
         # sin él, la página que se abre puede tocar la nuestra por window.opener.
         txt, url = d['enlace']
         ira = (f'<a class="btn" href="{url}" target="_blank" rel="noopener">{html.escape(txt)}</a>')
+    # «Ver demo» abre la demostración de la app: la de verdad por dentro, con
+    # datos inventados y sin tocar nada. Sólo sale si esa app ya tiene una.
+    vd = (f'<a class="btn contorno" href="../{d["demo"]}">Ver demo</a>') if d.get('demo') else ''
     ficha = ''.join(f'<div><span>{html.escape(k)}</span><b>{html.escape(v)}</b></div>' for k, v in datos)
     principal, galeria = '', ''
     if d['img']:
@@ -620,7 +628,7 @@ for app, d in APPS.items():
 <section class="tapa"><div class="env">
 {nombre(app, d, pref='../')}
 <h1>{html.escape(d['lema'])}</h1>
-<div class="acciones">{ira}<a class="btn contorno" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a></div>
+<div class="acciones">{ira}{vd}<a class="btn contorno" href="mailto:{CORREO}?subject={app}">Pedir una demostración</a></div>
 <p class="estado">{html.escape(d['estado'])} · {html.escape(d['plataforma'])}</p>
 </div>{principal}</section>
 <section class="intro"><div class="env estrecho"><p>{html.escape(d['entrada'])}</p></div></section>
