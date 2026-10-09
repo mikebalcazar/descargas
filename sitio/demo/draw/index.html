@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de draw101 — Suite 101</title>
+<meta name="description" content="Pruebe draw101 con un alzado de ejemplo: capas, cotas asociativas y la hoja con pie de plano.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../demo.css">
+<style>
+body{background:#fff}
+.todo{height:calc(100% - var(--demo));display:flex;flex-direction:column}
+
+.menu{background:#0f2231;color:#cfdde6;display:flex;align-items:center;gap:3px;
+  padding:0 14px;height:46px;flex:none;font-size:13.5px}
+.menu .marca{display:flex;align-items:center;gap:7px;font:700 16px Raleway,sans-serif;
+  color:#fff;margin-right:16px}
+.menu .aro{width:19px;height:19px;border:2px solid #fff;border-radius:50%;display:grid;
+  place-items:center;font:700 8px Cifras,sans-serif}
+.menu button{background:none;border:0;color:#cfdde6;font:400 13.5px Raleway,sans-serif;
+  padding:7px 12px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.menu button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.menu button.vivo{background:var(--azul);color:#fff;font-weight:600}
+.menu .obra{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:13px;color:#fff}
+.menu .obra i{width:8px;height:8px;border-radius:50%;background:var(--acento)}
+
+.medio{flex:1;display:flex;min-height:0}
+.herra{width:56px;border-right:1px solid var(--linea);padding:9px 0;flex:none;overflow:auto}
+.herra .rot{font:600 8.5px Raleway,sans-serif;color:var(--gris);letter-spacing:.09em;
+  padding:9px 0 5px;text-align:center}
+.herra .rejilla{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 6px}
+.herra b{display:grid;place-items:center;height:21px;border-radius:4px;color:#44606f;
+  font-size:11px;font-weight:400;cursor:default}
+.herra b:hover{background:#eef3f7}
+
+.papel{flex:1;position:relative;overflow:hidden;background:#fff;
+  background-image:linear-gradient(#eef2f5 1px,transparent 1px),
+                   linear-gradient(90deg,#eef2f5 1px,transparent 1px);
+  background-size:19px 19px}
+#plano{width:100%;height:100%;display:block}
+.gab{cursor:pointer}
+.gab rect{fill:#fff;stroke:#1a7fc1;stroke-width:1.6;vector-effect:non-scaling-stroke}
+.gab:hover rect{fill:#eaf5fc}
+.gab.sel rect{stroke:var(--acento);stroke-width:2.6}
+.rotulo{font:400 11px Raleway,sans-serif;fill:#1a7fc1}
+.cota line,.cota path{stroke:#1a7fc1;stroke-width:1;vector-effect:non-scaling-stroke;fill:none}
+.cota text{font:400 10.5px Cifras,Raleway,sans-serif;fill:#1a7fc1;text-anchor:middle}
+.titulo{font:400 14px Raleway,sans-serif;fill:#44606f;letter-spacing:.04em}
+
+.lado{width:288px;border-left:1px solid var(--linea);display:flex;flex-direction:column;flex:none;
+  overflow:auto}
+.lado .rot{font:600 10px Raleway,sans-serif;color:var(--gris);letter-spacing:.11em;
+  padding:13px 15px 8px}
+.capa{display:flex;align-items:center;gap:10px;padding:9px 15px;cursor:pointer;
+  border-bottom:1px solid #f0f4f6}
+.capa:hover{background:#f6fafc}
+.capa.act{background:#eaf5fc}
+.capa .ojo{width:15px;text-align:center;color:var(--gris);font-size:12px}
+.capa.off .ojo{opacity:.3}
+.capa .col{width:13px;height:13px;border-radius:3px;flex:none}
+.capa .n{flex:1;min-width:0}
+.capa .n b{display:block;font:600 12.5px Raleway,sans-serif}
+.capa.off .n b{color:var(--gris);text-decoration:line-through}
+.capa .n small{color:var(--gris);font-size:11px}
+.capa .cuenta{color:var(--gris);font-size:11.5px}
+
+.props{padding:13px 15px;border-top:1px solid var(--linea)}
+.props .par{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12.5px}
+.props .par span{color:var(--gris);width:74px;flex:none}
+.props .par b{font-weight:400}
+.cel{width:78px;border:1px solid var(--linea);border-radius:6px;padding:6px 9px;
+  font:400 12.5px Cifras,Raleway,sans-serif;color:var(--tinta);text-align:right}
+.cel:focus{outline:2px solid #cfe6f5;border-color:var(--azul)}
+.vacio{color:var(--gris);font-size:12.5px;line-height:1.5}
+.btn{border:1px solid var(--linea);background:#fff;border-radius:7px;padding:9px 14px;
+  font:600 12.5px Raleway,sans-serif;color:var(--tinta);cursor:pointer;width:100%;margin-top:8px}
+.btn:hover{border-color:var(--gris)}
+
+.cmd{border-top:1px solid var(--linea);background:#f7fafb;padding:8px 15px;flex:none;
+  font:400 12px ui-monospace,Menlo,Consolas,monospace;color:#44606f;min-height:34px}
+.cmd b{color:var(--azul-texto);font-weight:400}
+.estado{border-top:1px solid var(--linea);display:flex;align-items:center;gap:17px;
+  padding:7px 15px;flex:none;font-size:11.5px;color:var(--gris)}
+.estado .der{margin-left:auto;display:flex;gap:15px}
+.estado em{font-style:normal;color:var(--tinta)}
+
+/* la hoja */
+.hoja{position:absolute;inset:0;background:rgba(18,39,51,.55);display:grid;place-items:center;
+  z-index:12;padding:22px}
+.hoja .papelito{background:#fff;border-radius:4px;width:min(660px,100%);
+  box-shadow:0 22px 60px rgba(0,0,0,.4);padding:18px;max-height:100%;overflow:auto}
+.hoja .pie{border:1.4px solid #44606f;margin-top:11px;display:grid;
+  grid-template-columns:1fr 128px;font-size:11px}
+.hoja .pie div{padding:7px 10px;border-right:1.4px solid #44606f}
+.hoja .pie div:last-child{border-right:0}
+.hoja .pie b{display:block;font:700 12px Raleway,sans-serif}
+.hoja .pie small{color:var(--gris)}
+.cerrar{border:1px solid var(--linea);background:#fff;border-radius:7px;padding:8px 15px;
+  font:600 12.5px Raleway,sans-serif;cursor:pointer;margin-top:11px}
+
+@media(max-width:980px){
+  .herra{display:none}
+  .lado{width:238px}
+}
+@media(max-width:700px){
+  .lado{position:fixed;right:0;top:calc(var(--demo) + 46px);bottom:0;background:#fff;z-index:11;
+    width:238px;box-shadow:-10px 0 30px rgba(18,39,51,.13)}
+  .menu button:not(.siempre){display:none}
+  .menu .obra{display:none}
+  .estado .der{display:none}
+}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Alzado de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/draw101.html">Conocer draw101</a>
+</div>
+
+<div class="todo">
+  <div class="menu">
+    <div class="marca">draw<span class="aro">101</span></div>
+    <button>Nuevo</button><button>Abrir…</button>
+    <button class="vivo">Guardar</button><button>Exportar DXF…</button>
+    <button class="siempre" id="b-hoja">Hoja con pie de plano</button>
+    <div class="obra"><i></i>Cocina Ramírez</div>
+  </div>
+
+  <div class="medio">
+    <div class="herra">
+      <div class="rot">TRAZO</div>
+      <div class="rejilla"><b>╱</b><b>⌒</b><b>▭</b><b>◯</b><b>∿</b><b>·</b></div>
+      <div class="rot">COTAS</div>
+      <div class="rejilla"><b>↔</b><b>∠</b><b>⌒</b><b>⌀</b></div>
+      <div class="rot">MODIFICAR</div>
+      <div class="rejilla"><b>✛</b><b>⧉</b><b>↻</b><b>⤢</b><b>✂</b><b>⇥</b></div>
+      <div class="rot">HOJA</div>
+      <div class="rejilla"><b>▤</b><b>▦</b></div>
+    </div>
+
+    <div class="papel">
+      <svg id="plano" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <aside class="lado">
+      <div class="rot">CAPAS</div>
+      <div id="capas"></div>
+      <div class="rot">PROPIEDADES</div>
+      <div class="props" id="props"></div>
+    </aside>
+  </div>
+
+  <div class="cmd" id="cmd">Comando: <b>_</b></div>
+  <div class="estado">
+    <span>Entidades <em id="n-ent">0</em></span>
+    <span>Capas <em>5</em></span>
+    <span class="der"><span>Zoom <em>21 %</em></span><span>DWG · motor propio</span>
+      <span>R2013 · mm</span></span>
+  </div>
+</div>
+
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* El alzado: ocho gabinetes, los de arriba y los de abajo. Las medidas van en
+   milímetros, como en el programa. */
+const ALTOS = [
+  {id:'A-1', ancho:900, alto:700, prof:350},
+  {id:'A-2', ancho:600, alto:700, prof:350},
+  {id:'A-3', ancho:900, alto:700, prof:350},
+  {id:'A-4', ancho:600, alto:700, prof:350}
+];
+const BAJOS = [
+  {id:'B-1', ancho:900, alto:900, prof:600},
+  {id:'B-2', ancho:600, alto:900, prof:600},
+  {id:'B-3', ancho:900, alto:900, prof:600},
+  {id:'B-4', ancho:600, alto:900, prof:600}
+];
+
+const CAPAS = [
+  {n:'0', col:'#1a2b36', gr:'0.25 mm', ve:true},
+  {n:'COTAS', col:'#1a7fc1', gr:'0.18 mm', ve:true},
+  {n:'T101-CUERPO', col:'#1a7fc1', gr:'0.35 mm', ve:true},
+  {n:'T101-FRENTES', col:'#4aa8e0', gr:'0.35 mm', ve:true},
+  {n:'T101-TEXTO', col:'#1a2b36', gr:'0.18 mm', ve:true}
+];
+const ve = n => CAPAS.find(c => c.n === n).ve;
+
+const ESC = 0.25, X0 = 118, Y_ALTO = 92, Y_BAJO = 330;
+let sel = null, hoja = false;
+
+const mm = v => v * ESC;
+const anchoTotal = fila => fila.reduce((a, g) => a + g.ancho, 0);
+
+function cota(x1, x2, y, txt) {
+  if (!ve('COTAS')) return '';
+  return '<g class="cota">' +
+    '<line x1="' + x1 + '" y1="' + y + '" x2="' + x2 + '" y2="' + y + '"/>' +
+    '<line x1="' + x1 + '" y1="' + (y - 5) + '" x2="' + x1 + '" y2="' + (y + 5) + '"/>' +
+    '<line x1="' + x2 + '" y1="' + (y - 5) + '" x2="' + x2 + '" y2="' + (y + 5) + '"/>' +
+    '<rect x="' + ((x1 + x2) / 2 - 20) + '" y="' + (y - 7) + '" width="40" height="14" fill="#fff" stroke="none"/>' +
+    '<text x="' + ((x1 + x2) / 2) + '" y="' + (y + 4) + '">' + txt + '</text></g>';
+}
+
+function cotaV(x, y1, y2, txt) {
+  if (!ve('COTAS')) return '';
+  return '<g class="cota">' +
+    '<line x1="' + x + '" y1="' + y1 + '" x2="' + x + '" y2="' + y2 + '"/>' +
+    '<line x1="' + (x - 5) + '" y1="' + y1 + '" x2="' + (x + 5) + '" y2="' + y1 + '"/>' +
+    '<line x1="' + (x - 5) + '" y1="' + y2 + '" x2="' + (x + 5) + '" y2="' + y2 + '"/>' +
+    '<text x="' + x + '" y="' + ((y1 + y2) / 2) + '" transform="rotate(-90 ' + x + ' ' +
+      ((y1 + y2) / 2) + ')">' + txt + '</text></g>';
+}
+
+function fila(gs, y0, clase) {
+  let x = X0, out = '', cotas = '';
+  const alto = mm(gs[0].alto);
+  gs.forEach(g => {
+    const w = mm(g.ancho);
+    if (ve('T101-CUERPO')) {
+      out += '<g class="gab' + (sel === g.id ? ' sel' : '') + '" data-id="' + g.id +
+        '" role="button" tabindex="0" aria-label="' + g.id + '">' +
+        '<rect x="' + x + '" y="' + y0 + '" width="' + w + '" height="' + alto + '"/>' +
+        (ve('T101-FRENTES')
+          ? '<line x1="' + x + '" y1="' + (y0 + alto * 0.34) + '" x2="' + (x + w) +
+            '" y2="' + (y0 + alto * 0.34) + '" stroke="#4aa8e0" stroke-width="1.2"/>'
+          : '') +
+        '</g>';
+    }
+    if (ve('T101-TEXTO')) {
+      out += '<text class="rotulo" x="' + (x + 3) + '" y="' + (y0 + alto + 24) + '">' +
+        g.id + '  ' + g.ancho + '×' + g.alto + '×' + g.prof + '</text>';
+    }
+    cotas += cota(x, x + w, y0 + alto + 42, String(g.ancho));
+    x += w;
+  });
+  cotas += cotaV(X0 - 24, y0, y0 + alto, String(gs[0].alto));
+  return out + cotas;
+}
+
+function dibuja() {
+  const total = anchoTotal(BAJOS);
+  const svg =
+    (ve('T101-TEXTO')
+      ? '<text class="titulo" x="500" y="42" text-anchor="middle">ALZADO FRONTAL · VERIFICAR MEDIDAS EN OBRA</text>'
+      : '') +
+    fila(ALTOS, Y_ALTO, 'alto') +
+    fila(BAJOS, Y_BAJO, 'bajo') +
+    cota(X0, X0 + mm(total), Y_BAJO + mm(BAJOS[0].alto) + 76, String(total));
+  $('#plano').innerHTML = svg;
+  $('#n-ent').textContent = (ve('T101-CUERPO') ? 8 : 0) + (ve('COTAS') ? 10 : 0) +
+                            (ve('T101-TEXTO') ? 9 : 0);
+}
+
+function pintaCapas() {
+  $('#capas').innerHTML = CAPAS.map(c =>
+    '<div class="capa' + (c.ve ? '' : ' off') + (c.n === 'T101-CUERPO' ? ' act' : '') +
+      '" data-capa="' + esc(c.n) + '" role="button" tabindex="0">' +
+      '<span class="ojo">' + (c.ve ? '◉' : '◌') + '</span>' +
+      '<span class="col" style="background:' + c.col + '"></span>' +
+      '<span class="n"><b>' + esc(c.n) + '</b><small>' + c.gr + ' · continuous</small></span>' +
+    '</div>').join('');
+}
+
+function pintaProps() {
+  const g = [].concat(ALTOS, BAJOS).find(x => x.id === sel);
+  if (!g) {
+    $('#props').innerHTML = '<p class="vacio">Nada seleccionado. Pica un gabinete del ' +
+      'alzado para ver y cambiar sus medidas.</p>';
+    return;
+  }
+  $('#props').innerHTML =
+    '<div class="par"><span>Entidad</span><b>' + g.id + '</b></div>' +
+    '<div class="par"><span>Capa</span><b>T101-CUERPO</b></div>' +
+    '<div class="par"><span>Ancho</span><input class="cel" id="an" value="' + g.ancho +
+      '" inputmode="numeric" aria-label="Ancho en milímetros"> mm</div>' +
+    '<div class="par"><span>Alto</span><b>' + g.alto + ' mm</b></div>' +
+    '<div class="par"><span>Profundidad</span><b>' + g.prof + ' mm</b></div>' +
+    '<p class="vacio">Las cotas son <b>asociativas</b>: se mueven con el mueble, ' +
+      'incluida la del ancho total.</p>';
+  $('#an').oninput = () => {
+    const v = parseInt($('#an').value, 10);
+    if (!isFinite(v) || v < 200 || v > 1800) return;
+    g.ancho = v;
+    dibuja();
+    $('#cmd').innerHTML = 'Ancho de ' + g.id + ' → <b>' + v + '</b> mm · cotas actualizadas';
+    document.dispatchEvent(new Event('demo:ancho'));
+  };
+}
+
+function pintar() {
+  pintaCapas(); dibuja(); pintaProps(); amarrar();
+  if (window.guia) guia.remarcar();
+}
+
+function amarrar() {
+  document.querySelectorAll('.gab').forEach(g => {
+    const pick = () => {
+      sel = g.dataset.id;
+      pintar();
+      $('#cmd').innerHTML = 'Seleccionada <b>' + sel + '</b> · capa T101-CUERPO';
+      document.dispatchEvent(new CustomEvent('demo:abrir', {detail:sel}));
+    };
+    g.addEventListener('click', pick);
+    g.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+  });
+
+  document.querySelectorAll('[data-capa]').forEach(c => {
+    const cambia = () => {
+      const capa = CAPAS.find(x => x.n === c.dataset.capa);
+      capa.ve = !capa.ve;
+      pintar();
+      avisar('Capa «' + capa.n + '» ' + (capa.ve ? 'prendida' : 'apagada') + '.');
+      if (!capa.ve) document.dispatchEvent(new CustomEvent('demo:capa', {detail:capa.n}));
+    };
+    c.onclick = cambia;
+    c.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); cambia(); } };
+  });
+}
+
+$('#b-hoja').onclick = () => {
+  if (hoja) return;
+  hoja = true;
+  const d = document.createElement('div');
+  d.className = 'hoja';
+  d.innerHTML = '<div class="papelito">' +
+    '<svg viewBox="0 0 1000 620" style="width:100%;border:1px solid #dfe6ea">' +
+      $('#plano').innerHTML + '</svg>' +
+    '<div class="pie">' +
+      '<div><b>Cocina Ramírez · Alzado frontal</b>' +
+        '<small>Taller 101 · plano de fabricación</small></div>' +
+      '<div><b>A3 · 1:20</b><small>09 oct 2026 · Rev. A</small></div>' +
+    '</div>' +
+    '<button class="cerrar">Cerrar la vista previa</button></div>';
+  document.body.appendChild(d);
+  d.querySelector('.cerrar').onclick = () => { d.remove(); hoja = false; };
+  avisar('Hoja A3 a escala 1:20. En la demostración no se imprime nada.');
+  document.dispatchEvent(new Event('demo:hoja'));
+};
+
+/* ---------------- la guía ---------------- */
+window.DEMO_APP = '/app/draw101.html';
+window.DEMO_NOMBRE = 'draw101';
+window.GUIA = [
+  {t:'Esto es un alzado de cocina: ocho gabinetes, sus rótulos y sus cotas. ' +
+     'Pica el gabinete que <b>parpadea</b> para seleccionarlo.',
+   marca:'.gab[data-id="B-1"]', svg:true, espera:'demo:abrir', solo:'B-1',
+   regaño:'Ése no. Pica el que <b>parpadea</b>, abajo a la izquierda: B-1, ' +
+          'que es el que vamos a mover.'},
+  {t:'Sus medidas salen a la derecha. Cámbiale el <b>ancho</b>: de 900 a 1200. ' +
+     'Mira las cotas de abajo mientras tecleas.',
+   marca:'#an', espera:'demo:ancho'},
+  {t:'Las cotas se movieron solas, la del gabinete y la del ancho total: eso son ' +
+     '<b>cotas asociativas</b>. Ahora apaga la capa <b>COTAS</b> y mira cómo se limpia el plano.',
+   marca:'[data-capa="COTAS"]', espera:'demo:capa'},
+  {t:'Capas, como en el DWG del arquitecto. Para cerrar, manda el plano a la ' +
+     '<b>hoja con pie de plano</b>: así sale a imprimir.',
+   marca:'#b-hoja', espera:'demo:hoja'},
+  {t:'Eso es draw101: abre el DWG del arquitecto tal cual, acota solo y saca el plano ' +
+     'de fabricación del taller. Sin suscripción.',
+   fin:true}
+];
+</script>
+<script src="../guia.js"></script>
+<script>pintar();</script>
