@@ -151,10 +151,37 @@ body{font-family:Cifras,Raleway,system-ui,sans-serif;color:var(--tinta);backgrou
 .avance b{font:600 13px Raleway,sans-serif}
 .avance span{margin-left:auto;color:var(--gris);font-size:12px}
 
+/* ---- la guía: lleva al visitante por el camino feliz, y se puede saltar ---- */
+.guia{position:fixed;left:18px;bottom:18px;width:336px;background:var(--tinta);color:#fff;
+  border-radius:12px;padding:16px 18px;z-index:20;font-size:13.5px;line-height:1.5;
+  box-shadow:0 16px 38px rgba(18,39,51,.32)}
+.guia[hidden]{display:none}
+.guia .paso{font:600 11px Raleway,sans-serif;color:#8fb0c4;letter-spacing:.07em;margin-bottom:7px}
+.guia p{margin-bottom:13px}
+.guia .pie{display:flex;align-items:center;gap:12px}
+.guia .seguir{background:var(--azul);border:0;color:#fff;border-radius:7px;padding:9px 16px;
+  font:600 13px Raleway,sans-serif;cursor:pointer}
+.guia .seguir:hover{background:#0092dc}
+.guia .saltar{background:none;border:0;color:#8fb0c4;cursor:pointer;font:400 12px Raleway,sans-serif;
+  text-decoration:underline;padding:0}
+.guia .saltar:hover{color:#fff}
+.guia .espera{color:#8fb0c4;font-size:12px}
+
+@keyframes late{0%,100%{opacity:.25}50%{opacity:1}}
+.pin.late .sel{opacity:1;animation:late 1.4s ease-in-out infinite;stroke:var(--azul);stroke-width:2.5}
+.late{position:relative}
+.escribir textarea.late,.subtab.late{outline:2px solid var(--azul);outline-offset:2px;border-radius:6px}
+
+@media(max-width:700px){
+  .guia{left:10px;right:10px;width:auto;bottom:10px;font-size:13px;padding:14px 15px}
+}
+
 .aviso{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(14px);
   background:var(--tinta);color:#fff;padding:11px 18px;border-radius:7px;font-size:13px;
   opacity:0;pointer-events:none;transition:.22s}
 .aviso.ver{opacity:1;transform:translateX(-50%)}
+@media(max-width:700px){.aviso{bottom:auto;top:calc(var(--demo) + 10px)}
+  .aviso.ver{transform:translateX(-50%)}}
 
 @media(max-width:700px){
   /* en el celular la cinta sólo alcanza para el sello y la salida */
@@ -285,6 +312,12 @@ body{font-family:Cifras,Raleway,system-ui,sans-serif;color:var(--tinta);backgrou
   </aside>
 </div>
 
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+
 <div class="aviso" id="aviso"></div>
 
 <script>
@@ -372,6 +405,7 @@ function mostrar(id){
     p.classList.toggle('vivo', p.dataset.id === id));
   pintar();
   $('#panel').classList.add('abierto');
+  document.dispatchEvent(new CustomEvent('demo:pin', {detail:id}));
 }
 
 function pintar(){
@@ -446,6 +480,7 @@ function pintar(){
       subtab = 'bitacora'; pintar();
       $('#hilo').scrollTop = $('#hilo').scrollHeight;
       avisar('Nota registrada. En la demostración no se guarda.');
+      document.dispatchEvent(new Event('demo:nota'));
     };
   }
   $('#panel').querySelectorAll('.pl').forEach(f => {
@@ -455,10 +490,12 @@ function pintar(){
       p.d = p.ok ? 'Cerrado ahora' : 'Levantado el 7 de septiembre';
       pintar(); repintarPin(it); contar();
       avisar(p.ok ? 'Pendiente cerrado.' : 'Pendiente reabierto.');
+      if(p.ok) document.dispatchEvent(new Event('demo:punch'));
     };
     f.onclick = voltear;
     f.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); voltear(); }};
   });
+  remarcar();
 }
 
 function repintarPin(it){
@@ -480,7 +517,110 @@ function avisar(t){
   clearTimeout(reloj); reloj = setTimeout(() => a.classList.remove('ver'), 2600);
 }
 
-/* arranca con el ítem que tiene punchlist, que es lo que vale la pena enseñar */
-mostrar('M01');
-$('#panel').classList.remove('abierto');
+/* ---------------- la guía ----------------
+   Cuatro pasos por el camino feliz. Cada uno espera a que el visitante HAGA la
+   cosa, no a que le dé «siguiente»: así aprende la app usándola. Se sale con
+   «Saltar» en cualquier momento y entonces la guía ya no vuelve. */
+const GUIA = [
+  {t:'Cada pin del plano es un mueble, una puerta o un acabado de la obra. '+
+     'Pica el que <b>parpadea</b>: su aro rojo dice que tiene pendientes.',
+   pin:'M01', espera:'demo:pin', solo:'M01',
+   regaño:'Ese ítem está al día. El del <b>aro rojo</b> es el que trae pendientes: '+
+          'es el que vamos a recorrer.'},
+  {t:'Ésta es su <b>bitácora</b>: lo que se ha dicho de ese mueble, quién lo dijo y cuándo. '+
+     'No se pierde entre mensajes de WhatsApp.',
+   boton:'Siguiente'},
+  {t:'Escribe abajo lo que viste y dale <b>Registrar</b>. Así se levanta la bitácora '+
+     'parado frente al mueble, desde el celular.',
+   marca:'#caja', espera:'demo:nota', requiere:'M01'},
+  {t:'Ahora abre <b>Punchlist</b> y cierra un pendiente picándolo. Fíjate en el aro del pin '+
+     'y en el contador de la izquierda.',
+   marca:'.subtab[data-t="punch"]', espera:'demo:punch', requiere:'M01'},
+  {t:'Eso es quell101: la obra sobre el plano, con su bitácora y sus pendientes, '+
+     'y el cliente viendo nada más lo que le toca.',
+   fin:true}
+];
+
+let paso = 0, viva = true, soltar = null;
+
+function remarcar(){
+  document.querySelectorAll('.late').forEach(e => e.classList.remove('late'));
+  if(!viva) return;
+  const g = GUIA[paso]; if(!g) return;
+  if(g.pin){
+    const el = document.querySelector('.pin[data-id="'+g.pin+'"]');
+    if(el) el.classList.add('late');
+  }
+  if(g.marca){
+    const el = document.querySelector(g.marca);
+    if(el) el.classList.add('late');
+  }
+}
+
+function guia(){
+  const caja = $('#guia');
+  if(!viva){ caja.hidden = true; remarcar(); return; }
+  const g = GUIA[paso];
+  caja.hidden = false;
+  $('#g-paso').textContent = g.fin ? 'LISTO' : 'PASO ' + (paso+1) + ' DE ' + (GUIA.length-1);
+  $('#g-txt').innerHTML = g.t;
+
+  const pie = $('#g-pie'); pie.innerHTML = '';
+  if(g.fin){
+    const b = document.createElement('button');
+    b.className = 'seguir'; b.textContent = 'Seguir explorando';
+    b.onclick = cerrar; pie.appendChild(b);
+    const a = document.createElement('a');
+    a.className = 'saltar'; a.href = '/app/quell101.html'; a.textContent = 'Conocer quell101';
+    pie.appendChild(a);
+  } else if(g.boton){
+    const b = document.createElement('button');
+    b.className = 'seguir'; b.textContent = g.boton;
+    b.onclick = avanzar; pie.appendChild(b);
+    pie.appendChild(saltarse());
+  } else {
+    const s = document.createElement('span');
+    s.className = 'espera'; s.textContent = 'Te toca a ti ↑';
+    pie.appendChild(s); pie.appendChild(saltarse());
+  }
+
+  if(soltar){ document.removeEventListener(soltar.ev, soltar.fn); soltar = null; }
+  if(g.espera){
+    const fn = e => {
+      // Si el paso pide un ítem en concreto y abrieron otro, no se avanza:
+      // sólo M01 trae punchlist, y sin punchlist el paso 4 no tendría salida.
+      if(g.solo && e.detail !== g.solo){ regañar(g); return; }
+      document.removeEventListener(g.espera, fn); soltar = null; avanzar();
+    };
+    document.addEventListener(g.espera, fn);
+    soltar = {ev:g.espera, fn};
+  }
+  remarcar();
+}
+
+function saltarse(){
+  const b = document.createElement('button');
+  b.className = 'saltar'; b.textContent = 'Saltar';
+  b.onclick = cerrar; b.style.marginLeft = 'auto';
+  return b;
+}
+
+function regañar(g){ $('#g-txt').innerHTML = g.regaño || g.t; }
+
+/* Si en pleno paso 3 o 4 abren otro ítem, el camino se rompe: de vuelta al 1. */
+document.addEventListener('demo:pin', e => {
+  const g = GUIA[paso];
+  if(viva && g && g.requiere && e.detail !== g.requiere){ paso = 0; guia(); regañar(GUIA[0]); }
+});
+
+function avanzar(){ if(paso < GUIA.length-1){ paso++; guia(); } }
+function cerrar(){
+  viva = false;
+  if(soltar){ document.removeEventListener(soltar.ev, soltar.fn); soltar = null; }
+  guia();
+}
+
+/* los contadores salen del dato, no del HTML */
+contar();
+guia();
 </script>
