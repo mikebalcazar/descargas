@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de nest101 — Suite 101</title>
+<meta name="description" content="Pruebe nest101 con un mueble de ejemplo: la lista de corte, los herrajes y el archivo .t101x.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../demo.css">
+<style>
+body{background:#f4f7f9}
+.todo{height:calc(100% - var(--demo));display:flex}
+.flanco{width:210px;background:#0f2231;color:#cfdde6;flex:none;overflow:auto}
+.flanco .marca{font:700 21px Raleway,sans-serif;color:#fff;padding:20px 22px 16px}
+.flanco .marca i{font-style:normal;color:var(--claro)}
+.flanco button{display:block;width:100%;text-align:left;background:none;border:0;
+  color:#9fb6c5;font:400 14px Raleway,sans-serif;padding:11px 22px;cursor:pointer}
+.flanco button:hover{color:#fff;background:rgba(255,255,255,.06)}
+.flanco button[aria-selected=true]{background:var(--azul);color:#fff;font-weight:600}
+
+.cuerpo{flex:1;display:flex;flex-direction:column;min-width:0}
+.tope{background:#fff;border-bottom:1px solid var(--linea);display:flex;align-items:center;
+  gap:13px;padding:14px 24px;flex:none;flex-wrap:wrap}
+.tope h1{font:700 19px Raleway,sans-serif}
+.tope .cuenta{background:#e8f1fb;color:#1c5b8f;border-radius:20px;padding:5px 13px;
+  font:600 12px Raleway,sans-serif;margin-left:auto;white-space:nowrap}
+.btn{border:1px solid var(--linea);background:#fff;border-radius:8px;padding:9px 16px;
+  font:600 13px Raleway,sans-serif;color:var(--tinta);cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--gris)}
+.btn.lleno{background:var(--azul);border-color:var(--azul);color:#fff}
+.btn.lleno:hover{background:#0092dc}
+.lienzo{flex:1;overflow:auto;padding:20px 24px 40px}
+.dos{display:grid;grid-template-columns:1fr 330px;gap:14px;align-items:start}
+.tarjeta{background:#fff;border-radius:10px;box-shadow:0 1px 2px rgba(18,39,51,.07);
+  padding:16px 18px;margin-bottom:13px}
+.tarjeta .rot{font:600 10.5px Raleway,sans-serif;letter-spacing:.1em;color:var(--gris);
+  margin-bottom:11px}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font:600 10.5px Raleway,sans-serif;letter-spacing:.07em;color:var(--gris);
+  padding:11px 10px;border-bottom:1px solid var(--linea);white-space:nowrap}
+th.der,td.der{text-align:right}
+td{padding:11px 10px;border-bottom:1px solid #f2f6f8}
+tbody tr:last-child td{border-bottom:0}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mat b{font-weight:400}
+.mat b em{font-style:normal;color:var(--azul-texto)}
+tfoot td{font-weight:700;border-top:1px solid var(--linea);padding-top:12px}
+
+.mueblito{display:block;width:100%;text-align:left;background:none;border:0;cursor:pointer;
+  padding:9px 12px;border-radius:7px;font:600 13px Raleway,sans-serif;color:var(--tinta)}
+.mueblito:hover{background:#f2f7fa}
+.mueblito[aria-selected=true]{background:#eaf5fc;color:var(--azul-texto)}
+.mueblito small{display:block;font-weight:400;color:var(--gris);font-size:11.5px;margin-top:2px}
+.par{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12.5px}
+.par span{color:var(--gris);width:76px;flex:none}
+.cel{width:82px;border:1px solid var(--linea);border-radius:7px;padding:7px 10px;
+  font:400 12.5px Cifras,Raleway,sans-serif;text-align:right;color:var(--tinta)}
+.cel:focus{outline:2px solid #cfe6f5;border-color:var(--azul)}
+.reng{display:flex;padding:7px 0;border-bottom:1px solid #f2f6f8;font-size:12.5px;color:var(--gris)}
+.reng:last-child{border-bottom:0}
+.reng b{margin-left:auto;color:var(--tinta);font-weight:600;font-variant-numeric:tabular-nums}
+.reng b.cambio{color:#b4451f}
+
+@media(max-width:1100px){.dos{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .flanco{display:none}
+  .lienzo{padding:15px 13px 30px}
+  .tope{padding:12px 14px}
+  .tope h1{font-size:16px}
+  .ocultar{display:none}
+}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Proyecto de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/nest101.html">Conocer nest101</a>
+</div>
+
+<div class="todo">
+  <aside class="flanco">
+    <div class="marca">nest<i>101</i></div>
+    <button data-v="corte" aria-selected="true">Lista de corte</button>
+    <button data-v="herrajes" aria-selected="false">Herrajes</button>
+  </aside>
+  <div class="cuerpo">
+    <div class="tope">
+      <h1 id="titulo">Cocina Reyes</h1>
+      <span class="cuenta" id="cuenta"></span>
+      <button class="btn" id="t101x">Exportar .t101x</button>
+      <button class="btn lleno" id="excel">Exportar a Excel</button>
+    </div>
+    <div class="lienzo" id="lienzo"></div>
+  </div>
+</div>
+
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* Las piezas no están escritas: salen de las medidas del mueble. Por eso al
+   cambiar el ancho la lista entera se recalcula, que es de lo que se trata. */
+const MUEBLES = [
+  {id:'M1', n:'Módulo base 900', A:900, H:720, P:580, tipo:'base'},
+  {id:'M2', n:'Alacena 900',     A:900, H:900, P:340, tipo:'alta'},
+  {id:'M3', n:'Mueble de TV',    A:1200, H:420, P:380, tipo:'tv'}
+];
+
+const MEL = 'Melamina blanca <em>18</em>';
+const FOR = 'Formaica nogal <em>18</em>';
+const FIB = 'Fibracel <em>3</em>';
+const PIN = 'Pino <em>20 × 40</em>';
+
+function piezas(m) {
+  const A = m.A, H = m.H, P = m.P;
+  const base = [
+    ['Costado izq.',     MEL, H,       P,       1, 'Canto 2 mm · 4 lados'],
+    ['Costado der.',     MEL, H,       P,       1, 'Canto 2 mm · 4 lados'],
+    ['Piso',             MEL, A - 36,  P,       1, 'Canto 2 mm · frente'],
+    ['Techo',            MEL, A - 36,  P,       1, 'Canto 2 mm · frente'],
+    ['Entrepaño',        MEL, A - 40,  P - 20,  3, 'Canto 2 mm · frente'],
+    ['Trasera',          FIB, A - 30,  H + 6,   1, 'Sin canto'],
+    ['Refuerzo trasero', PIN, A - 36,  40,      2, 'Sin canto']
+  ];
+  const cajones = [
+    ['Frente cajón',     FOR, A - 4,   178,     4, 'Canto 2 mm · 4 lados'],
+    ['Costado cajonera', MEL, P - 60,  160,     8, 'Canto 2 mm · frente'],
+    ['Fondo cajón',      FIB, A - 64,  P - 84,  4, 'Sin canto'],
+    ['Trasera cajón',    MEL, A - 64,  160,     4, 'Canto 2 mm · sup.'],
+    ['Zócalo',           MEL, A - 36,  100,     1, 'Canto 2 mm · frente']
+  ];
+  const puertas = [
+    ['Puerta abatible',  FOR, (A - 8) / 2, H - 8, 2, 'Canto 2 mm · 4 lados']
+  ];
+  if (m.tipo === 'base') return base.concat(cajones, puertas);
+  if (m.tipo === 'alta') return base.concat(puertas);
+  return base.concat([['Tapa nicho', FOR, A - 36, 380, 1, 'Canto 2 mm · 4 lados']]);
+}
+
+/* Los herrajes también salen del mueble: tantas correderas por cajón, tantas
+   bisagras por puerta. */
+function herrajes(m) {
+  const ps = piezas(m);
+  const cajones = (ps.find(p => p[0] === 'Frente cajón') || [, , , , 0])[4];
+  const puertas = (ps.find(p => p[0] === 'Puerta abatible') || [, , , , 0])[4];
+  const entre = (ps.find(p => p[0] === 'Entrepaño') || [, , , , 0])[4];
+  return [
+    ['Corredera de extracción total ' + Math.round((m.P - 40) / 50) * 50 + ' mm', cajones, 'juego'],
+    ['Bisagra de golpe 110°', puertas * 2, 'pza'],
+    ['Jaladera tubular 160 mm', cajones + puertas, 'pza'],
+    ['Soporte de entrepaño', entre * 4, 'pza'],
+    ['Tornillo confirmat 7 × 50', ps.length * 6, 'pza'],
+    ['Tapatornillo adhesivo', ps.length * 6, 'pza']
+  ].filter(h => h[1] > 0);
+}
+
+let vista = 'corte', abierto = 'M1', movio = false;
+
+const cortes = m => piezas(m).reduce((a, p) => a + p[4], 0);
+const cantoM = m => piezas(m).reduce((a, p) => {
+  const lados = p[5].indexOf('4 lados') >= 0 ? 2 * (p[2] + p[3])
+              : p[5].indexOf('Sin canto') >= 0 ? 0 : p[2];
+  return a + lados * p[4] / 1000;
+}, 0);
+const tableros = m => Math.max(1, Math.ceil(
+  piezas(m).filter(p => p[1] !== FIB && p[1] !== PIN)
+           .reduce((a, p) => a + p[2] * p[3] * p[4], 0) / (2440 * 1220) / 0.82));
+
+function vCorte() {
+  const m = MUEBLES.find(x => x.id === abierto);
+  const ps = piezas(m);
+  const reng = ps.map((p, i) =>
+    '<tr>' +
+      '<td class="num" style="color:var(--gris)">' + String(i + 1).padStart(2, '0') + '</td>' +
+      '<td>' + esc(p[0]) + '</td>' +
+      '<td class="mat ocultar"><b>' + p[1] + '</b></td>' +
+      '<td class="der num">' + Math.round(p[2]) + ' × ' + Math.round(p[3]) + '</td>' +
+      '<td class="der num">' + p[4] + '</td>' +
+      '<td class="ocultar" style="color:var(--gris)">' + esc(p[5]) + '</td>' +
+    '</tr>').join('');
+
+  return '<div class="dos">' +
+    '<div class="tarjeta" style="padding:8px 12px"><table><thead><tr>' +
+      '<th>#</th><th>PIEZA</th><th class="ocultar">MATERIAL</th>' +
+      '<th class="der">MEDIDA (MM)</th><th class="der">CANT.</th><th class="ocultar">CANTO</th>' +
+      '</tr></thead><tbody>' + reng + '</tbody>' +
+      '<tfoot><tr><td colspan="4">Total</td><td class="der num">' + cortes(m) +
+        '</td><td class="ocultar"></td></tr></tfoot></table></div>' +
+    '<div>' +
+      '<div class="tarjeta"><div class="rot">MUEBLES DEL PROYECTO</div>' +
+        MUEBLES.map(x => '<button class="mueblito" data-m="' + x.id + '" aria-selected="' +
+          (x.id === abierto) + '">' + esc(x.n) +
+          '<small>' + x.A + ' × ' + x.H + ' × ' + x.P + ' mm · ' + cortes(x) + ' cortes</small>' +
+          '</button>').join('') + '</div>' +
+      '<div class="tarjeta"><div class="rot">MEDIDAS DEL MUEBLE</div>' +
+        '<div class="par"><span>Ancho</span><input class="cel" id="an" value="' + m.A +
+          '" inputmode="numeric" aria-label="Ancho en milímetros"> mm</div>' +
+        '<div class="par"><span>Alto</span><b>' + m.H + ' mm</b></div>' +
+        '<div class="par"><span>Profundidad</span><b>' + m.P + ' mm</b></div>' +
+        '<p style="color:var(--gris);font-size:12px;line-height:1.5">Las piezas no están ' +
+          'escritas a mano: salen de estas medidas. Cambia el ancho y la lista entera ' +
+          'se recalcula.</p></div>' +
+      '<div class="tarjeta"><div class="rot">RESUMEN DEL DESPIECE</div>' +
+        '<div class="reng">Tableros de 18 mm <b id="r-tab"' + (movio ? ' class="cambio"' : '') +
+          '>' + tableros(m) + '</b></div>' +
+        '<div class="reng">Aprovechamiento <b>82 %</b></div>' +
+        '<div class="reng">Canto de 2 mm <b id="r-canto"' + (movio ? ' class="cambio"' : '') +
+          '>' + cantoM(m).toFixed(1) + ' m</b></div>' +
+        '<div class="reng">Herrajes <b>' + herrajes(m).reduce((a, h) => a + h[1], 0) +
+          ' piezas</b></div>' +
+        '<div class="reng">Archivo <b>.t101x</b></div></div>' +
+    '</div></div>';
+}
+
+function vHerrajes() {
+  const m = MUEBLES.find(x => x.id === abierto);
+  const hs = herrajes(m);
+  return '<div class="tarjeta" style="padding:8px 12px"><table><thead><tr>' +
+    '<th>HERRAJE</th><th class="der">CANTIDAD</th><th class="ocultar">UNIDAD</th>' +
+    '<th class="ocultar">PARA</th></tr></thead><tbody>' +
+    hs.map(h => '<tr><td>' + esc(h[0]) + '</td><td class="der num">' + h[1] + '</td>' +
+      '<td class="ocultar" style="color:var(--gris)">' + h[2] + '</td>' +
+      '<td class="ocultar" style="color:var(--gris)">' + esc(m.n) + '</td></tr>').join('') +
+    '</tbody><tfoot><tr><td>Total</td><td class="der num">' +
+      hs.reduce((a, h) => a + h[1], 0) + '</td><td class="ocultar"></td>' +
+      '<td class="ocultar"></td></tr></tfoot></table></div>' +
+    '<p style="color:var(--gris);font-size:12.5px;margin-top:11px;line-height:1.5">' +
+      'La cuenta de lo que hay que pedir sale del propio mueble: tantas correderas por cajón, ' +
+      'tantas bisagras por puerta. Si cambia el mueble, cambia el pedido.</p>';
+}
+
+function pintar() {
+  const m = MUEBLES.find(x => x.id === abierto);
+  $('#lienzo').innerHTML = vista === 'corte' ? vCorte() : vHerrajes();
+  $('#titulo').textContent = 'Cocina Reyes · ' + m.n;
+  $('#cuenta').textContent = piezas(m).length + ' piezas · ' + cortes(m) + ' cortes';
+  document.querySelectorAll('.flanco button').forEach(b =>
+    b.setAttribute('aria-selected', String(b.dataset.v === vista)));
+  amarrar();
+  if (window.guia) guia.remarcar();
+}
+
+function amarrar() {
+  document.querySelectorAll('.flanco button').forEach(b =>
+    b.onclick = () => { vista = b.dataset.v; pintar();
+      if (vista === 'herrajes') document.dispatchEvent(new Event('demo:herrajes')); });
+
+  document.querySelectorAll('[data-m]').forEach(b => b.onclick = () => {
+    abierto = b.dataset.m; pintar();
+    document.dispatchEvent(new CustomEvent('demo:abrir', {detail:abierto}));
+  });
+
+  const an = $('#an');
+  if (an) an.oninput = () => {
+    const v = parseInt(an.value, 10);
+    if (!isFinite(v) || v < 300 || v > 2200) return;
+    MUEBLES.find(x => x.id === abierto).A = v;
+    movio = true;
+    const pos = an.selectionStart;
+    pintar();
+    const otro = $('#an');
+    if (otro) { otro.focus(); try { otro.setSelectionRange(pos, pos); } catch (e) {} }
+    document.dispatchEvent(new Event('demo:ancho'));
+  };
+}
+
+$('#t101x').onclick = () => {
+  avisar('Archivo .t101x armado. draw101 lo abre para acotar y quote101 para cotizar.');
+  document.dispatchEvent(new Event('demo:t101x'));
+};
+$('#excel').onclick = () =>
+  avisar('Excel con las tablas y las columnas de números alineadas. Aquí no se descarga.');
+
+/* ---------------- la guía ---------------- */
+window.DEMO_APP = '/app/nest101.html';
+window.DEMO_NOMBRE = 'nest101';
+window.GUIA = [
+  {t:'Ésta es la lista de corte de un mueble: cada pieza con su material, su medida y ' +
+     'su canto. Abre otro mueble del proyecto —el que <b>parpadea</b>— y mira cómo cambia.',
+   marca:'[data-m="M2"]', espera:'demo:abrir', solo:'M2',
+   regaño:'Ése no, pero mira: ya cambió la lista. Abre el que <b>parpadea</b> —la alacena— que es con el que seguimos.'},
+  {t:'Otra lista, otras piezas. Ahora lo que vale: cámbiale el <b>ancho</b> al mueble. ' +
+     'Las piezas no están escritas a mano, salen de la medida.',
+   marca:'#an', espera:'demo:ancho'},
+  {t:'Se recalcularon las piezas, los tableros y los metros de canto. Abre <b>Herrajes</b>: ' +
+     'la cuenta de lo que hay que pedir también salió del mueble.',
+   marca:'.flanco [data-v="herrajes"]', espera:'demo:herrajes'},
+  {t:'Para cerrar, saca el <b>.t101x</b>. Es el puente: draw101 lo abre para acotar los ' +
+     'planos y quote101 para armar la cotización, sin recapturar el mueble.',
+   marca:'#t101x', espera:'demo:t101x'},
+  {t:'Eso es nest101: del mueble a lo que el taller necesita para cortarlo, y de ahí a ' +
+     'los planos y a la cotización sin volver a teclear nada.',
+   fin:true}
+];
+</script>
+<script src="../guia.js"></script>
+<script>pintar();</script>
