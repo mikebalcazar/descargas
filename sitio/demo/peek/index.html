@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de peek101 — Suite 101</title>
+<meta name="description" content="Pruebe peek101 como lo ve el cliente: su estado de cuenta, la etapa de cada mueble y los pagos recibidos.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../demo.css">
+<style>
+body{background:#f4f7f9}
+.todo{height:calc(100% - var(--demo));display:flex;flex-direction:column}
+.barra{background:#0f2231;color:#fff;display:flex;align-items:center;gap:12px;
+  padding:0 22px;height:54px;flex:none}
+.marca{font:700 19px Raleway,sans-serif}
+.marca i{font-style:normal;color:var(--claro)}
+.taller{color:#7e97a8;font-size:13px;padding-left:14px;border-left:1px solid rgba(255,255,255,.14)}
+.yo{margin-left:auto;font-size:13px;color:#cfdde6}
+.lienzo{flex:1;overflow:auto;padding:26px 20px 40px}
+.env{max-width:860px;margin:0 auto}
+
+/* la puerta */
+.puerta{max-width:390px;margin:6vh auto 0;background:#fff;border-radius:13px;padding:28px 26px;
+  box-shadow:0 3px 14px rgba(18,39,51,.1);text-align:center}
+.puerta h1{font:700 21px Raleway,sans-serif;margin-bottom:7px}
+.puerta p{color:var(--gris);font-size:13.5px;line-height:1.55;margin-bottom:19px}
+.puerta .correo{background:#f4f7f9;border-radius:8px;padding:11px 14px;font-size:13.5px;
+  color:var(--tinta);margin-bottom:14px}
+.pines{display:flex;gap:8px;justify-content:center;margin-bottom:17px}
+.pin{width:42px;height:52px;border:1px solid var(--linea);border-radius:9px;text-align:center;
+  font:400 21px Cifras,Raleway,sans-serif;color:var(--tinta);background:#fff}
+.pin:focus{outline:2px solid #cfe6f5;border-color:var(--azul)}
+.btn{border:1px solid var(--linea);background:#fff;border-radius:9px;padding:12px 18px;
+  font:600 13.5px Raleway,sans-serif;color:var(--tinta);cursor:pointer}
+.btn.lleno{background:var(--azul);border-color:var(--azul);color:#fff;width:100%}
+.btn.lleno:hover{background:#0092dc}
+.btn[disabled]{background:#a9c9dd;border-color:#a9c9dd;color:#fff;cursor:default}
+
+h1.tit{font:700 25px Raleway,sans-serif;margin-bottom:5px}
+.bajo{color:var(--gris);font-size:13.5px;margin-bottom:20px}
+.cifras{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:15px}
+.cifra{background:#fff;border-radius:11px;padding:17px 19px;box-shadow:0 1px 2px rgba(18,39,51,.07)}
+.cifra span{display:block;font-size:12px;color:var(--gris);margin-bottom:5px}
+.cifra b{font:400 25px Cifras,Raleway,sans-serif;display:block}
+.cifra b.azul{color:var(--azul-texto)}
+.tarjeta{background:#fff;border-radius:11px;padding:18px 20px;margin-bottom:13px;
+  box-shadow:0 1px 2px rgba(18,39,51,.07)}
+.tarjeta h2{font:700 15px Raleway,sans-serif;margin-bottom:11px}
+.medidor{height:11px;background:#e9eef2;border-radius:6px;overflow:hidden;margin:9px 0 7px}
+.medidor i{display:block;height:100%;background:var(--azul);transition:width .4s}
+
+.proy{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #f2f6f8;
+  cursor:pointer;flex-wrap:wrap}
+.proy:last-child{border-bottom:0}
+.proy:hover{background:#f9fcfd}
+.proy .q{flex:1;min-width:160px}
+.proy .q b{display:block;font:600 14px Raleway,sans-serif}
+.proy .q small{color:var(--gris);font-size:12.5px}
+.proy .lana{font:400 16px Cifras,Raleway,sans-serif;white-space:nowrap}
+.proy .flecha{color:var(--gris)}
+
+.etapas{display:flex;gap:4px;margin:9px 0 5px}
+.etapas i{flex:1;height:7px;border-radius:3px;background:#e4eaee}
+.etapas i.hecha{background:var(--azul)}
+.etapas i.ahora{background:var(--acento)}
+.etapatxt{font-size:12px;color:var(--gris)}
+.etapatxt b{color:var(--tinta);font-weight:600}
+.mueble{padding:13px 0;border-bottom:1px solid #f2f6f8}
+.mueble:last-child{border-bottom:0}
+.mueble .cab{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.mueble .cab b{font:600 14px Raleway,sans-serif}
+.mueble .cab .lana{margin-left:auto;font:400 14px Cifras,Raleway,sans-serif;white-space:nowrap}
+.regresa{background:none;border:0;color:var(--gris);font:400 13px Raleway,sans-serif;
+  cursor:pointer;padding:0;margin-bottom:10px}
+.regresa:hover{color:var(--azul-texto)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font:600 11.5px Raleway,sans-serif;color:var(--gris);padding:9px 8px;
+  border-bottom:1px solid var(--linea)}
+th.der,td.der{text-align:right}
+td{padding:11px 8px;border-bottom:1px solid #f2f6f8}
+tbody tr:last-child td{border-bottom:0}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.solo{background:#eef4f8;border-radius:9px;padding:12px 15px;font-size:12.5px;color:#44606f;
+  line-height:1.55;margin-top:14px}
+
+@media(max-width:700px){
+  .cifras{grid-template-columns:1fr}
+  .lienzo{padding:18px 13px 30px}
+  .taller{display:none}
+  h1.tit{font-size:21px}
+}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Cliente de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/peek101.html">Conocer peek101</a>
+</div>
+
+<div class="todo">
+  <header class="barra">
+    <div class="marca">peek<i>101</i></div>
+    <div class="taller">Muebles Bravo</div>
+    <div class="yo" id="yo"></div>
+  </header>
+  <div class="lienzo"><div class="env" id="env"></div></div>
+</div>
+
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pesos = n => '$' + Math.round(n).toLocaleString('es-MX');
+
+const ETAPAS = ['Diseño autorizado','Anticipo','Materiales','Ensamble','Entrega',
+                'Instalación','Cierre'];
+
+const CLIENTE = {nombre:'Sofía Reyes', correo:'sofia.reyes@ejemplo.mx'};
+
+const PROYECTOS = [
+  {id:'P1', n:'Cocina integral · Casa Poniente', monto:420000, pagado:310000,
+   muebles:[
+     {n:'Módulo base izquierdo', monto:139872, etapa:6},
+     {n:'Módulo base derecho',   monto:113800, etapa:5},
+     {n:'Alacena despensero',    monto:84200,  etapa:4},
+     {n:'Cubierta de cuarzo',    monto:82128,  etapa:3}]},
+  {id:'P2', n:'Área de TV · Casa Poniente', monto:124800, pagado:62400,
+   muebles:[
+     {n:'Mueble de TV con nicho', monto:78000, etapa:3},
+     {n:'Librero lateral',        monto:46800, etapa:2}]}
+];
+
+const PAGOS = [
+  {f:'12 ago 2026', ref:'SPEI 4471', monto:168000, p:'Cocina integral · Casa Poniente'},
+  {f:'04 sep 2026', ref:'SPEI 5520', monto:142000, p:'Cocina integral · Casa Poniente'},
+  {f:'18 sep 2026', ref:'SPEI 6013', monto:62400,  p:'Área de TV · Casa Poniente'}
+];
+
+let dentro = false, abierto = null, pin = '';
+
+const totalMonto = () => PROYECTOS.reduce((a, p) => a + p.monto, 0);
+const totalPagado = () => PROYECTOS.reduce((a, p) => a + p.pagado, 0);
+
+function vPuerta() {
+  return '<div class="puerta">' +
+    '<h1>Tu proyecto, al día</h1>' +
+    '<p>Entra con tu correo y el PIN de seis dígitos que te mandamos. ' +
+      'Sin instalar nada y sin registrarte.</p>' +
+    '<div class="correo">' + esc(CLIENTE.correo) + '</div>' +
+    '<div class="pines">' +
+      [0,1,2,3,4,5].map(i => '<input class="pin" id="p' + i + '" maxlength="1" ' +
+        'inputmode="numeric" aria-label="Dígito ' + (i + 1) + ' del PIN">').join('') +
+    '</div>' +
+    '<button class="btn lleno" id="entrar" disabled>Entrar</button>' +
+    '<p style="margin:15px 0 0;font-size:12px">En la demostración cualquier PIN de seis ' +
+      'dígitos sirve. En la app de verdad llega por correo.</p>' +
+  '</div>';
+}
+
+function vCuenta() {
+  const falta = totalMonto() - totalPagado();
+  const pct = Math.round(totalPagado() / totalMonto() * 100);
+  const lista = PROYECTOS.map(p => {
+    const pp = Math.round(p.pagado / p.monto * 100);
+    return '<div class="proy" data-p="' + p.id + '" role="button" tabindex="0">' +
+      '<div class="q"><b>' + esc(p.n) + '</b>' +
+        '<small>' + p.muebles.length + ' muebles · ' + pp + ' % cubierto</small></div>' +
+      '<span class="lana">' + pesos(p.monto) + '</span>' +
+      '<span class="flecha">›</span></div>';
+  }).join('');
+
+  return '<h1 class="tit">Hola, ' + esc(CLIENTE.nombre.split(' ')[0]) + '</h1>' +
+    '<p class="bajo">Esto es lo que Muebles Bravo te está fabricando. Corte al 9 de octubre.</p>' +
+    '<div class="cifras">' +
+      '<div class="cifra"><span>Total en proceso</span><b>' + pesos(totalMonto()) + '</b></div>' +
+      '<div class="cifra"><span>Total pagado</span><b class="azul">' + pesos(totalPagado()) + '</b></div>' +
+      '<div class="cifra"><span>Saldo pendiente</span><b>' + pesos(falta) + '</b></div>' +
+    '</div>' +
+    '<div class="tarjeta"><h2>Avance del pago</h2>' +
+      '<div class="medidor"><i style="width:' + pct + '%"></i></div>' +
+      '<p class="etapatxt">Llevas cubierto el <b>' + pct + ' %</b> de todo lo que tienes ' +
+        'en proceso.</p></div>' +
+    '<div class="tarjeta"><h2>Tus proyectos</h2>' + lista + '</div>' +
+    '<div class="tarjeta"><h2>Pagos recibidos</h2>' +
+      '<table><thead><tr><th>Fecha</th><th>Referencia</th>' +
+        '<th class="der">Monto</th></tr></thead><tbody>' +
+        PAGOS.map(g => '<tr><td>' + esc(g.f) + '</td><td class="num">' + esc(g.ref) + '</td>' +
+          '<td class="der num">' + pesos(g.monto) + '</td></tr>').join('') +
+        '</tbody></table></div>' +
+    '<div class="solo">Aquí ves tus muebles y tus pagos. Nunca vas a ver a qué proveedor ' +
+      'le compró el taller, a cuánto, ni cuánto gana. Esto es sólo de lectura: ' +
+      'para pedir un cambio, háblale a tu contacto en el taller.</div>';
+}
+
+function vProyecto() {
+  const p = PROYECTOS.find(x => x.id === abierto);
+  const falta = p.monto - p.pagado;
+  const pct = Math.round(p.pagado / p.monto * 100);
+  const ms = p.muebles.map(m =>
+    '<div class="mueble"><div class="cab"><b>' + esc(m.n) + '</b>' +
+      '<span class="lana">' + pesos(m.monto) + '</span></div>' +
+      '<div class="etapas">' + ETAPAS.map((e, i) =>
+        '<i class="' + (i < m.etapa - 1 ? 'hecha' : i === m.etapa - 1 ? 'ahora' : '') +
+        '" title="' + esc(e) + '"></i>').join('') + '</div>' +
+      '<p class="etapatxt">Va en <b>' + esc(ETAPAS[m.etapa - 1]) + '</b> · ' +
+        (m.etapa) + ' de ' + ETAPAS.length + '</p></div>').join('');
+
+  return '<button class="regresa" id="regresa">← Tu estado de cuenta</button>' +
+    '<h1 class="tit">' + esc(p.n) + '</h1>' +
+    '<p class="bajo">' + p.muebles.length + ' muebles · entrega acordada en noviembre</p>' +
+    '<div class="cifras">' +
+      '<div class="cifra"><span>Monto del proyecto</span><b>' + pesos(p.monto) + '</b></div>' +
+      '<div class="cifra"><span>Pagado</span><b class="azul">' + pesos(p.pagado) + '</b></div>' +
+      '<div class="cifra"><span>Resta</span><b>' + pesos(falta) + '</b></div>' +
+    '</div>' +
+    '<div class="tarjeta"><h2>Avance del pago</h2>' +
+      '<div class="medidor"><i style="width:' + pct + '%"></i></div>' +
+      '<p class="etapatxt">' + pct + ' % cubierto</p></div>' +
+    '<div class="tarjeta"><h2>Tus muebles, uno por uno</h2>' + ms +
+      '<p class="etapatxt" style="margin-top:13px">Las siete etapas son las mismas para ' +
+        'todos: ' + ETAPAS.join(' · ') + '.</p></div>';
+}
+
+function pintar() {
+  $('#env').innerHTML = !dentro ? vPuerta() : abierto ? vProyecto() : vCuenta();
+  $('#yo').textContent = dentro ? CLIENTE.nombre : '';
+  amarrar();
+  if (window.guia) guia.remarcar();
+}
+
+function amarrar() {
+  const cajas = [0,1,2,3,4,5].map(i => $('#p' + i)).filter(Boolean);
+  cajas.forEach((c, i) => {
+    c.oninput = () => {
+      c.value = c.value.replace(/\D/g, '').slice(0, 1);
+      if (c.value && cajas[i + 1]) cajas[i + 1].focus();
+      pin = cajas.map(x => x.value).join('');
+      $('#entrar').disabled = pin.length < 6;
+    };
+    c.onkeydown = e => {
+      if (e.key === 'Backspace' && !c.value && cajas[i - 1]) cajas[i - 1].focus();
+    };
+  });
+
+  const e = $('#entrar');
+  if (e) e.onclick = () => {
+    dentro = true; pintar();
+    avisar('Dentro. En la app de verdad el PIN llega por correo.');
+    document.dispatchEvent(new Event('demo:entrar'));
+  };
+
+  document.querySelectorAll('[data-p]').forEach(d => {
+    const abre = () => {
+      abierto = d.dataset.p; pintar();
+      document.dispatchEvent(new CustomEvent('demo:abrir', {detail:abierto}));
+    };
+    d.onclick = abre;
+    d.onkeydown = ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); abre(); } };
+  });
+
+  const v = $('#regresa');
+  if (v) v.onclick = () => { abierto = null; pintar();
+    document.dispatchEvent(new Event('demo:volver')); };
+}
+
+/* ---------------- la guía ---------------- */
+window.DEMO_APP = '/app/peek101.html';
+window.DEMO_NOMBRE = 'peek101';
+window.GUIA = [
+  {t:'Así entra el cliente: su correo y un <b>PIN de seis dígitos</b>. Sin instalar nada, ' +
+     'sin registrarse y sin otra contraseña que recordar. Teclea seis números cualesquiera.',
+   marca:'#p0', espera:'demo:entrar'},
+  {t:'Esto es todo lo que ve: cuánto tiene en proceso, cuánto lleva pagado y cuánto debe. ' +
+     'Abre uno de sus <b>proyectos</b>.',
+   marca:'[data-p="P1"]', espera:'demo:abrir'},
+  {t:'Cada mueble con su etapa, de diseño autorizado a cierre. Es la respuesta a ' +
+     '«¿cómo va lo mío?», a cualquier hora y sin que nadie del taller conteste el teléfono. ' +
+     '<b>Regresa</b>.',
+   marca:'#regresa', espera:'demo:volver'},
+  {t:'Abajo están los <b>pagos recibidos</b>, con su fecha y su referencia. No hay ' +
+     'discusión sobre lo que se abonó. Dale «Siguiente» cuando los veas.',
+   boton:'Siguiente'},
+  {t:'Eso es peek101: el cliente ve lo suyo y nada más lo suyo —nunca proveedores, ' +
+     'nunca márgenes—, y del lado del taller no hay trabajo extra: son los datos que ' +
+     'dash101 ya tiene.',
+   fin:true}
+];
+</script>
+<script src="../guia.js"></script>
+<script>pintar();</script>
