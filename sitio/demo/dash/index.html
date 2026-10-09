@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de dash101 — Suite 101</title>
+<meta name="description" content="Pruebe dash101 con un taller de ejemplo: el tablero, el flujo a 52 semanas y el margen de cada proyecto.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../demo.css">
+<style>
+body{background:#f4f7f9}
+.todo{height:calc(100% - var(--demo));display:flex}
+.flanco{width:210px;background:#0f2231;color:#cfdde6;flex:none;display:flex;flex-direction:column;
+  overflow:auto}
+.flanco .marca{font:700 21px Raleway,sans-serif;color:#fff;padding:20px 22px 16px}
+.flanco .marca i{font-style:normal;color:var(--claro)}
+.flanco button{display:block;width:100%;text-align:left;background:none;border:0;
+  color:#9fb6c5;font:400 14px Raleway,sans-serif;padding:11px 22px;cursor:pointer}
+.flanco button:hover{color:#fff;background:rgba(255,255,255,.06)}
+.flanco button[aria-selected=true]{background:var(--azul);color:#fff;font-weight:600}
+
+.cuerpo{flex:1;display:flex;flex-direction:column;min-width:0}
+.tope{background:#fff;border-bottom:1px solid var(--linea);display:flex;align-items:center;
+  gap:14px;padding:16px 24px;flex:none}
+.tope h1{font:700 19px Raleway,sans-serif}
+.tope .corte{margin-left:auto;color:var(--gris);font-size:12.5px;white-space:nowrap}
+.lienzo{flex:1;overflow:auto;padding:20px 24px 40px}
+
+.cifras{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.cifra{background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 1px 2px rgba(18,39,51,.07)}
+.cifra span{display:block;font:600 10.5px Raleway,sans-serif;letter-spacing:.09em;
+  color:var(--gris);margin-bottom:6px}
+.cifra b{font:400 25px Cifras,Raleway,sans-serif;display:block;transition:color .3s}
+.cifra b.azul{color:var(--azul-texto)}
+.cifra b.rojo{color:#b4451f}
+.cifra b.cambio{color:#1d7a3f}
+
+.dos{display:grid;grid-template-columns:1fr 470px;gap:14px;align-items:start}
+.tarjeta{background:#fff;border-radius:10px;padding:18px 20px;box-shadow:0 1px 2px rgba(18,39,51,.07)}
+.tarjeta h2{font:700 15px Raleway,sans-serif;margin-bottom:3px}
+.tarjeta .bajo{color:var(--gris);font-size:12.5px;margin-bottom:14px}
+#flujo{width:100%;height:280px;display:block}
+.leyenda{display:flex;gap:17px;font-size:12px;color:var(--gris);margin-top:9px}
+.leyenda i{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:6px}
+.alerta{background:#fdf3e8;border-radius:8px;padding:11px 14px;font-size:12.5px;
+  color:#8a5a22;margin-top:13px;line-height:1.5}
+.alerta.bien{background:#eaf5ec;color:#2f6238}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font:600 10.5px Raleway,sans-serif;letter-spacing:.07em;color:var(--gris);
+  padding:10px 8px;border-bottom:1px solid var(--linea);white-space:nowrap}
+th.der,td.der{text-align:right}
+td{padding:11px 8px;border-bottom:1px solid #f2f6f8;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tr.pica{cursor:pointer}
+tr.pica:hover{background:#f6fafc}
+.num{font-variant-numeric:tabular-nums}
+.marg{display:inline-block;border-radius:20px;padding:3px 9px;font:600 11px Raleway,sans-serif}
+.marg.alto{background:#e7f4ea;color:#2f6238}
+.marg.medio{background:#e8f1fb;color:#1c5b8f}
+.marg.bajo{background:#fdf0e3;color:#96561c}
+
+.forma{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;align-items:end}
+.forma label{font-size:12px;color:var(--gris);display:block;margin-bottom:5px}
+.forma input,.forma select{width:100%;border:1px solid var(--linea);border-radius:8px;
+  padding:9px 11px;font:400 13px Raleway,sans-serif;color:var(--tinta);background:#fff}
+.forma input:focus,.forma select:focus{outline:2px solid #cfe6f5;border-color:var(--azul)}
+.btn{border:1px solid var(--linea);background:#fff;border-radius:8px;padding:10px 16px;
+  font:600 13px Raleway,sans-serif;color:var(--tinta);cursor:pointer}
+.btn.lleno{background:var(--azul);border-color:var(--azul);color:#fff}
+.btn.lleno:hover{background:#0092dc}
+.regresa{background:none;border:0;color:var(--gris);font:400 13px Raleway,sans-serif;
+  cursor:pointer;padding:0;margin-bottom:9px}
+.regresa:hover{color:var(--azul-texto)}
+.deriva div{display:flex;padding:8px 0;border-bottom:1px solid #f2f6f8;font-size:13px;
+  color:var(--gris)}
+.deriva div span{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--tinta)}
+.deriva div.fin{border-bottom:0;font-weight:600;color:var(--tinta)}
+
+@media(max-width:1150px){.dos{grid-template-columns:1fr}.cifras{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){
+  .flanco{position:fixed;left:-210px;top:0;bottom:0;z-index:9}
+  .todo{display:block}
+  .cuerpo{height:100%}
+  .cifras{grid-template-columns:1fr}
+  .forma{grid-template-columns:1fr 1fr}
+  .lienzo{padding:15px 13px 30px}
+  .tope{padding:13px 14px}
+  .tope h1{font-size:16px}
+  .corte{display:none}
+  .ocultar{display:none}
+}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Taller de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/dash101.html">Conocer dash101</a>
+</div>
+
+<div class="todo">
+  <aside class="flanco">
+    <div class="marca">dash<i>101</i></div>
+    <button data-v="tablero" aria-selected="true">Tablero</button>
+    <button data-v="movimientos" aria-selected="false">Movimientos</button>
+    <button data-v="fijos" aria-selected="false">Gastos fijos</button>
+  </aside>
+  <div class="cuerpo">
+    <div class="tope"><h1 id="titulo">Muebles Bravo · Tablero</h1>
+      <span class="corte">Corte al 9 de octubre · 3 usuarios</span></div>
+    <div class="lienzo" id="lienzo"></div>
+  </div>
+</div>
+
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pesos = n => (n < 0 ? '−$' : '$') + Math.abs(Math.round(n)).toLocaleString('es-MX');
+
+const PROYECTOS = [
+  {c:'Cocina Reyes',     venta:420000, cobrado:310000, pagado:168000},
+  {c:'Clóset Peralta',   venta:185000, cobrado:185000, pagado:98400},
+  {c:'Oficinas Lomas',   venta:960000, cobrado:480000, pagado:612000},
+  {c:'Recámara Nava',    venta:240000, cobrado:120000, pagado:88000},
+  {c:'Barra Coyoacán',   venta:315000, cobrado:94500,  pagado:142000},
+  {c:'Cocina Santa Fe',  venta:680000, cobrado:340000, pagado:401000},
+  {c:'Vestidor Del Valle',venta:295000,cobrado:295000, pagado:181000},
+  {c:'Librero Condesa',  venta:210000, cobrado:105000, pagado:119000}
+];
+
+let FIJOS = [{c:'Nómina', monto:96000, cada:'semana'},
+             {c:'Renta del taller', monto:48000, cada:'mes'},
+             {c:'Luz y servicios', monto:14000, cada:'mes'}];
+
+let banco = 486300;
+const MOVS = [];
+let vista = 'tablero', abierto = null, movio = false;
+
+const margen = p => p.venta ? (p.venta - p.pagado / (p.cobrado / p.venta || 1)) / p.venta : 0;
+const margenSimple = p => (p.venta - p.pagado) / p.venta;
+const porCobrar = () => PROYECTOS.reduce((a, p) => a + (p.venta - p.cobrado), 0);
+const comprometido = () => PROYECTOS.reduce((a, p) => a + p.pagado, 0);
+
+/* El flujo a 52 semanas. Lo que entra son dos cosas: la venta nueva que el
+   taller levanta cada semana y la cobranza de lo que ya está vendido, que no
+   llega pareja —se junta a mitad del año, cuando se entregan las obras
+   grandes—. Lo que sale es la nómina cada semana y los gastos del mes.
+   De ahí sale el hueco: hay un tramo donde todavía no cobra y ya está pagando. */
+const NUEVAS = 70000;
+function forma(s) { return s <= 16 ? 0.30 : s <= 36 ? 2.90 : 0.90; }
+
+function flujo() {
+  const semanal = FIJOS.filter(f => f.cada === 'semana').reduce((a, f) => a + f.monto, 0);
+  const mensual = FIJOS.filter(f => f.cada === 'mes').reduce((a, f) => a + f.monto, 0);
+  const drip = porCobrar() / 52;
+  let saldo = banco;
+  const r = [];
+  for (let s = 1; s <= 52; s++) {
+    const entra = NUEVAS + drip * forma(s);
+    const sale = semanal + (s % 4 === 1 ? mensual : 0);
+    saldo += entra - sale;
+    r.push({s, entra, sale, saldo});
+  }
+  return r;
+}
+
+function vTablero() {
+  const f = flujo();
+  const minimo = f.reduce((a, x) => Math.min(a, x.saldo), banco);
+  const bache = f.filter(x => x.s <= 40).reduce((a, x) => Math.min(a, x.saldo), banco);
+  const cruza = f.find(x => x.saldo < 0);
+  const max = Math.max.apply(null, f.map(x => Math.max(x.entra, x.sale)));
+  const W = 1000, H = 250, ancho = W / f.length;
+
+  const barras = f.map((x, i) => {
+    const bx = i * ancho + 1.6, w = Math.max(2, ancho - 3.2);
+    const he = x.entra / max * (H - 20), hs = x.sale / max * (H - 20);
+    return '<rect x="' + bx + '" y="' + (H - he) + '" width="' + w + '" height="' + he +
+             '" fill="#0d82c4" rx="1.5"/>' +
+           '<rect x="' + bx + '" y="' + (H - hs) + '" width="' + w + '" height="' + hs +
+             '" fill="#f6d0c5" rx="1.5"/>' +
+           (cruza && x.s === cruza.s
+             ? '<rect x="' + bx + '" y="0" width="' + w + '" height="' + H +
+               '" fill="#b4451f" opacity=".12"/>' : '');
+  }).join('');
+
+  const reng = PROYECTOS.map((p, i) => {
+    const m = margenSimple(p);
+    const cl = m >= .24 ? 'alto' : m >= .17 ? 'medio' : 'bajo';
+    return '<tr class="pica" data-p="' + i + '">' +
+      '<td>' + esc(p.c) + '</td>' +
+      '<td class="der num ocultar">' + pesos(p.venta) + '</td>' +
+      '<td class="der num">' + pesos(p.cobrado) + '</td>' +
+      '<td class="der num ocultar">' + pesos(p.pagado) + '</td>' +
+      '<td class="der"><span class="marg ' + cl + '">' + Math.round(m * 100) + ' %</span></td>' +
+      '</tr>';
+  }).join('');
+
+  return '<div class="cifras">' +
+      '<div class="cifra"><span>EN BANCOS Y CAJA</span><b id="c-banco"' +
+        (movio ? ' class="cambio"' : '') + '>' + pesos(banco) + '</b></div>' +
+      '<div class="cifra"><span>POR COBRAR</span><b class="azul">' + pesos(porCobrar()) + '</b></div>' +
+      '<div class="cifra"><span>COMPROMETIDO</span><b>' + pesos(comprometido()) + '</b></div>' +
+      '<div class="cifra"><span>SALDO MÍNIMO PREVISTO</span><b id="c-min" class="' +
+        (bache < 0 ? 'rojo' : '') + '">' + pesos(bache) + '</b></div>' +
+    '</div>' +
+    '<div class="dos">' +
+      '<div class="tarjeta"><h2>Flujo a 52 semanas</h2>' +
+        '<p class="bajo">Lo que entra y lo que sale, con los gastos fijos ya contados.</p>' +
+        '<svg id="flujo" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">' +
+          barras + '</svg>' +
+        '<div class="leyenda"><span><i style="background:#0d82c4"></i>Entradas</span>' +
+          '<span><i style="background:#f6d0c5"></i>Salidas</span></div>' +
+        (cruza
+          ? '<div class="alerta" id="alerta">El saldo cruza el cero en la <b>semana ' + cruza.s +
+            '</b>. Faltan ' + pesos(Math.abs(bache)) + '. Hay tiempo para moverle.</div>'
+          : '<div class="alerta bien" id="alerta">El saldo no cruza el cero en las 52 semanas ' +
+            'que vienen. El mínimo previsto es ' + pesos(minimo) + '.</div>') +
+      '</div>' +
+      '<div class="tarjeta" style="padding:8px 12px"><table><thead><tr>' +
+        '<th>PROYECTO</th><th class="der ocultar">VENTA</th><th class="der">COBRADO</th>' +
+        '<th class="der ocultar">PAGADO</th><th class="der">MARGEN</th>' +
+        '</tr></thead><tbody>' + reng + '</tbody></table></div>' +
+    '</div>';
+}
+
+function vMovimientos() {
+  const reng = MOVS.length
+    ? MOVS.map(m => '<tr><td>' + esc(m.fecha) + '</td><td>' + esc(m.concepto) + '</td>' +
+        '<td>' + esc(m.proyecto) + '</td><td class="der num">' + pesos(m.monto) + '</td>' +
+        '<td><span class="marg alto">Ingreso</span></td></tr>').join('')
+    : '<tr><td colspan="5" style="color:var(--gris);padding:18px 8px">Todavía no capturas nada ' +
+      'en esta demostración.</td></tr>';
+  return '<div class="tarjeta"><h2>Capturar un movimiento</h2>' +
+      '<p class="bajo">Cinco campos. Si el proyecto, el cliente o el proveedor no existen, ' +
+        'se crean sin salir de aquí.</p>' +
+      '<div class="forma">' +
+        '<div><label>Concepto</label><input id="m-con" value="Segundo anticipo"></div>' +
+        '<div><label>Proyecto</label><select id="m-pro">' +
+          PROYECTOS.map((p, i) => '<option value="' + i + '">' + esc(p.c) + '</option>').join('') +
+          '</select></div>' +
+        '<div><label>Cuenta</label><select><option>BBVA · operación</option>' +
+          '<option>Caja chica</option></select></div>' +
+        '<div><label>Monto</label><input id="m-monto" value="240000" inputmode="numeric"></div>' +
+        '<div><button class="btn lleno" id="guardar" style="width:100%">Guardar ingreso</button></div>' +
+      '</div></div>' +
+    '<div class="tarjeta" style="padding:8px 12px;margin-top:14px"><table><thead><tr>' +
+      '<th>FECHA</th><th>CONCEPTO</th><th>PROYECTO</th><th class="der">MONTO</th><th>TIPO</th>' +
+      '</tr></thead><tbody>' + reng + '</tbody></table></div>';
+}
+
+function vProyecto() {
+  const p = PROYECTOS[abierto];
+  const m = margenSimple(p);
+  return '<button class="regresa" id="regresa">← Tablero</button>' +
+    '<div class="tarjeta"><h2>' + esc(p.c) + '</h2>' +
+      '<p class="bajo">Cada peso que entró y que salió está amarrado a este proyecto, ' +
+        'así que el margen no se saca a fin de mes: está a la vista.</p>' +
+      '<div class="deriva">' +
+        '<div>Precio de venta <span>' + pesos(p.venta) + '</span></div>' +
+        '<div>Cobrado <span>' + pesos(p.cobrado) + '</span></div>' +
+        '<div>Falta por cobrar <span>' + pesos(p.venta - p.cobrado) + '</span></div>' +
+        '<div>Pagado a proveedores <span>− ' + pesos(p.pagado) + '</span></div>' +
+        '<div class="fin">Margen <span>' + pesos(p.venta - p.pagado) + ' · ' +
+          Math.round(m * 100) + ' %</span></div>' +
+      '</div></div>';
+}
+
+function vFijos() {
+  return '<div class="tarjeta"><h2>Gastos fijos</h2>' +
+    '<p class="bajo">Renta, nómina y servicios. Son los que alimentan la proyección: ' +
+      'si suben, la semana del cero se adelanta.</p>' +
+    '<table><thead><tr><th>CONCEPTO</th><th>CADA</th><th class="der">MONTO</th></tr></thead>' +
+    '<tbody>' + FIJOS.map((f, i) =>
+      '<tr><td>' + esc(f.c) + '</td><td class="ocultar">' + f.cada + '</td>' +
+      '<td class="der"><input class="cel" data-fijo="' + i + '" value="' + f.monto +
+        '" inputmode="numeric" aria-label="Monto de ' + esc(f.c) + '" ' +
+        'style="width:110px;border:1px solid var(--linea);border-radius:8px;padding:8px 11px;' +
+        'text-align:right;font:400 13px Cifras,Raleway,sans-serif"></td></tr>').join('') +
+    '</tbody></table></div>';
+}
+
+function pintar() {
+  $('#lienzo').innerHTML = vista === 'tablero' ? vTablero()
+                         : vista === 'movimientos' ? vMovimientos()
+                         : vista === 'proyecto' ? vProyecto() : vFijos();
+  $('#titulo').textContent = 'Muebles Bravo · ' +
+    (vista === 'tablero' ? 'Tablero' : vista === 'movimientos' ? 'Movimientos'
+     : vista === 'proyecto' ? 'Proyecto' : 'Gastos fijos');
+  document.querySelectorAll('.flanco button').forEach(b =>
+    b.setAttribute('aria-selected', String(b.dataset.v === vista)));
+  amarrar();
+  if (window.guia) guia.remarcar();
+}
+
+function amarrar() {
+  document.querySelectorAll('.flanco button').forEach(b =>
+    b.onclick = () => { vista = b.dataset.v; pintar(); });
+
+  const g = $('#guardar');
+  if (g) g.onclick = () => {
+    const i = +$('#m-pro').value, monto = parseFloat($('#m-monto').value);
+    if (!isFinite(monto) || monto <= 0) return;
+    const p = PROYECTOS[i];
+    p.cobrado = Math.min(p.venta, p.cobrado + monto);
+    banco += monto;
+    MOVS.unshift({fecha:'9 oct 2026', concepto:$('#m-con').value || 'Ingreso',
+                  proyecto:p.c, monto});
+    movio = true;
+    vista = 'tablero'; pintar();
+    avisar('Ingreso capturado. Saldos, margen y flujo recalculados.');
+    document.dispatchEvent(new Event('demo:movimiento'));
+  };
+
+  document.querySelectorAll('tr.pica').forEach(t => t.onclick = () => {
+    abierto = +t.dataset.p; vista = 'proyecto'; pintar();
+    document.dispatchEvent(new CustomEvent('demo:abrir', {detail:PROYECTOS[abierto].c}));
+  });
+
+  const vol = $('#regresa');
+  if (vol) vol.onclick = () => { vista = 'tablero'; pintar(); };
+
+  document.querySelectorAll('[data-fijo]').forEach(inp => inp.oninput = () => {
+    const v = parseFloat(inp.value);
+    if (!isFinite(v) || v < 0) return;
+    FIJOS[+inp.dataset.fijo].monto = v;
+    document.dispatchEvent(new Event('demo:fijo'));
+  });
+}
+
+/* ---------------- la guía ---------------- */
+window.DEMO_APP = '/app/dash101.html';
+window.DEMO_NOMBRE = 'dash101';
+window.GUIA = [
+  {t:'El tablero dice cuánto hay, cuánto falta cobrar y —lo que importa— ' +
+     '<b>en qué semana el saldo cruza el cero</b>. Ve a <b>Movimientos</b> a capturar un cobro.',
+   marca:'.flanco [data-v="movimientos"]', espera:'demo:movimiento'},
+  {t:'Un movimiento son cinco campos, y se amarra a un proyecto. Por eso los saldos, ' +
+     'el margen de ese proyecto y el flujo se movieron solos. ' +
+     'Abre ahora el proyecto que <b>parpadea</b>.',
+   marca:'tr[data-p="2"]', espera:'demo:abrir', boton:null},
+  {t:'Aquí se ve de qué se forma su margen: lo vendido, lo cobrado y lo que ya se le pagó ' +
+     'a proveedores. <b>Regresa</b> al tablero.',
+   marca:'#regresa', espera:'demo:tablero'},
+  {t:'Último: ve a <b>Gastos fijos</b> y súbele a la nómina. El aviso del cero, abajo de la ' +
+     'gráfica, se recorre solo.',
+   marca:'.flanco [data-v="fijos"]', espera:'demo:fijo'},
+  {t:'Eso es dash101: no dice nada más cuánto hay hoy, dice cuánto va a haber, ' +
+     'con tiempo para moverle.',
+   fin:true}
+];
+</script>
+<script src="../guia.js"></script>
+<script>
+pintar();
+// El tercer paso se cierra al regresar al tablero.
+document.addEventListener('click', e => {
+  if (e.target && e.target.id === 'regresa') document.dispatchEvent(new Event('demo:tablero'));
+});
+</script>
