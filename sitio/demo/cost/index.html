@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de cost101 — Suite 101</title>
+<meta name="description" content="Pruebe cost101 con un catálogo de ejemplo: el generador de partidas, los precios base y el recálculo en cadena.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../demo.css">
+<style>
+/* cost101 es oscura. Los colores salen de sus capturas. */
+body{background:#0b2437;color:#e8f1f7}
+.fondo{position:fixed;inset:0;z-index:0;
+  background:radial-gradient(1200px 600px at 50% -10%,#15415f 0%,#0b2437 60%)}
+.todo{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
+
+.barra{display:flex;align-items:center;gap:26px;padding:13px 22px;flex:none}
+.sello{width:30px;height:30px;border-radius:7px;background:var(--azul);display:grid;
+  place-items:center;font:700 9px Raleway,sans-serif;color:#fff;flex:none}
+.nom{font:700 19px Raleway,sans-serif;letter-spacing:-.01em}
+.nom i{font-style:normal;color:var(--claro)}
+.sub{font:400 10px Raleway,sans-serif;color:#7c9bb0;letter-spacing:.11em}
+.nav{display:flex;gap:6px;margin-left:14px}
+.nav button{background:none;border:0;color:#9fbccd;font:600 12px Raleway,sans-serif;
+  letter-spacing:.07em;padding:8px 15px;border-radius:7px;cursor:pointer}
+.nav button:hover{color:#fff}
+.nav button[aria-selected=true]{background:rgba(255,255,255,.12);color:#fff}
+.quien{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:12px;color:#7c9bb0}
+.quien b{color:#e8f1f7;font-weight:600}
+
+.lienzo{flex:1;overflow:auto;padding:4px 22px 26px}
+.titulillo{font:600 10px Raleway,sans-serif;letter-spacing:.13em;color:#7c9bb0;margin-bottom:7px}
+h1{font:400 33px Raleway,sans-serif;letter-spacing:-.02em;line-height:1.14;margin-bottom:5px}
+h1 i{font-style:normal;color:var(--claro)}
+.bajo{color:#8fb0c4;font-size:13px;margin-bottom:18px}
+
+.panel{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;overflow:hidden}
+.dos{display:grid;grid-template-columns:1fr 390px;gap:18px;align-items:start}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font:600 10px Raleway,sans-serif;letter-spacing:.08em;color:#7c9bb0;text-align:left;
+  padding:13px 14px;border-bottom:1px solid rgba(255,255,255,.08);white-space:nowrap}
+th.der,td.der{text-align:right}
+td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.055);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr.pica{cursor:pointer}
+tbody tr.pica:hover{background:rgba(255,255,255,.05)}
+.clave{color:var(--claro);font-size:12px;white-space:nowrap}
+.desc b{font-weight:400;display:block}
+.desc small{color:#7c9bb0;font-size:11.5px}
+.lana{font-variant-numeric:tabular-nums;white-space:nowrap}
+.sube{color:#ffc46b}
+.marca{display:inline-block;font:600 11px Raleway,sans-serif;padding:3px 10px;border-radius:20px;
+  border:1px solid rgba(255,255,255,.2);color:#9fbccd;white-space:nowrap}
+.marca.ok{border-color:rgba(107,158,120,.55);color:#9ad4a8}
+.marca.bo{border-color:rgba(74,179,232,.5);color:var(--claro)}
+
+.celda{width:62px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.15);
+  border-radius:16px;color:#fff;padding:6px 10px;font:400 13px Cifras,Raleway,sans-serif;
+  text-align:center}
+.celda:focus{outline:2px solid var(--claro);border-color:var(--claro)}
+.unid{color:#6f8da2;font-size:11px;margin-left:5px}
+
+.precio{padding:20px}
+.precio .rot{font:600 10px Raleway,sans-serif;letter-spacing:.13em;color:#7c9bb0}
+.pu{font:400 42px Cifras,Raleway,sans-serif;letter-spacing:-.02em;margin:4px 0 2px;
+  transition:color .25s}
+.pu.cambio{color:#ffc46b}
+.pu em{font-style:normal;font-size:16px;color:#8fb0c4}
+.nota{color:#7c9bb0;font-size:12px;margin-bottom:15px}
+.cinturon{display:flex;height:7px;border-radius:4px;overflow:hidden;margin-bottom:15px}
+.reng{display:flex;align-items:center;gap:9px;font-size:13px;padding:5px 0}
+.reng i{width:9px;height:9px;border-radius:2px;flex:none}
+.reng span{margin-left:auto;font-variant-numeric:tabular-nums}
+.suma{border-top:1px solid rgba(255,255,255,.1);margin-top:11px;padding-top:11px}
+.suma .reng{color:#b9d0de}
+.btn{border:1px solid rgba(255,255,255,.2);background:none;color:#e8f1f7;border-radius:9px;
+  padding:11px 17px;font:600 13px Raleway,sans-serif;cursor:pointer;width:100%;margin-top:14px}
+.btn:hover{border-color:#fff}
+.btn.lleno{background:#fff;color:#10293c;border-color:#fff}
+.btn.lleno:hover{background:#d9ecf7}
+.btn[disabled]{opacity:.4;cursor:default}
+
+.aclara{color:#7c9bb0;font-size:12px;line-height:1.55;margin-top:14px}
+.cab{display:flex;align-items:center;gap:13px;padding:15px 18px;
+  border-bottom:1px solid rgba(255,255,255,.08)}
+.cab h2{font:600 15px Raleway,sans-serif}
+.cab .tot{margin-left:auto;font:400 19px Cifras,Raleway,sans-serif}
+.cab small{color:#7c9bb0;font-size:11.5px;display:block;font-weight:400}
+
+@media(max-width:1100px){
+  .dos{grid-template-columns:1fr}
+  .nav{display:none}
+  h1{font-size:25px}
+  .lienzo{padding:4px 13px 20px}
+  .barra{padding:11px 13px;gap:12px}
+  .quien{display:none}
+  .oculta-chico{display:none}
+  .celda{width:54px}
+}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Catálogo de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/cost101.html">Conocer cost101</a>
+</div>
+
+<div class="fondo"></div>
+<div class="todo">
+  <header class="barra">
+    <div class="sello">101</div>
+    <div>
+      <div class="nom">cost<i>101</i></div>
+      <div class="sub">GENERADOR DE PARTIDAS</div>
+    </div>
+    <nav class="nav" id="nav">
+      <button data-v="catalogo" aria-selected="true">CATÁLOGO</button>
+      <button data-v="generador" aria-selected="false">GENERADOR</button>
+      <button data-v="precios" aria-selected="false">PRECIOS BASE</button>
+    </nav>
+    <div class="quien"><b>Constructora Ramírez</b><span>Aprueba</span><span>Salir</span></div>
+  </header>
+  <div class="lienzo" id="lienzo"></div>
+</div>
+
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pesos = n => '$' + n.toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+/* ---------------- los datos inventados ---------------- */
+// Precios base: lo que cuesta cada insumo. Mover uno de aquí mueve TODAS las
+// partidas que lo llevan; eso es lo que la demostración quiere enseñar.
+const BASE = {
+  'MAT-001': {d:'Panel de yeso 1/2" 1.22×2.44 m', u:'pza', p:245.00},
+  'MAT-002': {d:'Canal galvanizado 6.35 cm cal. 26', u:'ml', p:28.00},
+  'MAT-003': {d:'Poste galvanizado 6.35 cm cal. 26', u:'ml', p:36.00},
+  'MAT-004': {d:'Tornillo para tablaroca 1"', u:'pza', p:0.35},
+  'MAT-005': {d:'Colchoneta fibra de vidrio 2.5" acústica', u:'m²', p:68.00},
+  'MAT-006': {d:'Compuesto para juntas (redimix)', u:'kg', p:14.00},
+  'MAT-007': {d:'Cinta de refuerzo para juntas', u:'ml', p:1.90},
+  'MAT-010': {d:'Pintura vinílica lavable', u:'L', p:92.00},
+  'MAT-011': {d:'Sellador 5× vinílico', u:'L', p:78.00},
+  'MAT-020': {d:'Cemento gris CPC 30R, saco 50 kg', u:'saco', p:238.00},
+  'MAT-021': {d:'Arena de río cribada', u:'m³', p:420.00},
+  'MAT-022': {d:'Grava 3/4"', u:'m³', p:465.00},
+  'MAT-030': {d:'Block hueco 15×20×40 cm', u:'pza', p:17.50},
+  'MAT-031': {d:'Malla electrosoldada 6×6-10/10', u:'m²', p:58.00}
+};
+
+// Cuadrillas: un grupo de oficios con su costo por jornada y su rendimiento.
+const CUADRILLAS = {
+  'CU-01': {d:'Tablaroquero + ayudante', jornada:1360.00},
+  'CU-02': {d:'Pintor + ayudante', jornada:1180.00},
+  'CU-03': {d:'Albañil + 2 ayudantes', jornada:1840.00}
+};
+
+// Las partidas. `sub` es una partida dentro de otra: el mortero entra en el
+// muro y el muro en la barda, y se costea una sola vez.
+const PARTIDAS = [
+  {c:'PAR-101', d:'Concreto hecho en obra f’c=150 kg/cm²', cat:'Concretos', u:'m³', ok:true,
+   mat:[['MAT-020',6.5,3],['MAT-021',0.52,8],['MAT-022',0.69,8]],
+   cua:['CU-03',1.8], equipo:96.00, sub:[]},
+  {c:'PAR-102', d:'Mortero cemento-arena 1:4', cat:'Morteros', u:'m³', ok:true,
+   mat:[['MAT-020',7.2,3],['MAT-021',1.05,8]],
+   cua:['CU-03',3.2], equipo:38.00, sub:[]},
+  {c:'PAR-201', d:'Pintura vinílica 2 manos sobre muro', cat:'Acabados', u:'m²', ok:true,
+   mat:[['MAT-010',0.22,6],['MAT-011',0.09,6]],
+   cua:['CU-02',38], equipo:0, sub:[]},
+  {c:'PAR-301', d:'Muro de block 15 cm asentado con mortero', cat:'Muros', u:'m²', ok:true,
+   mat:[['MAT-030',12.5,4]],
+   cua:['CU-03',9.5], equipo:0, sub:[['PAR-102',0.022]]},
+  {c:'PAR-302', d:'Muro de tablaroca 2 caras con aislante acústico y pintura',
+   cat:'Muros', u:'m²', ok:false,
+   mat:[['MAT-001',0.672,8],['MAT-002',0.7,5],['MAT-003',2.2,5],['MAT-004',30,10],
+        ['MAT-005',1,5],['MAT-006',0.9,10],['MAT-007',1.5,10]],
+   cua:['CU-01',12], equipo:3.60, sub:[['PAR-201',1]]},
+  {c:'PAR-401', d:'Firme de concreto 10 cm con malla', cat:'Pisos', u:'m²', ok:true,
+   mat:[['MAT-031',1.05,5]],
+   cua:['CU-03',22], equipo:0, sub:[['PAR-101',0.105]]},
+  {c:'PAR-402', d:'Plafón de tablaroca liso', cat:'Plafones', u:'m²', ok:false,
+   mat:[['MAT-001',0.52,10],['MAT-003',1.9,5],['MAT-004',26,10],['MAT-006',0.75,10],
+        ['MAT-007',1.2,10]],
+   cua:['CU-01',9], equipo:3.20, sub:[]}
+];
+
+const IND = 12, UTIL = 10, HERR = 3;   // indirectos, utilidad y herramienta menor, en %
+
+/* ---------------- la cuenta ---------------- */
+// El costo de una partida se arma de abajo hacia arriba y las subpartidas se
+// calculan recursivamente, así que mover un precio base recorre toda la cadena.
+function cuenta(p, visto) {
+  visto = visto || {};
+  if (visto[p.c]) return {materiales:0, mo:0, herr:0, equipo:0, subs:0, cd:0, pu:0};
+  visto[p.c] = 1;
+  let materiales = 0;
+  p.mat.forEach(([clave, cant, desp]) => {
+    materiales += BASE[clave].p * cant * (1 + desp / 100);
+  });
+  const mo = CUADRILLAS[p.cua[0]].jornada / p.cua[1];
+  const herr = mo * HERR / 100;
+  let subs = 0;
+  p.sub.forEach(([clave, cant]) => {
+    const otra = PARTIDAS.find(x => x.c === clave);
+    if (otra) subs += cuenta(otra, Object.assign({}, visto)).pu * cant;
+  });
+  const cd = materiales + mo + herr + p.equipo + subs;
+  const pu = cd * (1 + IND / 100) * (1 + UTIL / 100);
+  return {materiales, mo, herr, equipo:p.equipo, subs, cd, pu};
+}
+
+/* ---------------- las vistas ---------------- */
+let vista = 'catalogo', abierta = 'PAR-302', previos = {};
+
+function recordar() {
+  previos = {};
+  PARTIDAS.forEach(p => previos[p.c] = cuenta(p).pu);
+}
+
+function catalogo() {
+  const reng = PARTIDAS.map(p => {
+    const pu = cuenta(p).pu;
+    const antes = previos[p.c];
+    const movio = antes !== undefined && Math.abs(antes - pu) > 0.005;
+    return '<tr class="pica" data-c="' + p.c + '">' +
+      '<td class="clave">' + p.c + '</td>' +
+      '<td class="desc"><b>' + esc(p.d) + '</b><small>' + esc(p.cat) + ' · ' +
+        (p.mat.length + p.sub.length) + ' componentes</small></td>' +
+      '<td class="oculta-chico">' + p.u + '</td>' +
+      '<td class="der lana' + (movio ? ' sube' : '') + '">' + pesos(pu) + '</td>' +
+      '<td><span class="marca ' + (p.ok ? 'ok' : 'bo') + '">' +
+        (p.ok ? 'Aprobada' : 'Borrador') + '</span></td>' +
+      '</tr>';
+  }).join('');
+  return '<div class="titulillo">CATÁLOGO</div>' +
+    '<h1>Catálogo de <i>partidas</i></h1>' +
+    '<p class="bajo">' + PARTIDAS.length + ' partidas · precio unitario con indirectos y utilidad</p>' +
+    '<div class="panel"><table><thead><tr>' +
+    '<th>CLAVE</th><th>DESCRIPCIÓN</th><th class="oculta-chico">UNIDAD</th>' +
+    '<th class="der">P. UNITARIO</th><th>ESTADO</th>' +
+    '</tr></thead><tbody>' + reng + '</tbody></table></div>';
+}
+
+function generador() {
+  const p = PARTIDAS.find(x => x.c === abierta);
+  const q = cuenta(p);
+  const mats = p.mat.map(([clave, cant, desp], i) => {
+    const b = BASE[clave];
+    const importe = b.p * cant * (1 + desp / 100);
+    return '<tr>' +
+      '<td class="clave">' + clave + '</td>' +
+      '<td class="desc"><b>' + esc(b.d) + '</b></td>' +
+      '<td class="oculta-chico">' + b.u + '</td>' +
+      '<td class="der lana">' + pesos(b.p) + '</td>' +
+      '<td><input class="celda" id="cant-' + i + '" data-i="' + i + '" data-q="cant" ' +
+        'value="' + cant + '" inputmode="decimal" aria-label="Cantidad de ' + esc(b.d) + '">' +
+        '<span class="unid oculta-chico">' + b.u + ' / ' + p.u + '</span></td>' +
+      '<td><input class="celda" id="desp-' + i + '" data-i="' + i + '" data-q="desp" ' +
+        'value="' + desp + '" inputmode="decimal" aria-label="Desperdicio de ' + esc(b.d) + '">' +
+        '<span class="unid">%</span></td>' +
+      '<td class="der lana">' + pesos(importe) + '</td>' +
+      '</tr>';
+  }).join('');
+
+  const barra = [['#4ab3e8', q.materiales], ['#7fd1a6', q.mo], ['#ffc46b', q.herr + q.equipo],
+                 ['#b39ddb', q.subs]]
+    .map(([col, v]) => '<i style="background:' + col + ';width:' + (v / q.cd * 100) + '%"></i>')
+    .join('');
+
+  return '<div class="titulillo">GENERADOR · EDITANDO ' + p.c + '</div>' +
+    '<h1>' + esc(p.d) + '</h1>' +
+    '<p class="bajo">' + esc(p.cat) + ' · por ' + p.u + '</p>' +
+    '<div class="dos">' +
+      '<div class="panel"><div class="cab"><h2>Materiales</h2>' +
+        '<small>Cantidad por unidad de obra; el desperdicio se suma al importe.</small>' +
+        '<div class="tot lana">' + pesos(q.materiales) + '</div></div>' +
+        '<table><thead><tr><th>CLAVE</th><th>DESCRIPCIÓN</th>' +
+        '<th class="oculta-chico">UNIDAD</th><th class="der">PRECIO</th>' +
+        '<th>CANTIDAD</th><th>DESP.</th><th class="der">IMPORTE</th>' +
+        '</tr></thead><tbody>' + mats + '</tbody></table></div>' +
+      '<div class="panel precio">' +
+        '<div class="rot">PRECIO UNITARIO</div>' +
+        '<div class="pu" id="pu">' + pesos(q.pu) + ' <em>/ ' + p.u + '</em></div>' +
+        '<p class="nota">Indirectos ' + IND + ' % · Utilidad ' + UTIL + ' %</p>' +
+        '<div class="cinturon">' + barra + '</div>' +
+        '<div class="reng"><i style="background:#4ab3e8"></i>Materiales<span>' + pesos(q.materiales) + '</span></div>' +
+        '<div class="reng"><i style="background:#7fd1a6"></i>Mano de obra<span>' + pesos(q.mo) + '</span></div>' +
+        '<div class="reng"><i style="background:#ffc46b"></i>Herramienta y equipo<span>' + pesos(q.herr + q.equipo) + '</span></div>' +
+        '<div class="reng"><i style="background:#b39ddb"></i>Subpartidas<span>' + pesos(q.subs) + '</span></div>' +
+        '<div class="suma">' +
+          '<div class="reng">Costo directo<span>' + pesos(q.cd) + '</span></div>' +
+          '<div class="reng">Indirectos ' + IND + ' %<span>' + pesos(q.cd * IND / 100) + '</span></div>' +
+          '<div class="reng">Utilidad ' + UTIL + ' %<span>' + pesos(q.cd * (1 + IND / 100) * UTIL / 100) + '</span></div>' +
+        '</div>' +
+        '<button class="btn lleno" id="aprobar"' + (p.ok ? ' disabled' : '') + '>' +
+          (p.ok ? '✓ Aprobada' : 'Guardar y aprobar') + '</button>' +
+        '<p class="aclara">La cuadrilla «' + esc(CUADRILLAS[p.cua[0]].d) + '» rinde ' +
+          p.cua[1] + ' ' + p.u + ' por jornada, así que la mano de obra sale de dividir ' +
+          'la jornada entre el rendimiento.</p>' +
+      '</div>' +
+    '</div>';
+}
+
+function precios() {
+  const usos = {};
+  PARTIDAS.forEach(p => p.mat.forEach(([c]) => { usos[c] = (usos[c] || 0) + 1; }));
+  const reng = Object.keys(BASE).filter(c => usos[c]).map(c => {
+    const b = BASE[c];
+    return '<tr>' +
+      '<td class="clave">' + c + '</td>' +
+      '<td class="desc"><b>' + esc(b.d) + '</b><small>Lo llevan ' + usos[c] +
+        (usos[c] === 1 ? ' partida' : ' partidas') + '</small></td>' +
+      '<td class="oculta-chico">' + b.u + '</td>' +
+      '<td class="der"><input class="celda" data-base="' + c + '" value="' + b.p.toFixed(2) +
+        '" inputmode="decimal" aria-label="Precio de ' + esc(b.d) + '"></td>' +
+      '</tr>';
+  }).join('');
+  return '<div class="titulillo">PRECIOS BASE</div>' +
+    '<h1>Lo que cuesta cada <i>insumo</i></h1>' +
+    '<p class="bajo">Se corrige aquí una vez y todas las partidas que lo llevan se recalculan solas.</p>' +
+    '<div class="panel"><table><thead><tr>' +
+    '<th>CLAVE</th><th>DESCRIPCIÓN</th><th class="oculta-chico">UNIDAD</th>' +
+    '<th class="der">PRECIO</th></tr></thead><tbody>' + reng + '</tbody></table></div>';
+}
+
+function pintar() {
+  $('#lienzo').innerHTML = vista === 'catalogo' ? catalogo()
+                         : vista === 'generador' ? generador() : precios();
+  document.querySelectorAll('#nav button').forEach(b =>
+    b.setAttribute('aria-selected', String(b.dataset.v === vista)));
+  amarrar();
+  if (window.guia) guia.remarcar();
+}
+
+function ir(v) { vista = v; pintar(); }
+
+function amarrar() {
+  document.querySelectorAll('tr.pica').forEach(t => {
+    t.onclick = () => {
+      abierta = t.dataset.c;
+      vista = 'generador';
+      pintar();
+      document.dispatchEvent(new CustomEvent('demo:abrir', {detail:abierta}));
+    };
+  });
+  document.querySelectorAll('#nav button').forEach(b => b.onclick = () => ir(b.dataset.v));
+
+  // El generador: cantidad y desperdicio recalculan mientras se teclea.
+  document.querySelectorAll('.celda[data-q]').forEach(inp => {
+    inp.oninput = () => {
+      const p = PARTIDAS.find(x => x.c === abierta);
+      const v = parseFloat(inp.value);
+      if (!isFinite(v) || v < 0) return;
+      p.mat[+inp.dataset.i][inp.dataset.q === 'cant' ? 1 : 2] = v;
+      const foco = document.activeElement.id, pos = inp.selectionStart;
+      pintar();
+      const otra = document.getElementById(foco);
+      if (otra) { otra.focus(); try { otra.setSelectionRange(pos, pos); } catch (e) {} }
+      $('#pu').classList.add('cambio');
+      document.dispatchEvent(new Event('demo:recalcula'));
+    };
+  });
+
+  // Los precios base: mover uno recorre la cadena entera.
+  document.querySelectorAll('.celda[data-base]').forEach(inp => {
+    inp.onchange = () => {
+      const v = parseFloat(inp.value);
+      if (!isFinite(v) || v < 0) return;
+      recordar();
+      const clave = inp.dataset.base;
+      const antes = BASE[clave].p;
+      BASE[clave].p = v;
+      const tocadas = PARTIDAS.filter(p =>
+        Math.abs(cuenta(p).pu - previos[p.c]) > 0.005).length;
+      avisar(tocadas
+        ? 'Se recalcularon ' + tocadas + (tocadas === 1 ? ' partida.' : ' partidas.')
+        : 'Ninguna partida cambió.');
+      if (tocadas && Math.abs(v - antes) > 0.0001) {
+        document.dispatchEvent(new Event('demo:precio'));
+      }
+    };
+  });
+
+  const ap = $('#aprobar');
+  if (ap) ap.onclick = () => {
+    const p = PARTIDAS.find(x => x.c === abierta);
+    if (p.ok) return;
+    p.ok = true;
+    pintar();
+    avisar('Partida aprobada. Ya la puede cotizar quote101.');
+    document.dispatchEvent(new Event('demo:aprobar'));
+  };
+}
+
+/* ---------------- la guía ---------------- */
+window.DEMO_APP = '/app/cost101.html';
+window.DEMO_NOMBRE = 'cost101';
+window.GUIA = [
+  {t:'Esto es el catálogo: cada renglón es una partida de obra con su precio ' +
+     'unitario. Abre la que <b>parpadea</b> —está en borrador, todavía no se cotiza.',
+   marca:'tr[data-c="PAR-302"]', espera:'demo:abrir', solo:'PAR-302',
+   regaño:'Ésa ya está aprobada. Abre la del renglón que <b>parpadea</b>: ' +
+          'PAR-302, el muro de tablaroca, que es la que vamos a recorrer.'},
+  {t:'Aquí se ve <b>de qué se forma</b> el precio. Súbele el desperdicio del panel ' +
+     'de yeso: de 8 a 15. El precio unitario de la derecha se mueve mientras tecleas.',
+   marca:'#desp-0', espera:'demo:recalcula', requiere:'PAR-302'},
+  {t:'Eso fue una partida. Ahora lo importante: ve a <b>PRECIOS BASE</b> y súbele ' +
+     'el precio al panel de yeso. Es el insumo, no la partida.',
+   marca:'#nav button[data-v="precios"]', espera:'demo:precio'},
+  {t:'Dos partidas lo llevaban, y las dos se recalcularon solas. Vuelve al ' +
+     '<b>CATÁLOGO</b>: las que cambiaron salen en ámbar. Abre PAR-302 y apruébala.',
+   marca:'#nav button[data-v="catalogo"]', espera:'demo:aprobar'},
+  {t:'Eso es cost101: el precio se captura una vez, y el catálogo entero se entera ' +
+     'solo —con el historial de por qué cambió cada partida.',
+   fin:true}
+];
+</script>
+<script src="../guia.js"></script>
+<script>recordar(); pintar();</script>
