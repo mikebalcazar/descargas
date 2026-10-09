@@ -101,6 +101,7 @@ APPS = {
         ('04-expediente-completo.png','El expediente completo, listo para el contador'),
         ('01-acceso-correo.png','Se entra con un código que llega al correo, sin contraseña')],
    enlace=('Entrar a la app','https://t101-portal.mike-929.workers.dev'),
+   demo='demo/roster/',
    datos=[('Versión','portal 0.10.0 · central 0.4.0'),('Plataforma','Web · celular y computadora'),
           ('Estado','En producción con el primer cliente'),('Modelo','Renta mensual por empresa')]),
 
@@ -134,6 +135,7 @@ APPS = {
         ('01-resumen.png','El resumen: qué falta aprobar y qué precios cambiaron'),
         ('06-celular.png','El mismo catálogo, desde el celular')],
    enlace=('Entrar a la app','https://cost101.taller101.com'),
+   demo='demo/cost/',
    datos=[('Versión','0.2.0'),('Plataforma','Web · computadora y celular'),
           ('Estado','En producción'),('Modelo','Licencia por empresa')],
    no=['No trae precios de mercado: los precios base los captura cada empresa.',
@@ -198,6 +200,7 @@ APPS = {
         ('02-propiedades-en-vivo.png','Las propiedades del objeto, al momento'),
         ('06-vista-previa.png','La vista previa antes de mandar a imprimir')],
    baja='draw101',          # la liga y la versión salen de draw101.json
+   demo='demo/draw/',
    datos=[('Plataforma','Windows · macOS en preparación'),
           ('Estado','En uso interno, v1 comercial en curso')]),
 
@@ -225,6 +228,7 @@ APPS = {
    img=[('01-clientes.png','Los clientes, con sus proyectos y sus cotizaciones'),
         ('02-cotizacion.png','La cotización armada, mueble por mueble')],
    enlace=('Entrar a la app','https://quote101.mike-929.workers.dev'),
+   demo='demo/quote/',
    datos=[('Versión','G80'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción, uso diario'),('Se conecta con','nest101, por archivo .t101x')]),
 
@@ -254,6 +258,7 @@ APPS = {
         ('maqueta-ficha-mueble.png','La ficha del mueble, la que se lleva quien lo arma'),
         ('maqueta-proyectos.png','Los proyectos del taller y en qué va el despiece de cada uno')],
    baja='nest101',          # la liga y la versión salen de nest101.json (Mike, 2-oct: igual que draw101)
+   demo='demo/nest/',
    datos=[('Plataforma','Windows'),
           ('Estado','En producción')]),
 
@@ -290,6 +295,7 @@ APPS = {
         ('maqueta-equipo.png','Quién entra y hasta dónde ve: se invita por correo, con puesto y alcance'),
         ('maqueta-flujo.png','Las 52 semanas por delante, semana por semana, con el aviso de cuándo se va a cero')],
    enlace=('Entrar a la app','https://dash101.mike-929.workers.dev'),
+   demo='demo/dash/',
    datos=[('Versión','0.1.0'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción, uso interno'),('Alcance','Varios negocios en una cuenta')]),
 
@@ -325,6 +331,7 @@ APPS = {
         ('06-estado-de-cuenta.png','El estado de cuenta fiscal: sólo lo facturado, con su saldo corrido'),
         ('07-celular.png','El inicio, desde el celular')],
    enlace=('Entrar a la app','https://bill101.taller101.com'),
+   demo='demo/bill/',
    datos=[('Versión','0.1.0'),('Plataforma','Web · computadora y celular'),
           ('Estado','En producción'),('Modelo','Licencia por empresa')],
    no=['No emite ni timbra facturas: se hacen donde se hacen hoy, y aquí se suben.',
@@ -364,6 +371,7 @@ APPS = {
         ('05-directorio.png','El directorio: quien ya prestó y quien podría'),
         ('06-celular.png','Lo que ve quien presta, desde su celular: cuánto tiene invertido y qué día le pagan')],
    enlace=('Entrar a la app','https://patron101.taller101.com'),
+   demo='demo/patron/',
    datos=[('Versión','0.1.1'),('Plataforma','Web · computadora y celular'),
           ('Estado','En producción'),('Modelo','Licencia por empresa')],
    no=['No es fondeo colectivo ni capta dinero del público: lleva los préstamos de gente que la empresa ya conoce.',
@@ -403,6 +411,7 @@ APPS = {
         ('maqueta-celular.png','En el teléfono del cliente, que es donde se consulta'),
         ('maqueta-lista.png','Sus proyectos, con lo pagado y lo que resta de cada uno')],
    enlace=('Entrar a la app','https://peek101.mike-929.workers.dev'),
+   demo='demo/peek/',
    datos=[('Versión','v0 · 7-sep-2026'),('Plataforma','Web, sin instalar'),
           ('Estado','En producción con clientes de prueba'),('Para entrar','Correo y PIN de seis dígitos')]),
 }
