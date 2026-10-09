@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demostración de quote101 — Suite 101</title>
+<meta name="description" content="Pruebe quote101 con una cotización de ejemplo: el mueble por partes, el resumen de cargos y el PDF para el cliente.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../demo.css">
+<style>
+body{background:#11303f;color:#eaf2f6}
+.fondo{position:fixed;inset:0;z-index:0;overflow:hidden;background:#11303f}
+.fondo i{position:absolute;border-radius:50%;background:rgba(58,163,220,.11)}
+.fondo i:nth-child(1){width:780px;height:780px;right:-150px;top:-230px}
+.fondo i:nth-child(2){width:620px;height:620px;left:-210px;bottom:-190px}
+.todo{position:relative;z-index:1;height:calc(100% - var(--demo));display:flex;flex-direction:column}
+
+.barra{background:#0c2432;display:flex;align-items:center;gap:14px;padding:0 24px;height:56px;flex:none}
+.marca{font:700 20px Raleway,sans-serif;color:#fff}
+.ver{margin-left:auto;color:#8fb0c4;font-size:12px;text-align:right;line-height:1.3}
+.recibo{background:var(--azul);border:0;color:#fff;border-radius:7px;padding:9px 17px;
+  font:600 13px Raleway,sans-serif;cursor:pointer}
+.recibo:hover{background:#0092dc}
+
+.lienzo{flex:1;overflow:auto;padding:22px 24px 40px}
+.env{max-width:1230px;margin:0 auto}
+.volver{background:none;border:0;color:#8fb0c4;font:400 13px Raleway,sans-serif;cursor:pointer;
+  padding:0;margin-bottom:9px}
+.volver:hover{color:#fff}
+h1{font:700 25px Raleway,sans-serif;margin-bottom:18px}
+
+.mueble{background:#ccd7de;color:#152b38;border-radius:9px;margin-bottom:11px;overflow:hidden}
+.cabe{display:flex;align-items:center;gap:16px;padding:16px 20px;cursor:pointer}
+.cabe:hover{background:#d5dee4}
+.mas{font:400 21px Raleway,sans-serif;color:var(--azul-texto);width:15px;flex:none;
+  text-align:center;line-height:1}
+.cabe .tit{flex:1;min-width:0}
+.cabe .tit b{display:block;font:700 15px Raleway,sans-serif}
+.cabe .tit span{color:var(--azul-texto);font:700 13.5px Cifras,Raleway,sans-serif}
+.cabe .pzas{color:#5a6e7b;font-size:12.5px;white-space:nowrap}
+.cabe .lana{font:700 17px Cifras,Raleway,sans-serif;white-space:nowrap}
+.partes{border-top:1px solid #bbc8d1;padding:4px 20px 16px;background:#d5dee4}
+.parte{display:flex;align-items:center;gap:13px;padding:11px 0;border-bottom:1px solid #c5d0d8;
+  flex-wrap:wrap}
+.parte:last-child{border-bottom:0}
+.parte .q{flex:1;min-width:150px}
+.parte .q b{font:600 13.5px Raleway,sans-serif;display:block}
+.parte .q small{color:#5a6e7b;font-size:12px}
+.parte .lana{font:400 14px Cifras,Raleway,sans-serif;white-space:nowrap;min-width:86px;
+  text-align:right}
+.cel{width:58px;background:#fff;border:1px solid #adbcc6;border-radius:16px;padding:6px 9px;
+  text-align:center;font:400 13px Cifras,Raleway,sans-serif;color:#152b38}
+.cel:focus{outline:2px solid var(--azul);border-color:var(--azul)}
+
+.resumen{background:#ccd7de;color:#152b38;border-radius:9px;padding:19px 21px;margin-top:17px}
+.resumen h2{color:var(--azul-texto);font:700 15px Raleway,sans-serif;margin-bottom:11px}
+.reng{display:flex;padding:7px 0;font-size:13px;border-bottom:1px solid #c0ccd4;color:#44606f}
+.reng span{margin-left:auto;font-variant-numeric:tabular-nums;color:#152b38}
+.total{display:flex;align-items:center;background:#f4f7f9;border-left:4px solid var(--azul);
+  border-radius:5px;padding:14px 17px;margin-top:11px;font:700 14px Raleway,sans-serif}
+.total b{margin-left:auto;font:700 25px Cifras,Raleway,sans-serif;color:var(--azul-texto)}
+.pies{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}
+.btn{border:1px solid rgba(255,255,255,.28);background:none;color:#eaf2f6;border-radius:8px;
+  padding:11px 18px;font:600 13px Raleway,sans-serif;cursor:pointer}
+.btn:hover{border-color:#fff}
+.btn.lleno{background:#fff;border-color:#fff;color:#11303f}
+.btn.lleno:hover{background:#d9ecf7}
+.aclara{color:#8fb0c4;font-size:12.5px;line-height:1.55;margin-top:14px;max-width:760px}
+
+@media(max-width:760px){
+  .lienzo{padding:16px 13px 30px}
+  h1{font-size:20px}
+  .cabe{padding:13px 14px;gap:11px}
+  .cabe .pzas{display:none}
+  .partes{padding:4px 14px 13px}
+  .barra{padding:0 13px}
+  .ver{display:none}
+}
+</style>
+
+<div class="cinta">
+  <b>DEMOSTRACIÓN</b>
+  <span>Cotización de ejemplo. Los datos son inventados y nada se guarda.</span>
+  <a href="/app/quote101.html">Conocer quote101</a>
+</div>
+
+<div class="fondo"><i></i><i></i></div>
+<div class="todo">
+  <header class="barra">
+    <div class="marca">quote101</div>
+    <div class="ver">viernes, 09 oct 2026<br>G80</div>
+    <button class="recibo">Generar recibo</button>
+  </header>
+  <div class="lienzo"><div class="env" id="env"></div></div>
+</div>
+
+<aside class="guia" id="guia" hidden>
+  <div class="paso" id="g-paso"></div>
+  <p id="g-txt"></p>
+  <div class="pie" id="g-pie"></div>
+</aside>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pesos = n => '$' + Math.round(n).toLocaleString('es-MX');
+
+/* La tabla de precios: más de 200 valores en la app de verdad. Aquí van los
+   que hacen falta para que la cuenta se vea salir. */
+const PRECIO = {
+  gabinete:  {d:'Gabinete melamina roble, 90 cm',        u:'pza', p:6850},
+  cajon:     {d:'Cajón con corredera de extracción total', u:'pza', p:2240},
+  entrepano: {d:'Entrepaño melamina 18 mm',               u:'pza', p:780},
+  poste:     {d:'Poste lateral melamina',                 u:'pza', p:1180},
+  cubierta:  {d:'Cubierta de cuarzo, canto recto',        u:'ml',  p:4900},
+  laminado:  {d:'Laminado alta presión, frente',          u:'m²',  p:1450},
+  luz:       {d:'Tira de luz LED bajo gabinete',          u:'ml',  p:620},
+  puerta:    {d:'Puerta abatible con bisagra de golpe',   u:'pza', p:1890}
+};
+
+const CARGOS = [['Indirectos', 7.5], ['Ingeniería', 3.5], ['Embalaje', 2.0],
+                ['Flete', 2.0], ['Comisiones', 4.0]];
+
+const MUEBLES = [
+  {c:'CO-01', d:'Cocina módulo base izquierdo', pzas:2, abierto:false,
+   partes:{gabinete:3, cajon:6, entrepano:4, cubierta:2.4, laminado:2.1, puerta:2}},
+  {c:'CO-02', d:'Cocina módulo base derecho', pzas:1, abierto:false,
+   partes:{gabinete:2, cajon:3, entrepano:3, cubierta:1.8, laminado:1.6, puerta:2}},
+  {c:'CO-03', d:'Alacena despensero', pzas:1, abierto:false,
+   partes:{gabinete:2, entrepano:8, poste:2, puerta:4, luz:1.8}},
+  {c:'MU-TV', d:'Mueble de TV con nicho', pzas:1, abierto:false,
+   partes:{gabinete:2, cajon:2, entrepano:3, laminado:2.4, luz:2.2}}
+];
+
+let importado = false;
+
+const unitario = m => Object.keys(m.partes)
+  .reduce((a, k) => a + PRECIO[k].p * m.partes[k], 0);
+const subtotal = () => MUEBLES.reduce((a, m) => a + unitario(m) * m.pzas, 0);
+
+function pintar() {
+  const st = subtotal();
+  const cargos = CARGOS.map(([n, p]) => [n, p, st * p / 100]);
+  const total = st + cargos.reduce((a, c) => a + c[2], 0);
+
+  const lista = MUEBLES.map((m, i) => {
+    const u = unitario(m);
+    const partes = Object.keys(m.partes).map(k =>
+      '<div class="parte">' +
+        '<div class="q"><b>' + esc(PRECIO[k].d) + '</b>' +
+          '<small>' + pesos(PRECIO[k].p) + ' por ' + PRECIO[k].u + '</small></div>' +
+        '<input class="cel" data-m="' + i + '" data-k="' + k + '" value="' + m.partes[k] +
+          '" inputmode="decimal" aria-label="Cantidad de ' + esc(PRECIO[k].d) + '">' +
+        '<span class="lana">' + pesos(PRECIO[k].p * m.partes[k]) + '</span>' +
+      '</div>').join('');
+    return '<div class="mueble" data-c="' + m.c + '">' +
+      '<div class="cabe" data-abre="' + i + '" role="button" tabindex="0">' +
+        '<span class="mas">' + (m.abierto ? '−' : '+') + '</span>' +
+        '<div class="tit"><b>' + m.c + ' · ' + esc(m.d) + '</b>' +
+          '<span>' + pesos(u) + '/u</span></div>' +
+        '<span class="pzas">' + m.pzas + (m.pzas === 1 ? ' pza' : ' pzas') + '</span>' +
+        '<span class="lana">' + pesos(u * m.pzas) + '</span>' +
+      '</div>' +
+      (m.abierto ? '<div class="partes">' + partes + '</div>' : '') +
+    '</div>';
+  }).join('');
+
+  $('#env').innerHTML =
+    '<button class="volver">← Volver al proyecto</button>' +
+    '<h1>Cocina integral + Área TV — Sofía Reyes</h1>' +
+    lista +
+    '<div class="resumen"><h2>Resumen de cotización</h2>' +
+      '<div class="reng">Subtotal productos <span>' + pesos(st) + '</span></div>' +
+      cargos.map(([n, p, v]) =>
+        '<div class="reng">' + n + ' (' + p.toFixed(1) + ' %) <span>' + pesos(v) + '</span></div>').join('') +
+      '<div class="total">TOTAL COTIZACIÓN <b id="total">' + pesos(total) + '</b></div>' +
+    '</div>' +
+    '<div class="pies">' +
+      '<button class="btn" id="importar"' + (importado ? ' disabled style="opacity:.45"' : '') + '>' +
+        (importado ? '✓ Importado de nest101' : 'Importar de nest101 (.t101x)') + '</button>' +
+      '<button class="btn lleno" id="pdf">PDF para el cliente</button>' +
+      '<button class="btn">Excel para el arquitecto</button>' +
+    '</div>' +
+    '<p class="aclara">Los precios viven en una sola tabla: se corrigen ahí una vez y toda ' +
+      'cotización nueva ya sale con el precio bueno. El PDF lleva logotipo, firma, ' +
+      'especificación de materiales y las condiciones con su fecha de vigencia.</p>';
+  amarrar();
+  if (window.guia) guia.remarcar();
+}
+
+function amarrar() {
+  document.querySelectorAll('[data-abre]').forEach(c => {
+    const abre = () => {
+      const m = MUEBLES[+c.dataset.abre];
+      m.abierto = !m.abierto;
+      pintar();
+      if (m.abierto) document.dispatchEvent(new CustomEvent('demo:abrir', {detail:m.c}));
+    };
+    c.onclick = abre;
+    c.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abre(); } };
+  });
+
+  document.querySelectorAll('.cel').forEach(inp => inp.oninput = () => {
+    const v = parseFloat(inp.value);
+    if (!isFinite(v) || v < 0) return;
+    MUEBLES[+inp.dataset.m].partes[inp.dataset.k] = v;
+    const k = inp.dataset.k, m = inp.dataset.m, pos = inp.selectionStart;
+    pintar();
+    const otra = document.querySelector('.cel[data-m="' + m + '"][data-k="' + k + '"]');
+    if (otra) { otra.focus(); try { otra.setSelectionRange(pos, pos); } catch (e) {} }
+    document.dispatchEvent(new Event('demo:cambia'));
+  });
+
+  const imp = $('#importar');
+  if (imp) imp.onclick = () => {
+    if (importado) return;
+    importado = true;
+    MUEBLES.push({c:'CO-04', d:'Isla con barra desayunador', pzas:1, abierto:false,
+      partes:{gabinete:4, cajon:4, entrepano:2, cubierta:3.2, laminado:2.8, luz:2.6}});
+    pintar();
+    avisar('Entró un gabinete del archivo .t101x, con sus medidas. No se tecleó nada.');
+    document.dispatchEvent(new Event('demo:importar'));
+  };
+
+  const pdf = $('#pdf');
+  if (pdf) pdf.onclick = () => {
+    avisar('PDF armado: desglose por mueble, materiales, diez cláusulas y bloque de firma.');
+    document.dispatchEvent(new Event('demo:pdf'));
+  };
+}
+
+/* ---------------- la guía ---------------- */
+window.DEMO_APP = '/app/quote101.html';
+window.DEMO_NOMBRE = 'quote101';
+window.GUIA = [
+  {t:'Cada renglón es un mueble de la cotización. <b>Ábrelo</b>: el precio no es un número ' +
+     'a ojo, se forma de las partes que lleva.',
+   marca:'[data-abre="0"]', espera:'demo:abrir', solo:'CO-01'},
+  {t:'Gabinetes, cajones, entrepaños, cubierta. Cámbiale la cantidad a cualquiera: ' +
+     'el precio del mueble y el <b>total de abajo</b> se mueven mientras tecleas.',
+   marca:'.cel', espera:'demo:cambia'},
+  {t:'Ahora lo que ahorra el día: <b>importa de nest101</b>. El mueble ya despiezado entra ' +
+     'como renglón, con sus medidas, sin volver a capturarlo.',
+   marca:'#importar', espera:'demo:importar'},
+  {t:'Entró solo. Para cerrar, saca el <b>PDF para el cliente</b>: los indirectos, la ' +
+     'ingeniería, el embalaje y el flete ya están calculados.',
+   marca:'#pdf', espera:'demo:pdf'},
+  {t:'Eso es quote101: armas el mueble por partes y la propuesta sale en minutos, con su ' +
+     'firma y sus condiciones, sin recapturar lo que ya se despiezó.',
+   fin:true}
+];
+</script>
+<script src="../guia.js"></script>
+<script>pintar();</script>
