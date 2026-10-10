@@ -1,0 +1,9 @@
+# Lo que sale de un guion no se guarda: se regenera con un comando y pesa
+# mucho más que su fuente. Guardarlo sería guardar dos veces lo mismo, con el
+# riesgo de que la copia se despegue de su fuente sin que nadie se entere.
+venta/taller101/marca/taller101*
+venta/taller101/manual/*.pdf
+venta/taller101/manual/*.html
+
+# Python
+__pycache__/
