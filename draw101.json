@@ -1,22 +1,23 @@
 {
   "draw101": {
-    "version": "0.24.0",
-    "fecha": "2026-10-06",
+    "version": "0.25.0",
+    "fecha": "2026-10-11",
     "notas": [
-      "draw101 0.24.0 (2026-10-06)",
-      "IMPRIMIR UN PEDAZO DEL DIBUJO, SIN HACER UNA HOJA. En el modelo, Ctrl+P te pregunta en qué hoja, luego trazas con el ratón el área que quieres imprimir, y con Enter sale la vista previa con el botón de imprimir. Antes Ctrl+P en el modelo contestaba «no hay ninguna hoja que imprimir, crea una con PLANO»: para sacar un alzado había que hacer una hoja, ponerle una ventana, acomodarla, imprimir y luego decidir si la hoja se queda estorbando o se borra.",
-      "La hoja de esa impresión NO se guarda en ninguna parte: se arma, se imprime y se tira. Imprimir no te deja una hoja de más en las pestañas, ni un paso en el historial, ni el dibujo marcado como «sin guardar».",
-      "LLENA LA HOJA: lo que trazaste se agranda hasta ocupar todo el espacio dentro del marco, sin invadir el pie de plano. Y la hoja se voltea sola: si lo que trazaste es más alto que ancho, sale parada.",
-      "Como llenar la hoja da la escala que dé —1:11.5, 1:37.4—, el rótulo dice S/E en vez de inventar un 1:20 que no se puede medir con escalímetro. Pero la escala de verdad SÍ se enseña en el pie de la vista previa y en la consola, para que sepas qué estás mandando.",
-      "En una HOJA, Ctrl+P sigue haciendo lo de siempre: imprimir esa hoja. Y el comando nuevo también se llama por su nombre: IMPRIMIRVENTANA (o IV).",
-      "Prueba t058 (28 comprobaciones), con el programa de verdad en un navegador y verificada rompiendo el código. Dos de sus comprobaciones no medían nada la primera vez y se cazaron viendo una rotura salir verde; quedaron escritas en la prueba."
+      "draw101 0.25.0 (2026-10-11)",
+      "EMPALME (fillet) YA FUNCIONA CONTRA ARCOS Y POLILÍNEAS, no sólo entre dos líneas. Antes, al pedir un empalme entre un rectángulo y un arco contestaba «tiene que ser una línea». No era un filtro puesto por prudencia: la cuenta buscaba el centro del empalme sobre la bisectriz del ángulo entre las dos rectas, y un arco no tiene una dirección que bisecar. Ahora se calcula con curvas paralelas, que sirven igual para una recta que para un arco.",
+      "El empalme queda TANGENTE de verdad a las dos curvas —tangente medida como distancia, no a ojo— y sus dos extremos caen exactamente en los puntos de tangencia. El arco original conserva su centro y su radio: lo único que se le mueve es un ángulo, así que la curva no cambia, nomás queda más corta.",
+      "SE PICA CADA CURVA DEL LADO QUE SE QUIERE CONSERVAR. Entre dos curvas caben hasta cuatro empalmes del mismo radio, y el punto del clic es el único dato que dice cuál se quiere y qué pedazo de cada curva sobrevive. El mensaje lo pide así: «pica la primera curva del lado que se queda».",
+      "Si la tangencia cae fuera de la curva, se alarga para alcanzarla y se avisa.",
+      "UN RECTÁNGULO CERRADO QUEDA ABIERTO al empalmarlo, y se dice en el historial. No hay manera de que no: un contorno cerrado al que se le quita un pedazo deja de ser un circuito. Vale saberlo de inmediato y no al rato, al ver que el achurado ya no rellena.",
+      "Todavía NO se puede empalmar una polilínea consigo misma —redondear la esquina de un rectángulo con su propio lado de al lado—; cuando se intenta, se dice en vez de hacer algo raro.",
+      "Un solo Ctrl+Z deshace el empalme entero: el arco nuevo y el recorte de las dos curvas, no en tres pasos."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.24.0-setup.exe",
-      "bytes": 125537517,
-      "sha256": "783d0f104655e2986f6fc793032ba850bbd490f4fddaca06228bbaf54824dd42",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.24.0/draw101-0.24.0-setup.exe",
+      "archivo": "draw101-0.25.0-setup.exe",
+      "bytes": 125545294,
+      "sha256": "b4d4b707c8bed70817fba4852568dff07c6e1825df8cb14a9598285dcab0dabd",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.25.0/draw101-0.25.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
