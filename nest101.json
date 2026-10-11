@@ -1,18 +1,18 @@
 {
   "nest101": {
-    "version": "0.19.5",
+    "version": "0.19.6",
     "fecha": "2026-10-11",
     "notas": [
-      "Arranque: nest101 ya no deja que una librería ajena tumbe sus ventanas. En máquinas de empresa, cuando un antivirus inyecta su librería dentro de una ventana tipo Chrome, Windows mata la ventana entera; es lo que hacía que la pantalla de activación se muriera a los 50 milisegundos de abrirse. Se apaga esa comprobación, que es lo que Microsoft documenta para programas como este.",
-      "Arranque: si se cae cualquier proceso del programa —una ventana, la gráfica, la red—, queda apuntado en arranque.log con su nombre y su motivo: \"crashed\", \"killed\", \"launch-failed\" o \"integrity-failure\". Antes sólo se escuchaba a la ventana de la licencia, y lo que pasaba no se veía.",
-      "Arranque: queda apuntado el momento exacto en que se crea cada ventana, para que un registro que se corta de golpe señale dónde."
+      "Arranque: nest101 pinta sus ventanas por software, sin usar la aceleración de la tarjeta de video. En un equipo el contenido de la ventana de activación se desarmaba a los 20 milisegundos sin que ningún proceso se cayera, y crear la siguiente ventana tumbaba el programa entero; esa firma es del driver de video. El 3D sigue funcionando, algo más lento.",
+      "Arranque: si el programa se cae, deja un volcado de caída en su carpeta de datos (%APPDATA%\\nest101\\Crashpad), sólo en disco, sin mandar nada a ningún lado. Dice en qué módulo se cayó, que es lo que no se puede adivinar desde fuera.",
+      "Arranque: queda apuntada la tarjeta de video del equipo en arranque.log."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.19.5-setup.exe",
-      "bytes": 160709485,
-      "sha256": "0c1476653841624e9977b35939a222da246d459e792d85531b2562be8a084cc2",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.5/nest101-0.19.5-setup.exe",
+      "archivo": "nest101-0.19.6-setup.exe",
+      "bytes": 160710311,
+      "sha256": "7eb509422a68ca6499fa1dc47494f2ee78ca58f2f50d4ea3080c14a6898fa742",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.6/nest101-0.19.6-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
