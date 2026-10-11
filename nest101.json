@@ -1,16 +1,20 @@
 {
   "nest101": {
-    "version": "0.19.2",
-    "fecha": "2026-10-09",
+    "version": "0.19.3",
+    "fecha": "2026-10-11",
     "notas": [
-      "Ícono nuevo: nest101 estrena el ícono que se eligió para la app, en el escritorio, la barra de tareas, el menú Inicio y el instalador."
+      "Arranque: nest101 ya no se cierra en silencio. Si la ventana de activación de licencia no carga —lo más común, un proxy o una VPN de la empresa— ahora se queda en pantalla diciendo el motivo con su código, y queda apuntado en arranque.log. Es lo que hacía que la 0.19.2 \"no abriera\": una ventana que aparecía y desaparecía sin una palabra.",
+      "Licencia: la app ya no apaga el proxy del sistema para todo. Lo apagaba para que el servidor local no se bloqueara, y de paso dejaba sin salida a la pantalla de activación en las máquinas que salen por proxy.",
+      "Ajustes: un solo menú (el engrane) con la licencia de este equipo, la llave de Claude, el idioma, las unidades, el logotipo, las actualizaciones y la carpeta del taller. La llave se puede pegar, PROBAR contra Anthropic y quitar; antes vivía escondida en la pestaña Estándar.",
+      "Llave de Claude: \"Quitar\" ahora quita de verdad sin reiniciar, y una llave válida pero sin workspace se explica en castellano y dice cómo hacer una que sirva.",
+      "Unidades: las medidas del dibujo y de la parrilla se pueden leer en milímetros, centímetros o pulgadas. La lista de corte, los planos, el Excel y el DXF se quedan en milímetros: son los que van a la máquina."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.19.2-setup.exe",
-      "bytes": 160437158,
-      "sha256": "1dac4557ff2beb73d2234dca987e636fc4c96a6ae348d15ed87ca50d06a44409",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.2/nest101-0.19.2-setup.exe",
+      "archivo": "nest101-0.19.3-setup.exe",
+      "bytes": 160707081,
+      "sha256": "99d1ec82d98168328d9a1002032dd9bc10287365195764ee0b7e76c3ee84e57f",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.3/nest101-0.19.3-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
