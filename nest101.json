@@ -1,18 +1,16 @@
 {
   "nest101": {
-    "version": "0.19.7",
-    "fecha": "2026-10-11",
+    "version": "0.19.8",
+    "fecha": "2026-10-12",
     "notas": [
-      "Arranque: arreglado de raíz por qué nest101 no abría desde la 0.19.1. Al cerrar la pantalla de arranque antes de pedir la licencia, el programa se quedaba sin ventanas un instante y Electron lo tomaba como orden de cerrarse; la ventana de activación nacía con el programa ya cerrándose y se desarmaba a los 20 milisegundos. Lo dijo el volcado de caída de la 0.19.6, leído con los símbolos de Electron.",
-      "Arranque: la gráfica vuelve a estar encendida (la 0.19.6 la apagó a ciegas y no era la causa). El 3D vuelve a su velocidad normal.",
-      "Arranque: se quitó el interruptor de seguridad que la 0.19.5 apagó por si un antivirus tumbaba la ventana. Tampoco era eso."
+      "La interfaz ya no se queda vieja: tras actualizar, el engrane enseña el menú de Ajustes de la versión instalada, no el de la anterior (#112)."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "nest101-0.19.7-setup.exe",
-      "bytes": 160711522,
-      "sha256": "785080147e449ca315dc1d67c1bb6a51e00ff1e34bbf4df5f8a59aa6a600006f",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.7/nest101-0.19.7-setup.exe",
+      "archivo": "nest101-0.19.8-setup.exe",
+      "bytes": 160712679,
+      "sha256": "fe8b4a9e9b37fee840f9a1153c718d86c9db37b6b0234e80e6cd603895db2149",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/nest101-0.19.8/nest101-0.19.8-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/nest101-ultima",
       "fijo": "https://github.com/mikebalcazar/descargas/releases/download/nest101-ultima/nest101-setup.exe"
     }
