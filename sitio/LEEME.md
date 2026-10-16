@@ -31,11 +31,24 @@ su material en `claude/venta/` de su repositorio, se copian sus capturas a
 ## Cómo se publica
 
 Push a `main` → GitHub Actions → **Cloudflare Pages** (gratis, sin límite de
-tráfico) → https://suite101.pages.dev
+tráfico) → **https://suite101.app**
+
+`https://suite101.pages.dev` sigue sirviendo el mismo sitio y es la dirección
+que mide el flujo después de publicar, porque contesta en cuanto termina el
+despliegue. La que se le enseña a la gente, y la que declaran el `canonical` y
+el `og:url` de cada página, es la del dominio. **`www.suite101.app` redirige
+a `suite101.app`** con un 301, conservando la ruta (Cloudflare, 16-oct-2026).
 
 El secreto `CLOUDFLARE_API_TOKEN` está puesto desde el 10-sep y trae
 **Cloudflare Pages: Edit**. Cada publicación mide lo servido contra el commit,
 archivo por archivo, y deja el resultado como comentario del commit.
+
+**El botón de descarga se revisa después de publicar, no antes.** El paso «El
+botón de descarga apunta a lo publicado» corre *detrás* del despliegue: si una
+entrega nueva deja el sitio apuntando a la versión anterior, el sitio sí se
+publica —con la liga vieja— y lo que se pone en rojo es el flujo. Pasó con
+draw101 0.25.0 y nest101 0.19.8: se arregla volviendo a correr
+`armar-sitio.py` y empujando las dos páginas.
 
 ## Logotipos
 
@@ -194,7 +207,6 @@ la página, el diseño del 10-sep por la mañana daba 72 % en conjunto.
 conjunto 44 % a 1440; a 390, 23 %. Apple alterna una pantalla grande con aire y
 titulares; el diseño anterior apilaba capturas. **Pendiente de que Mike diga
 cuál manda.**
-- Dominio propio. Cloudflare Pages lo conecta gratis cuando lo haya.
 - Precios: **no van en el sitio**. Decidido por Mike el 9-sep: la única
   llamada a la acción es pedir una demostración. Si alguien pide número, se
   contesta por correo.
