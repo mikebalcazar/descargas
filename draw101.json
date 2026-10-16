@@ -1,23 +1,24 @@
 {
   "draw101": {
-    "version": "0.25.0",
-    "fecha": "2026-10-11",
+    "version": "0.26.0",
+    "fecha": "2026-10-16",
     "notas": [
-      "draw101 0.25.0 (2026-10-11)",
-      "EMPALME (fillet) YA FUNCIONA CONTRA ARCOS Y POLILÍNEAS, no sólo entre dos líneas. Antes, al pedir un empalme entre un rectángulo y un arco contestaba «tiene que ser una línea». No era un filtro puesto por prudencia: la cuenta buscaba el centro del empalme sobre la bisectriz del ángulo entre las dos rectas, y un arco no tiene una dirección que bisecar. Ahora se calcula con curvas paralelas, que sirven igual para una recta que para un arco.",
-      "El empalme queda TANGENTE de verdad a las dos curvas —tangente medida como distancia, no a ojo— y sus dos extremos caen exactamente en los puntos de tangencia. El arco original conserva su centro y su radio: lo único que se le mueve es un ángulo, así que la curva no cambia, nomás queda más corta.",
-      "SE PICA CADA CURVA DEL LADO QUE SE QUIERE CONSERVAR. Entre dos curvas caben hasta cuatro empalmes del mismo radio, y el punto del clic es el único dato que dice cuál se quiere y qué pedazo de cada curva sobrevive. El mensaje lo pide así: «pica la primera curva del lado que se queda».",
-      "Si la tangencia cae fuera de la curva, se alarga para alcanzarla y se avisa.",
-      "UN RECTÁNGULO CERRADO QUEDA ABIERTO al empalmarlo, y se dice en el historial. No hay manera de que no: un contorno cerrado al que se le quita un pedazo deja de ser un circuito. Vale saberlo de inmediato y no al rato, al ver que el achurado ya no rellena.",
-      "Todavía NO se puede empalmar una polilínea consigo misma —redondear la esquina de un rectángulo con su propio lado de al lado—; cuando se intenta, se dice en vez de hacer algo raro.",
-      "Un solo Ctrl+Z deshace el empalme entero: el arco nuevo y el recorte de las dos curvas, no en tres pasos."
+      "draw101 0.26.0 (2026-10-16)",
+      "DONDE VA UNA MEDIDA AHORA PUEDES TECLEAR LA CUENTA. En vez de sacar aparte que 45 y 110 son 155, escribes «45+110» y traza 155. Sirven la suma, la resta, la multiplicación, la división y los paréntesis: «(1200-80)/2» son 560, «1200-2*18» son 1164. Funciona en los 23 comandos que preguntan una medida —radio del empalme, distancia del desfase, ancho, alto, separación del arreglo—, en las coordenadas tecleadas («45+110,20*2»), en la cajita de la entrada dinámica, en el panel de propiedades y en los cuadros de diálogo.",
+      "Cuando tecleas una operación, el programa ENSEÑA la cuenta hecha («(1200-80)/2 = 560 cm»). Cuesta un renglón y es la única manera de cachar un paréntesis mal puesto antes de que la pieza esté trazada.",
+      "Lo que ya escribías sigue igual: «100,50» sigue siendo el punto (100, 50) y no la medida 100.50, y «100mm» sigue valiendo 100.",
+      "ENTER CORRE EL COMANDO DE HASTA ARRIBA DE LAS SUGERENCIAS. Tecleabas «OF», la lista enseñaba DESFASE, y Enter contestaba «comando desconocido: OF», porque los atajos de DESFASE son DF, O y OFFSET. Lo que la lista enseña y lo que Enter hace ya son lo mismo, desde la primera letra.",
+      "LA LISTA DE SUGERENCIAS APRENDE DE TI. Los comandos que más usas —y más recientemente— suben solos al principio. El orden es: tu atajo exacto primero, luego los que más usas, y el alfabético hasta el final. El atajo exacto gana SIEMPRE: «C» seguirá trazando círculos por muchas veces que uses COPIAR, para que una tecla que ya tienes en el dedo no cambie de significado sola.",
+      "ACTUALIZAR y ACTUALIZARMUEBLES no se disparan por adivinanza: uno baja e instala y el otro rehace el dibujo. Siguen en la lista y siguen corriendo escritos completos o con sus atajos, pero Enter no los agarra desde una letra suelta.",
+      "LOS ÍCONOS DE LA BARRA SON DIBUJOS, NO LETRAS. Eran caracteres sueltos («╱» para línea, «✥» para mover), y por eso se veían chicos y no se parecían a nada: un carácter se dibuja del tamaño que la tipografía quiera. Ahora son 42 dibujos propios, del doble de tamaño, con las proporciones medidas de una barra de AutoCAD.",
+      "Y DICEN CÓMO SE USA EL COMANDO, con dos colores: NARANJA son los puntos que te va a pedir que piques —los dos extremos en LINEA, el centro en CIRCULO, el punto de adentro en RAYADO—; AZUL es hacia dónde trabaja; y AZUL PUNTEADO es lo que se va o lo que todavía no existe: el pedazo que RECORTAR se lleva, el tramo que EXTENDER agrega, la copia que COPIAR va a dejar."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "draw101-0.25.0-setup.exe",
-      "bytes": 125545294,
-      "sha256": "b4d4b707c8bed70817fba4852568dff07c6e1825df8cb14a9598285dcab0dabd",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.25.0/draw101-0.25.0-setup.exe",
+      "archivo": "draw101-0.26.0-setup.exe",
+      "bytes": 125557778,
+      "sha256": "be06eb5a40e67f502fe591d44e157c9cbec7d42256ae7a1911af07651bf5cc14",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/draw101-0.26.0/draw101-0.26.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/draw101-ultima"
     }
   }
