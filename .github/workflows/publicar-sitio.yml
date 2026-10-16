@@ -1,8 +1,9 @@
 # Publica el escaparate de Suite 101 en Cloudflare Pages.
 #
 # Cloudflare Pages es gratis y sin límite de tráfico. El sitio es estático
-# —sin marco, sin build, sin peticiones a internet—, así que aquí no se
-# construye nada: se sube la carpeta tal cual.
+# —sin marco, sin peticiones a internet—. Lo único que se hace aquí antes de
+# subirlo es volver a armarlo con su propio guion, para que el botón de
+# descarga no pueda quedarse en la versión anterior (16-oct-2026).
 #
 # Requisitos (una sola vez, en Settings → Secrets and variables → Actions):
 #   CLOUDFLARE_API_TOKEN   el mismo valor que ya usan bitacora-obra y el
@@ -11,7 +12,8 @@
 #                          publicar sale con 403 y hay que agregarlo en
 #                          dash.cloudflare.com → My Profile → API Tokens.
 #
-# Queda en https://suite101.pages.dev
+# Queda en https://suite101.app (y en https://suite101.pages.dev, que es la
+# dirección directa de Pages y la que mide este flujo).
 
 name: Publicar sitio
 
@@ -20,8 +22,18 @@ on:
     branches: [main]
     paths:
       - 'sitio/**'
+      # Los <app>.json viven en la RAÍZ y de ahí sale el botón de descarga.
+      # Hasta el 16-oct-2026 no estaban aquí: una entrega nueva tocaba
+      # nest101.json, este flujo ni se enteraba y el sitio seguía ofreciendo la
+      # versión anterior. Así se atrasaron draw101 (0.24.0 contra 0.25.0) y
+      # nest101 (0.19.2 contra 0.19.8).
+      - '*.json'
       - '.github/workflows/publicar-sitio.yml'
   workflow_dispatch:
+
+# Para guardar en main el sitio rearmado.
+permissions:
+  contents: write
 
 concurrency:
   group: sitio
@@ -35,17 +47,50 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # EL SITIO SE ARMA AQUÍ, no se sube como venga en el commit. Antes se
+      # subía la carpeta tal cual y el guion se corría a mano; el día que a
+      # nadie se le ocurría correrlo, el botón de descarga se quedaba en la
+      # versión anterior. Armarlo en cada publicación lo vuelve imposible.
+      - name: Armar el sitio
+        run: python3 sitio/herramientas/armar-sitio.py
+
       - name: Que el proyecto exista (la primera vez lo crea)
         run: npx --yes wrangler@4 pages project create suite101 --production-branch main || true
 
       - name: Publicar
         run: npx --yes wrangler@4 pages deploy sitio --project-name suite101 --branch main --commit-dirty=true
 
+      # Lo que se publicó se guarda en main, para que el repositorio diga lo
+      # mismo que la gente está viendo. El push usa el token del flujo, que a
+      # propósito NO dispara otros flujos, y además lleva «[skip ci]»: no hay
+      # manera de que esto se muerda la cola. Si no se puede guardar, se avisa
+      # y ya: el sitio quedó publicado, que es lo que importa.
+      - name: Guardar el sitio rearmado
+        run: |
+          set -u
+          if git diff --quiet -- sitio/; then
+            echo "el sitio ya venía al día: nada que guardar"
+            exit 0
+          fi
+          git diff --name-only -- sitio/ | sed 's/^/  rearmado: /'
+          git config user.name  'publicar-sitio'
+          git config user.email 'actions@github.com'
+          git add sitio/
+          git commit -q -m 'sitio: rearmado al publicar [skip ci]'
+          git push -q origin HEAD:main && exit 0
+          echo "main se movió; reintento sobre lo nuevo"
+          git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0
+          echo "AVISO: el sitio se publicó, pero el rearmado no se pudo guardar en main"
+          exit 0
+
       # 2-oct-2026 (recado de draw101): el botón de descarga de cada app se
-      # compara contra su <app>.json publicado. La liga lleva la versión, así que
-      # un sitio sin rearmar sigue bajando la versión anterior sin que se note.
-      # Estricto desde que nest101 también lee su JSON (Mike, 2-oct): si una
-      # liga se queda vieja, la publicación sale roja.
+      # compara contra su <app>.json publicado. Desde que el sitio se arma en
+      # este mismo flujo (16-oct) esto ya no debería fallar nunca: si falla,
+      # no es que falte rearmar, es que algo más está roto.
+      #
+      # OJO CON EL ORDEN: esto corre DESPUÉS de publicar. Si alguna vez falla,
+      # el sitio YA salió —con la liga vieja— y lo que se pone en rojo es el
+      # flujo, no la publicación.
       - name: El botón de descarga apunta a lo publicado
         run: python3 sitio/herramientas/revisar-descargas.py
 
