@@ -1,17 +1,27 @@
 {
   "shape101": {
-    "version": "0.21.9",
-    "fecha": "2026-10-09",
+    "version": "0.22.0",
+    "fecha": "2026-11-03",
     "notas": [
-      "shape101 0.21.9 (2026-10-09)",
-      "Ícono nuevo: shape101 estrena el ícono que se eligió para la app, en el escritorio, la barra de tareas, el menú Inicio y el instalador."
+      "shape101 0.22.0 (2026-11-03)",
+      "Curvas exactas: la spline que ves es la que va al DXF y a la CNC, y el osnap se engancha a la curva de verdad (extremos, medio, cruces, cercano, perpendicular), también en elipses.",
+      "Las splines de un DXF o DWG que traen su curva completa ya se pueden editar; las demás se conservan como antes.",
+      "TOLERANCIA del documento (0.05 mm): la usan UNIR, RECORTAR, EXTENDER y el contorno de un sólido. Un contorno con huecos de centésimas ya se extruye.",
+      "RECORTAR y EXTENDER funcionan con splines y elipses; la spline se alarga suave, siguiendo su curva.",
+      "UNION, RESTA e INTERSECCION de contornos cerrados, exactas.",
+      "RAYADO picando dentro del área, con sus islas (con S, como antes).",
+      "DESFASE de splines y elipses.",
+      "Sólidos: bocetos con varios contornos, huecos e islas; splines y elipses en el boceto; CHAFLAN; un redondeo que no cabe dice el más grande que cabe.",
+      "Superficies: LOFT, REVOLVER y BARRER con curvas abiertas, PARCHE (una superficie que cierra un borde), BARRER2 (dos rieles) y edición por puntos de control.",
+      "CURVATURA y CEBRA para revisar qué tan lisas son las superficies.",
+      "Alias como AutoCAD: UN unidades, J/JOIN unir, CP copiar, BLOQUE bloque."
     ],
     "pagina": "https://github.com/mikebalcazar/descargas#readme",
     "windows": {
-      "archivo": "shape101-0.21.9-setup.exe",
-      "bytes": 341192149,
-      "sha256": "a25c64f9a365d35da51ca4a4e614977393fc7b0e8917f39ccb22de11cc817cfd",
-      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.21.9/shape101-0.21.9-setup.exe",
+      "archivo": "shape101-0.22.0-setup.exe",
+      "bytes": 341109952,
+      "sha256": "083449850a1896df6bb40cc8d64f8c9d879e44184aa753f707b725d3172a9202",
+      "url": "https://github.com/mikebalcazar/descargas/releases/download/shape101-0.22.0/shape101-0.22.0-setup.exe",
       "ultima": "https://github.com/mikebalcazar/descargas/releases/tag/shape101-ultima"
     }
   }
